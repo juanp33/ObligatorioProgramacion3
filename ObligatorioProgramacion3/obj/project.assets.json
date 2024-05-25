@@ -4107,23 +4107,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\33jua\\.nuget\\packages\\": {},
+    "C:\\Users\\USUARIO\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\33jua\\source\\repos\\ObligatorioProgramacion3\\ObligatorioProgramacion3\\ObligatorioProgramacion3.csproj",
+      "projectUniqueName": "C:\\Users\\USUARIO\\Source\\asd\\ObligatorioProgramacion4\\ObligatorioProgramacion3\\ObligatorioProgramacion3.csproj",
       "projectName": "ObligatorioProgramacion3",
-      "projectPath": "C:\\Users\\33jua\\source\\repos\\ObligatorioProgramacion3\\ObligatorioProgramacion3\\ObligatorioProgramacion3.csproj",
-      "packagesPath": "C:\\Users\\33jua\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\33jua\\source\\repos\\ObligatorioProgramacion3\\ObligatorioProgramacion3\\obj\\",
+      "projectPath": "C:\\Users\\USUARIO\\Source\\asd\\ObligatorioProgramacion4\\ObligatorioProgramacion3\\ObligatorioProgramacion3.csproj",
+      "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\USUARIO\\Source\\asd\\ObligatorioProgramacion4\\ObligatorioProgramacion3\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\33jua\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
