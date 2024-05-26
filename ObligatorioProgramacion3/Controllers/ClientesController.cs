@@ -55,11 +55,14 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Email,TipoCliente")] Cliente cliente)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && (cliente.TipoCliente == "Nuevo" || cliente.TipoCliente == "Vip" || cliente.TipoCliente == "Frecuente"))
             {
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+            } else
+            {
+                ModelState.AddModelError(string.Empty, "Error: El tipo de cliente no es válido.");
             }
             return View(cliente);
         }
