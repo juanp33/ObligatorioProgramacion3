@@ -1,17 +1,31 @@
-﻿@model IEnumerable<ObligatorioProgramacion3.Models.Reseña>
+﻿@using Microsoft.Data.SqlClient;
+@model IEnumerable<ObligatorioProgramacion3.Models.Reseña>
+
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Reseñas";
 }
 
+<<<<<<< Updated upstream
 <h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+=======
+<h1>Reseñas</h1>
+
+>>>>>>> Stashed changes
 <table class="table">
     <thead>
         <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Restaurante.Nombre)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Puntaje)
             </th>
@@ -21,16 +35,13 @@
             <th>
                 @Html.DisplayNameFor(model => model.FechaReseña)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cliente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Restaurante)
-            </th>
+            
+
             <th></th>
         </tr>
     </thead>
     <tbody>
+<<<<<<< Updated upstream
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -57,3 +68,36 @@
 }
     </tbody>
 </table>
+=======
+        @foreach (var item in Model)
+        {
+
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cliente.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Restaurante.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Puntaje)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comentario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaReseña)
+                </td>
+
+            </tr>
+
+
+
+        }
+    </tbody>
+</table>
+<p>
+    <a asp-action="Create">Agregar Reseña</a>
+</p>
+>>>>>>> Stashed changes

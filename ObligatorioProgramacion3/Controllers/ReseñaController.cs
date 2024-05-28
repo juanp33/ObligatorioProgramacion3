@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ObligatorioProgramacion3.Models;
 
@@ -21,8 +22,44 @@ namespace ObligatorioProgramacion3.Controllers
         // GET: Reseña
         public async Task<IActionResult> Index()
         {
-            var obligatorioProgramacion3Context = _context.Reseñas.Include(r => r.Cliente).Include(r => r.Restaurante);
-            return View(await obligatorioProgramacion3Context.ToListAsync());
+
+            List<Reseña> reseñas = new List<Reseña>();
+
+            using (SqlConnection connection = new SqlConnection("Data Source = Obligatorio ; Initial Catalog = ObligatorioProgramacion3 ; Integrated Security = true; TrustServerCertificate = True"))
+            {
+                string query = @"SELECT Reseñas.*,Clientes.Nombre as NombreCliente,Restaurantes.Nombre as NombreRestaurante FROM Reseñas inner join Clientes on Reseñas.ClienteID=Clientes.ID INNER JOIN Restaurantes ON Reseñas.RestauranteID = Restaurantes.ID";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                await connection.OpenAsync();
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+
+                while (await reader.ReadAsync())
+                {
+                    Reseña reseña = new Reseña
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                        ClienteId = reader.GetInt32(reader.GetOrdinal("ClienteId")),
+                        RestauranteId = reader.GetInt32(reader.GetOrdinal("RestauranteId")),
+                        Puntaje = reader.GetInt32(reader.GetOrdinal("Puntaje")),
+                        Comentario = reader.GetString(reader.GetOrdinal("Comentario")),
+                        FechaReseña = reader.GetDateTime(reader.GetOrdinal("FechaReseña")),
+                        Cliente = new Cliente
+                        {
+                            Nombre = reader.GetString(reader.GetOrdinal("NombreCliente"))
+                        },
+                        Restaurante = new Restaurante
+                         {
+                            Nombre= reader.GetString(reader.GetOrdinal("NombreRestaurante"))
+                         }
+
+                    };
+                    reseñas.Add(reseña);
+                }
+            }
+
+            return View(reseñas);
+
+
         }
 
         // GET: Reseña/Details/5
@@ -49,7 +86,7 @@ namespace ObligatorioProgramacion3.Controllers
         public IActionResult Create()
         {
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id");
-            ViewData["RestauranteId"] = new SelectList(_context.Restaurantes, "Id", "Id");
+            ViewData["RestauranteId"] = new SelectList(_context.Restaurantes, "Id", "Nombre");
             return View();
         }
 
@@ -63,11 +100,12 @@ namespace ObligatorioProgramacion3.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(reseña);
+                @reseña.FechaReseña = DateTime.Now;
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id", reseña.ClienteId);
-            ViewData["RestauranteId"] = new SelectList(_context.Restaurantes, "Id", "Id", reseña.RestauranteId);
+            ViewData["RestauranteId"] = new SelectList(_context.Restaurantes, "Id", "Nombre", reseña.RestauranteId);
             return View(reseña);
         }
 
