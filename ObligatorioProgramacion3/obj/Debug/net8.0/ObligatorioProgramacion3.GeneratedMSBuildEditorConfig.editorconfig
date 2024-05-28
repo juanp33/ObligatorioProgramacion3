@@ -1,279 +1,271 @@
 is_global = true
 build_property.TargetFramework = net8.0
-build_property.TargetFramework = net8.0
-build_property.TargetPlatformMinVersion = 
 build_property.TargetPlatformMinVersion = 
 build_property.UsingMicrosoftNETSdkWeb = true
-build_property.UsingMicrosoftNETSdkWeb = true
-build_property.ProjectTypeGuids = 
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
-build_property.InvariantGlobalization = 
-build_property.PlatformNeutralAssembly = 
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
-build_property.EnforceExtendedAnalyzerRules = 
-build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ObligatorioProgramacion3
 build_property.RootNamespace = ObligatorioProgramacion3
-build_property.ProjectDir = C:\Users\pesca\Source\Repos\ObligatorioProgramacion3\ObligatorioProgramacion3\
+build_property.ProjectDir = C:\Users\USUARIO\Source\Repos\ObligatorioProgramacion33\ObligatorioProgramacion3\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\pesca\Source\Repos\ObligatorioProgramacion3\ObligatorioProgramacion3
+build_property.MSBuildProjectDirectory = C:\Users\USUARIO\Source\Repos\ObligatorioProgramacion33\ObligatorioProgramacion3
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Clientes/Create.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Clientes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Clientes/Delete.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Clientes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Clientes/Details.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Clientes/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Clientes/Edit.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Clientes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Clientes/Index.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Clientes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Climas/Create.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Climas/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbWFzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Climas/Delete.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Climas/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbWFzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Climas/Details.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Climas/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbWFzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Climas/Edit.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Climas/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbWFzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Climas/Index.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Climas/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpbWFzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Home/Administracion.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Home/Administracion.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZG1pbmlzdHJhY2lvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Home/Index.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Home/Privacy.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Mesas/Create.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Mesas/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzYXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Mesas/Delete.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Mesas/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzYXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Mesas/Details.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Mesas/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzYXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Mesas/Edit.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Mesas/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzYXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Mesas/Index.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Mesas/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzYXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/OrdenDetalles/Create.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/OrdenDetalles/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZW5EZXRhbGxlc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/OrdenDetalles/Delete.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/OrdenDetalles/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZW5EZXRhbGxlc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/OrdenDetalles/Details.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/OrdenDetalles/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZW5EZXRhbGxlc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/OrdenDetalles/Edit.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/OrdenDetalles/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZW5EZXRhbGxlc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/OrdenDetalles/Index.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/OrdenDetalles/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZW5EZXRhbGxlc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Ordenes/Create.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Ordenes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZW5lc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Ordenes/Delete.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Ordenes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZW5lc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Ordenes/Details.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Ordenes/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZW5lc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Ordenes/Edit.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Ordenes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZW5lc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Ordenes/Index.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Ordenes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZW5lc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Pagoes/Create.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Pagoes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFnb2VzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Pagoes/Delete.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Pagoes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFnb2VzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Pagoes/Details.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Pagoes/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFnb2VzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Pagoes/Edit.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Pagoes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFnb2VzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Pagoes/Index.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Pagoes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFnb2VzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Platoes/Create.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Platoes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhdG9lc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Platoes/Delete.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Platoes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhdG9lc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Platoes/Details.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Platoes/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhdG9lc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Platoes/Edit.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Platoes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhdG9lc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Platoes/Index.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Platoes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhdG9lc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Reservas/Create.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Reservas/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Reservas/Delete.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Reservas/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Reservas/Details.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Reservas/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Reservas/Edit.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Reservas/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Reservas/Index.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Reservas/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Reseña/Create.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Reseña/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZcOxYVxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Reseña/Delete.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Reseña/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZcOxYVxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Reseña/Details.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Reseña/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZcOxYVxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Reseña/Edit.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Reseña/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZcOxYVxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Reseña/Index.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Reseña/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZcOxYVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Restaurantes/Create.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Restaurantes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdGF1cmFudGVzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Restaurantes/Delete.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Restaurantes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdGF1cmFudGVzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Restaurantes/Details.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Restaurantes/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdGF1cmFudGVzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Restaurantes/Edit.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Restaurantes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdGF1cmFudGVzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Restaurantes/Index.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Restaurantes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdGF1cmFudGVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Shared/Error.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Usuarios/Create.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Usuarios/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Usuarios/Delete.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Usuarios/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Usuarios/Details.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Usuarios/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Usuarios/Edit.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Usuarios/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Usuarios/Index.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Usuarios/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/_ViewImports.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/_ViewStart.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pesca/Source/Repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Shared/_Layout.cshtml]
+[C:/Users/USUARIO/Source/Repos/ObligatorioProgramacion33/ObligatorioProgramacion3/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-qnb0das3j7

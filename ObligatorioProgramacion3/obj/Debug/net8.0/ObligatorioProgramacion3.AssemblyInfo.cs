@@ -14,11 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ObligatorioProgramacion3")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< Updated upstream
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7465cf217b9207ad8486c1d4341983146bee3392")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f79611e2e9ac2b1efdd9d6f7f8177879592eddb6")]
->>>>>>> Stashed changes
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+509d6f74931f6fa75b66a26313527be238f9925a")]
 [assembly: System.Reflection.AssemblyProductAttribute("ObligatorioProgramacion3")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ObligatorioProgramacion3")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
