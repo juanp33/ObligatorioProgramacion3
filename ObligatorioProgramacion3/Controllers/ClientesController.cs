@@ -53,9 +53,9 @@ namespace ObligatorioProgramacion3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Email,TipoCliente")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Email,TipoCliente")] Cliente cliente) 
         {
-            if (ModelState.IsValid && (cliente.TipoCliente == "Nuevo" || cliente.TipoCliente == "Vip" || cliente.TipoCliente == "Frecuente"))
+            if (ModelState.IsValid && (cliente.TipoCliente.ToLower() == "nuevo" || cliente.TipoCliente.ToLower() == "vip" || cliente.TipoCliente.ToLower() == "frecuente"))
             {
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
