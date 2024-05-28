@@ -15,7 +15,7 @@ namespace ObligatorioProgramacion3.Controllers
 
         public PlatoesController(ObligatorioProgramacion3Context context)
         {
-            _context = context;
+            _conteaaaxt = context;
         }
 
         // GET: Platoes
