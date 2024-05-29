@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\NewFolder\**" />
     <Compile Remove="Views\PaginasWEB\**" />
+    <Content Remove="Views\NewFolder\**" />
     <Content Remove="Views\PaginasWEB\**" />
+    <EmbeddedResource Remove="Views\NewFolder\**" />
     <EmbeddedResource Remove="Views\PaginasWEB\**" />
+    <None Remove="Views\NewFolder\**" />
     <None Remove="Views\PaginasWEB\**" />
   </ItemGroup>
 
@@ -25,10 +29,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\NewFolder\" />
   </ItemGroup>
 
 </Project>

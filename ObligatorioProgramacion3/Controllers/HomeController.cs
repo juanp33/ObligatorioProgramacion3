@@ -13,10 +13,7 @@ namespace ObligatorioProgramacion3.Controllers
             _logger = logger;
         }
 
-        public IActionResult Administracion()
-        {
-            return View();
-        }
+       
         public IActionResult Index()
         {
             return View();
