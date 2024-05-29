@@ -21,6 +21,10 @@ namespace ObligatorioProgramacion3.Controllers
         {
             return View();
         }
+        public IActionResult InicioSesion()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {

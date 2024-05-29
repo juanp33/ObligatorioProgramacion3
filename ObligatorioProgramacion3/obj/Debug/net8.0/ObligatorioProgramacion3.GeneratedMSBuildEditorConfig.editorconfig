@@ -74,8 +74,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/33jua/source/repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Home/InicioSesion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmljaW9TZXNpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/33jua/source/repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/33jua/source/repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Home/Registro.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3Ryby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/33jua/source/repos/ObligatorioProgramacion3/ObligatorioProgramacion3/Views/Mesas/Create.cshtml]
