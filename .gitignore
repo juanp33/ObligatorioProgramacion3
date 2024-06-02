@@ -10,3 +10,4 @@ obj/*
 /ObligatorioProgramacion3/obj/project.nuget.cache
 /stop
 files/*
+/ObligatorioProgramacion3/wwwroot/files/*
