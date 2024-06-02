@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ObligatorioProgramacion3.Models;
 
 public partial class ObligatorioProgramacion3Context : DbContext
 {
-    public ObligatorioProgramacion3Context()
+    private readonly IWebHostEnvironment _webHostEnvironment;
+    public ObligatorioProgramacion3Context(  IWebHostEnvironment webHostEnvironment)
     {
+        _webHostEnvironment = webHostEnvironment;
     }
 
-    public ObligatorioProgramacion3Context(DbContextOptions<ObligatorioProgramacion3Context> options)
+    public ObligatorioProgramacion3Context(DbContextOptions<ObligatorioProgramacion3Context> options, IWebHostEnvironment webHostEnvironment)
         : base(options)
     {
+        _webHostEnvironment = webHostEnvironment;
     }
 
     public virtual DbSet<Cliente> Clientes { get; set; }
@@ -37,9 +42,23 @@ public partial class ObligatorioProgramacion3Context : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
+    public  string ReadFile()
+    {
+        
+        var filePath = Path.Combine(_webHostEnvironment.WebRootPath,"files", "ConnectionString.txt");
+
+        
+
+        return File.ReadAllText(filePath).Trim();
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Data Source= Obligatorio ;Initial Catalog= ObligatorioProgramacion3;Integrated Security=True; TrustServerCertificate=True");
+        
+        
+        var connectionString= ReadFile();
+        
+        optionsBuilder.UseSqlServer(connectionString);
 
     }
 

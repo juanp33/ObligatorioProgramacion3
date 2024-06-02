@@ -9,3 +9,4 @@ obj/*
 *.props
 /ObligatorioProgramacion3/obj/project.nuget.cache
 /stop
+files/*
