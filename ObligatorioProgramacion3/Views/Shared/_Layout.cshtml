@@ -20,18 +20,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="InicioSesion">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Login">Home</a>
                         </li>
                         @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index")
                         {
+                            
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Reseña" asp-action="Reseñas">Reseñas</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Reservar</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Reseña" asp-action="Index">Reseña</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Reserva</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Administracion" asp-action="Index">Administracion</a>
@@ -39,9 +37,7 @@
                         }
                         @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Administracion" || ViewContext.RouteData.Values["controller"]?.ToString() == "Clientes" || ViewContext.RouteData.Values["controller"]?.ToString() == "Mesas" || ViewContext.RouteData.Values["controller"]?.ToString() == "OrdenDetalles" || ViewContext.RouteData.Values["controller"]?.ToString() == "Ordenes" || ViewContext.RouteData.Values["controller"]?.ToString() == "Pagos" || ViewContext.RouteData.Values["controller"]?.ToString() == "Platoes" || ViewContext.RouteData.Values["controller"]?.ToString() == "Reseña" || ViewContext.RouteData.Values["controller"]?.ToString() == "Reservas" || ViewContext.RouteData.Values["controller"]?.ToString() == "Restaurantes")
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>      
+                               
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
                             </li>
@@ -68,6 +64,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Restaurantes" asp-action="Index">Restaurantes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
                             </li>
                         }
                             

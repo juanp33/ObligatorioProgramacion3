@@ -1,26 +1,22 @@
-﻿@using Microsoft.Data.SqlClient;
-@model IEnumerable<ObligatorioProgramacion3.Models.Reseña>
-
+﻿@model IEnumerable<ObligatorioProgramacion3.Models.Reseña>
 
 @{
-    ViewData["Title"] = "Reseñas";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-
-<h1>Reseñas</h1>
-
+<h2>Reseñas</h2>
 
 <table class="table">
     <thead>
         <tr>
-            
             <th>
-               Nombre del cliente
+                @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                Nombre del restaurante
+                @Html.DisplayNameFor(model => model.Restaurante.Nombre) <!-- Suponiendo que Restaurante tiene una propiedad Nombre -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente.Nombre) <!-- Suponiendo que Cliente tiene una propiedad Nombre -->
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Puntaje)
@@ -29,27 +25,23 @@
                 @Html.DisplayNameFor(model => model.Comentario)
             </th>
             <th>
-                Fecha de la reseña
+                @Html.DisplayNameFor(model => model.FechaReseña)
             </th>
-            
-
             <th></th>
         </tr>
     </thead>
     <tbody>
-
-
-
         @foreach (var item in Model)
         {
-
-
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Cliente.Nombre)
+                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Restaurante.Nombre)
+                    @Html.DisplayFor(modelItem => item.Restaurante.Nombre) <!-- Suponiendo que Restaurante tiene una propiedad Nombre -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cliente.Nombre) <!-- Suponiendo que Cliente tiene una propiedad Nombre -->
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Puntaje)
@@ -60,15 +52,16 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.FechaReseña)
                 </td>
-
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
             </tr>
-
-
-           
         }
     </tbody>
 </table>
-<p>
-    <a asp-action="Create">Agregar Reseña</a>
-</p>
 
+<p>
+    <a asp-action="Create">Create New</a>
+</p>

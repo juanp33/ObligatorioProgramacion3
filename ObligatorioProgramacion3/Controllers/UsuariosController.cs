@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,12 +16,48 @@ namespace ObligatorioProgramacion3.Controllers
     public class UsuariosController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
-
+        
         public UsuariosController(ObligatorioProgramacion3Context context)
         {
             _context = context;
+           
+
         }
 
+        public async Task<IActionResult> Login(Usuario model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == model.Email && u.Contraseña == model.Contraseña);
+                if (user != null)
+                {
+
+                    var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Email),
+                     
+                };
+
+                    // Crear el ClaimsIdentity
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    // Crear el ClaimsPrincipal
+                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                    
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+
+                    return RedirectToAction("Index", "Home");
+                }
+
+              
+
+
+
+            }
+            return View(model);
+        }
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
