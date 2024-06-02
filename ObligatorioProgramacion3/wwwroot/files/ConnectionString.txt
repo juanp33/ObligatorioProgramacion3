@@ -1,0 +1,1 @@
+Data Source= Obligatorio ;Initial Catalog= ObligatorioProgramacion3;Integrated Security=True; TrustServerCertificate=True
