@@ -1,3 +1,11 @@
 .vs/ 
 bin/*
 obj/*
+/ObligatorioProgramacion3/bin/Debug/net8.0
+/ObligatorioProgramacion3/obj/Debug/net8.0
+/ObligatorioProgramacion3/obj/Release/net8.0
+*.json
+*.targets
+*.props
+/ObligatorioProgramacion3/obj/project.nuget.cache
+/stop
