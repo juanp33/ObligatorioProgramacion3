@@ -1,1 +1,0 @@
-Data Source= Obasdfasdfligatorio ;Initial Catalog= ObligatorioProgramacion3;Integrated Security=True; TrustServerCertificate=True
