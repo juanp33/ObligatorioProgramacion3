@@ -23,35 +23,37 @@ namespace ObligatorioProgramacion3.Controllers
            
 
         }
-
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
         public async Task<IActionResult> Login(Usuario model)
         {
+            ModelState.Remove("Rol");
             if (ModelState.IsValid)
             {
 
                 var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == model.Email && u.Contraseña == model.Contraseña);
                 if (user != null)
                 {
-
                     var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.Email),
-                     
-                };
+                    {
+                        new Claim(ClaimTypes.Name, user.Email),
+                        new Claim(ClaimTypes.Role, user.Rol)
+                    };
 
-                    // Crear el ClaimsIdentity
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                    // Crear el ClaimsPrincipal
+                    var claimsIdentity = new ClaimsIdentity(claims, "Login");
                     var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-                    
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+                    await HttpContext.SignInAsync(claimsPrincipal);
 
                     return RedirectToAction("Index", "Home");
                 }
 
-              
+
+
 
 
 
@@ -93,7 +95,7 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegistroUsuario([Bind("Id,Nombre,Email,Contraseña,Rol")] Usuario usuario)
         {
-            usuario.Rol = "Usuario";
+            usuario.Rol = "USUARIO";
             ModelState.Remove("Rol");
             if (ModelState.IsValid)
             {
@@ -117,6 +119,7 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Email,Contraseña,Rol")] Usuario usuario)
         {
+            usuario.Rol = usuario.Rol.ToUpper();
             if (ModelState.IsValid)
             {
                 _context.Add(usuario);
