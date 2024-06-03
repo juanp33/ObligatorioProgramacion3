@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,79 @@ namespace ObligatorioProgramacion3.Controllers
         {
             _context = context;
         }
+        public IActionResult SeleccionarFecha()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SeleccionarFecha(DateTime fecha)
+        {
+            return RedirectToAction("SeleccionarMesa", new { fecha });
+        }
+        
+       
+        public IActionResult SeleccionarMesa(DateTime fecha)
+        {
+            var mesasOcupadas = _context.Reservas.Where(reserva => reserva.FechaReserva == fecha).Select(reserva => reserva.MesaId).ToList();
 
+            var mesas = _context.Mesas.ToList();
+
+            var viewModel = new SelectMesa
+            {
+                Fecha = fecha,
+                ChechboxMesa = mesas.Select(m => new ChechboxMesa
+                {
+                    MesaId = m.Id,
+                    
+                    IsOcupada = mesasOcupadas.Contains(m.Id)
+                }).ToList()
+            };
+
+            return View(viewModel);
+        }
+
+        public IActionResult CrearReserva(int MesaId, DateTime fecha)
+        {
+            var mesa = _context.Mesas.FirstOrDefault(m => m.Id == MesaId);
+            if (mesa == null)
+            {
+                return NotFound();
+            }
+
+            var reserva = new Reserva
+            {
+                MesaId = mesa.Id,
+                FechaReserva = fecha,
+                Estado = "Confirmada",
+                ClienteId = 1
+
+
+            };
+            ViewData["MesaId"] = mesa.Id;
+            ViewData["NumeroMesa"] = mesa.NumeroMesa;
+            ViewData["Fecha"] = fecha;
+            return View(reserva);
+        }
+
+      
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CrearReserva([Bind("MesaId,FechaReserva,ClienteId,Estado")] Reserva reserva)
+        {
+            reserva.Estado = "Confirmada";
+            if (ModelState.IsValid)
+            {
+                
+
+                _context.Add(reserva);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["MesaId"] = reserva.Id;
+            ViewData["Fecha"] = reserva.FechaReserva;
+            return View(reserva);
+        }
         // GET: Reservas
         public async Task<IActionResult> Index()
         {

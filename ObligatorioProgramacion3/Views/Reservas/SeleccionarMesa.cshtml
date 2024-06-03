@@ -1,0 +1,45 @@
+﻿@model ObligatorioProgramacion3.Models.SelectMesa
+
+@{
+    ViewData["Title"] = "Seleccionar Mesa";
+}
+
+<h1>Seleccionar Mesa para @Model.Fecha.ToShortDateString()</h1>
+
+<form asp-action="CrearReserva" method="get">
+    <input type="hidden" asp-for="Fecha" />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Seleccionar</th>
+                <th>Mesa</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var mesa in Model.ChechboxMesa)
+            {
+                <tr>
+                    <td>
+                        @if (!mesa.IsOcupada)
+                        {
+                            <input type="radio" name="mesaId" value="@mesa.MesaId" />
+                        }
+                        else
+                        {
+                            <input type="radio" name="mesaId" value="@mesa.MesaId" disabled />
+                        }
+                    </td>
+                    <td>
+                        @mesa.MesaId;
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <input type="hidden" name="fecha" value="@Model.Fecha" />
+    <button type="submit" class="btn btn-primary">Crear Reserva</button>
+</form>
+
+<div>
+    <a asp-action="SeleccionarFecha">Volver a Selección de Fecha</a>
+</div>

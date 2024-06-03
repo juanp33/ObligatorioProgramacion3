@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Seleccionar Fecha";
+}
+
+<h1>Seleccionar Fecha</h1>
+
+<form asp-action="SeleccionarFecha" method="post">
+    <div class="form-group">
+        <label for="fecha">Fecha</label>
+        <input type="date" class="form-control" id="fecha" name="fecha" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Seleccionar</button>
+</form>
