@@ -43,7 +43,7 @@ namespace ObligatorioProgramacion3.Controllers
                 {
                     MesaId = m.Id,
                     
-                    IsOcupada = mesasOcupadas.Contains(m.Id)
+                    EstaOcupada = mesasOcupadas.Contains(m.Id)
                 }).ToList()
             };
 

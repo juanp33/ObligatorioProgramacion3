@@ -4,6 +4,6 @@
     {
         public int MesaId { get; set; }
        
-        public bool IsOcupada { get; set; }
+        public bool EstaOcupada { get; set; }
     }
 }
