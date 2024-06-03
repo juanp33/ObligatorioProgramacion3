@@ -59,6 +59,8 @@ namespace ObligatorioProgramacion3.Controllers
             return View(model);
         }
         // GET: Usuarios
+
+        
         public async Task<IActionResult> Index()
         {
             return View(await _context.Usuarios.ToListAsync());
@@ -83,14 +85,34 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Usuarios/Create
-        public IActionResult Create()
+        public IActionResult RegistroUsuario()
         {
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegistroUsuario([Bind("Id,Nombre,Email,Contraseña,Rol")] Usuario usuario)
+        {
+            usuario.Rol = "Usuario";
+            ModelState.Remove("Rol");
+            if (ModelState.IsValid)
+            {
+                _context.Add(usuario);
+                await _context.SaveChangesAsync();
+                TempData["RegistroCorrecto"] = "Cuenta creada correctamente.";
+                return RedirectToAction(nameof(Login));
+            }
+            return View(usuario);
+        }
+
 
         // POST: Usuarios/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        public IActionResult Create()
+        {
+            return View();
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Email,Contraseña,Rol")] Usuario usuario)

@@ -3,10 +3,14 @@
 @{
     ViewData["Title"] = "Iniciar Sesion";
 }
+@{
+    var MsjRegistroCorrecto = TempData["RegistroCorrecto"] as string;
+}
 
 <h2>@ViewData["Title"]</h2>
 <hr />
 <div class="row">
+
     <div class="col-md-4">
         <form asp-action="Login">
             <div class="form-group">
@@ -30,6 +34,16 @@
             </div>
         </form>
     </div>
+    @if (!string.IsNullOrEmpty(MsjRegistroCorrecto))
+    {
+        <div class="alert alert-success">
+            @MsjRegistroCorrecto
+        </div>
+    }
+</div>
+
+<div>
+    <a asp-action="RegistroUsuario">No tienes cuenta?, presiona aqui para registrarte.</a>
 </div>
 
 @section Scripts {
