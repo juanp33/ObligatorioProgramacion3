@@ -45,6 +45,7 @@ namespace ObligatorioProgramacion3.Controllers
         // GET: Clientes/Create
         public IActionResult Create()
         {
+            ViewData["IdUsuarios"] = new SelectList(_context.Usuarios, "Id", "Nombre");
             return View();
         }
 
@@ -53,7 +54,7 @@ namespace ObligatorioProgramacion3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind(@"Id,Nombre,Email,TipoCliente")] Cliente cliente) 
+        public async Task<IActionResult> Create([Bind(@"Id,IdUsuarios,Nombre,Email,TipoCliente")] Cliente cliente) 
         {
             cliente.TipoCliente = cliente.TipoCliente.ToUpper();
             if (ModelState.IsValid && (cliente.TipoCliente == "NUEVO" || cliente.TipoCliente == "VIP" || cliente.TipoCliente == "FRECUENTE"))
@@ -66,6 +67,7 @@ namespace ObligatorioProgramacion3.Controllers
             {
                 ModelState.AddModelError(string.Empty, "Error: El tipo de cliente no es válido.");
             }
+            ViewData["IdUsuarios"] = new SelectList(_context.Usuarios, "Id", "Nombre", cliente.IdUsuarios);
             return View(cliente);
         }
 
@@ -90,7 +92,7 @@ namespace ObligatorioProgramacion3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Email,TipoCliente")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,IdUsuarios,Nombre,Email,TipoCliente")] Cliente cliente)
         {
             if (id != cliente.Id)
             {
