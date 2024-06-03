@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ObligatorioProgramacion3.Models;
 
 public partial class ObligatorioProgramacion3Context : DbContext
 {
-    private readonly IWebHostEnvironment _webHostEnvironment;
-    public ObligatorioProgramacion3Context(  IWebHostEnvironment webHostEnvironment)
+    public ObligatorioProgramacion3Context()
     {
-        _webHostEnvironment = webHostEnvironment;
     }
 
-    public ObligatorioProgramacion3Context(DbContextOptions<ObligatorioProgramacion3Context> options, IWebHostEnvironment webHostEnvironment)
+    public ObligatorioProgramacion3Context(DbContextOptions<ObligatorioProgramacion3Context> options)
         : base(options)
     {
-        _webHostEnvironment = webHostEnvironment;
     }
 
     public virtual DbSet<Cliente> Clientes { get; set; }
@@ -42,26 +37,9 @@ public partial class ObligatorioProgramacion3Context : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-    public  string ReadFile()
-    {
-        
-        var filePath = Path.Combine(_webHostEnvironment.WebRootPath,"files", "ConnectionString.txt");
-
-        
-
-        return File.ReadAllText(filePath).Trim();
-    }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        
-        
-        var connectionString= ReadFile();
-        
-        optionsBuilder.UseSqlServer(connectionString);
-
-    }
-
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=Obligatorio;Initial Catalog=ObligatorioProgramacion3;Integrated Security=True; TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -80,6 +58,9 @@ public partial class ObligatorioProgramacion3Context : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
+            entity.HasOne(d => d.IdUsuariosNavigation).WithMany(p => p.Clientes)
+                .HasForeignKey(d => d.IdUsuarios)
+                .HasConstraintName("fkUsuarios");
         });
 
         modelBuilder.Entity<Clima>(entity =>
@@ -241,6 +222,9 @@ public partial class ObligatorioProgramacion3Context : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Nombre)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Rol)
                 .HasMaxLength(100)
                 .IsUnicode(false);
         });

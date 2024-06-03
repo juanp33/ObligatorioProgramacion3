@@ -13,6 +13,10 @@ public partial class Cliente
 
     public string TipoCliente { get; set; } = null!;
 
+    public int? IdUsuarios { get; set; }
+
+    public virtual Usuario? IdUsuariosNavigation { get; set; }
+
     public virtual ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
 
     public virtual ICollection<Reseña> Reseñas { get; set; } = new List<Reseña>();

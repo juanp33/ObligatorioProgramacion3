@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace ObligatorioProgramacion3.Models;
 
@@ -14,7 +13,7 @@ public partial class Usuario
 
     public string Contraseña { get; set; } = null!;
 
-    public string Rol {  get; set; } = null!;
-}
+    public string? Rol { get; set; }
 
- 
+    public virtual ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
+}
