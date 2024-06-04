@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ObligatorioProgramacion3.Models.Restaurante>
+
+@{
+    ViewData["Title"] = "SeleccionRestaurante";
+}
+
+
+<h1>@ViewData["Title"]</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccione su restaurante de preferencia</title>
+    <style>
+        
+
+        .restauranteContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .CartaRestaurante {
+            display: flex;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 1s;
+            text-align: left;
+        }
+
+            .CartaRestaurante img {
+                max-width: 200px;
+                margin-right: 40px;
+            }
+
+            .CartaRestaurante:hover {
+                transform: scale(1.05);
+            }
+
+            .CartaRestaurante h2 {
+                margin-top: 1px;
+            }
+
+    </style>
+</head>
+<body>
+     
+    <a href="@Url.Action("SeleccionarFecha", "Reservas")" style="text-decoration: none; color: black;">
+        <div class="restauranteContainer">
+
+            @foreach (var restaurante in Model)
+            {
+                <a href="@Url.Action("SeleccionarFecha", "Reservas")" style="text-decoration: none; color: black;">
+                <div class="CartaRestaurante">
+                    <img src="https://brandemia.org/contenido/subidas/2022/10/marca-mcdonalds-logo.png" alt="Mcdonalds Logo" id="img" />
+                    <div>
+                        <h4>@restaurante.Nombre</h4>
+                        <p>Dirección: @restaurante.Dirección</p>
+                        <p>Teléfono: @restaurante.Teléfono</p>
+                        <a href="https://www.google.com/maps">Vealo en el mapa</a>
+                    </div>
+                
+                </div>
+                </a>
+            }
+        </div>
+    </a>
+    
+</body>
+
