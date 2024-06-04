@@ -38,17 +38,8 @@ public partial class ObligatorioProgramacion3Context : DbContext
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "files");
-        var configFilePath = Path.Combine(wwwrootPath, "ConnectionString.txt");
-
-        // Read the connection string from the file
-        if (File.Exists(configFilePath))
-        {
-            var connectionString = File.ReadAllText(configFilePath).Trim();
-            optionsBuilder.UseSqlServer(connectionString);
-        }
-    }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=Obligatorio;Initial Catalog=ObligatorioProgramacion3;Integrated Security=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -177,6 +168,10 @@ public partial class ObligatorioProgramacion3Context : DbContext
                 .HasForeignKey(d => d.ClienteId)
                 .HasConstraintName("FK__Reservas__Client__412EB0B6");
 
+            entity.HasOne(d => d.IdRestauranteNavigation).WithMany(p => p.Reservas)
+                .HasForeignKey(d => d.IdRestaurante)
+                .HasConstraintName("FK__Reservas__IdRest__14270015");
+
             entity.HasOne(d => d.Mesa).WithMany(p => p.Reservas)
                 .HasForeignKey(d => d.MesaId)
                 .HasConstraintName("FK__Reservas__MesaID__4222D4EF");
@@ -208,6 +203,9 @@ public partial class ObligatorioProgramacion3Context : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Restaura__3214EC27FA5ED3A8");
 
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(200)
+                .IsUnicode(false);
             entity.Property(e => e.Dirección)
                 .HasMaxLength(200)
                 .IsUnicode(false);

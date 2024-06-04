@@ -36,8 +36,6 @@ namespace ObligatorioProgramacion3.Controllers
                     .ToListAsync();
 
                 return View(reseñas);
-
-
             }
         }
         // GET: Reseña/Details/5
