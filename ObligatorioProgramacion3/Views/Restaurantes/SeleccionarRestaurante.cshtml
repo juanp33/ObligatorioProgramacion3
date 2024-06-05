@@ -49,12 +49,12 @@
 </head>
 <body>
      
-    <a href="@Url.Action("SeleccionarFecha", "Reservas")" style="text-decoration: none; color: black;">
+   
         <div class="restauranteContainer">
 
             @foreach (var restaurante in Model)
             {
-                <a href="@Url.Action("SeleccionarFecha", "Reservas")" style="text-decoration: none; color: black;">
+            <a href="@Url.Action("SeleccionarFecha", "Reservas",  new { restauranteId = restaurante.Id })" style="text-decoration: none; color: black;">
                 <div class="CartaRestaurante">
                     <img src="https://brandemia.org/contenido/subidas/2022/10/marca-mcdonalds-logo.png" alt="Mcdonalds Logo" id="img" />
                     <div>
@@ -68,7 +68,7 @@
                 </a>
             }
         </div>
-    </a>
+    
     
 </body>
 
