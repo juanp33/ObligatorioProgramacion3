@@ -42,12 +42,11 @@ public partial class ObligatorioProgramacion3Context : DbContext
         var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "files");
         var configFilePath = Path.Combine(wwwrootPath, "ConnectionString.txt");
 
-        // Read the connection string from the file
-        if (File.Exists(configFilePath))
-        {
+       
+      
             var connectionString = File.ReadAllText(configFilePath).Trim();
             optionsBuilder.UseSqlServer(connectionString);
-        }
+        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

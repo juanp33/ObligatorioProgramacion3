@@ -29,9 +29,15 @@ namespace ObligatorioProgramacion3.Controllers
         {
 
             List<Reseña> reseñas = new List<Reseña>();
+            var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "files");
+            var configFilePath = Path.Combine(wwwrootPath, "ConnectionString.txt");
 
-            using (SqlConnection connection = new SqlConnection("Data Source = Obligatorio ; Initial Catalog = ObligatorioProgramacion3 ; Integrated Security = true; TrustServerCertificate = True"))
+
+
+            var connectionString = File.ReadAllText(configFilePath).Trim();
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                
                 string query = @"SELECT Reseñas.*,Clientes.Nombre as NombreCliente,Restaurantes.Nombre as NombreRestaurante FROM Reseñas inner join Clientes on Reseñas.ClienteID=Clientes.ID INNER JOIN Restaurantes ON Reseñas.RestauranteID = Restaurantes.ID";
 
                 SqlCommand command = new SqlCommand(query, connection);
