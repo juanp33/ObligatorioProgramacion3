@@ -28,51 +28,16 @@ namespace ObligatorioProgramacion3.Controllers
         public async Task<IActionResult> Reseñas()
         {
 
-            List<Reseña> reseñas = new List<Reseña>();
-            var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "files");
-            var configFilePath = Path.Combine(wwwrootPath, "ConnectionString.txt");
-
-
-
-            var connectionString = File.ReadAllText(configFilePath).Trim();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var context = new ObligatorioProgramacion3Context())
             {
-                
-                string query = @"SELECT Reseñas.*,Clientes.Nombre as NombreCliente,Restaurantes.Nombre as NombreRestaurante FROM Reseñas inner join Clientes on Reseñas.ClienteID=Clientes.ID INNER JOIN Restaurantes ON Reseñas.RestauranteID = Restaurantes.ID";
+                var reseñas = await context.Reseñas
+                    .Include(r => r.Cliente)
+                    .Include(r => r.Restaurante)
+                    .ToListAsync();
 
-                SqlCommand command = new SqlCommand(query, connection);
-                await connection.OpenAsync();
-                SqlDataReader reader = await command.ExecuteReaderAsync();
-
-                while (await reader.ReadAsync())
-                {
-                    Reseña reseña = new Reseña
-                    {
-                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                        ClienteId = reader.GetInt32(reader.GetOrdinal("ClienteId")),
-                        RestauranteId = reader.GetInt32(reader.GetOrdinal("RestauranteId")),
-                        Puntaje = reader.GetInt32(reader.GetOrdinal("Puntaje")),
-                        Comentario = reader.GetString(reader.GetOrdinal("Comentario")),
-                        FechaReseña = reader.GetDateTime(reader.GetOrdinal("FechaReseña")),
-                        Cliente = new Cliente
-                        {
-                            Nombre = reader.GetString(reader.GetOrdinal("NombreCliente"))
-                        },
-                        Restaurante = new Restaurante
-                         {
-                            Nombre= reader.GetString(reader.GetOrdinal("NombreRestaurante"))
-                         }
-
-                    };
-                    reseñas.Add(reseña);
-                }
+                return View(reseñas);
             }
-
-            return View(reseñas);
-
-
         }
-
         // GET: Reseña/Details/5
         public async Task<IActionResult> Details(int? id)
         {

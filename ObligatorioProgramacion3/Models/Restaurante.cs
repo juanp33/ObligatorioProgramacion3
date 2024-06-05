@@ -13,5 +13,9 @@ public partial class Restaurante
 
     public string Teléfono { get; set; } = null!;
 
+    public string? Descripcion { get; set; }
+
+    public virtual ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
+
     public virtual ICollection<Reseña> Reseñas { get; set; } = new List<Reseña>();
 }

@@ -7,7 +7,8 @@
 <h1>Seleccionar Mesa para @Model.Fecha.ToShortDateString()</h1>
 
 <form asp-action="CrearReserva" method="get">
-    <input type="hidden" asp-for="Fecha" />
+    <input type="hidden" asp-for="Fecha"/>
+    <input type="hidden" name="restauranteId" value="@Model.restauranteId"/>
     <table class="table">
         <thead>
             <tr>

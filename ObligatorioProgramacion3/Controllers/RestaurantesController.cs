@@ -17,6 +17,11 @@ namespace ObligatorioProgramacion3.Controllers
         {
             _context = context;
         }
+        // GET: Restaurantes
+        public async Task<IActionResult> SeleccionarRestaurante()
+        {
+            return View(await _context.Restaurantes.ToListAsync());
+        }
 
         // GET: Restaurantes
         public async Task<IActionResult> Index()

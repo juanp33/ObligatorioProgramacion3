@@ -1,11 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Seleccionar Fecha";
+    var restauranteId = ViewData["RestauranteId"] as int?;
 }
 
 <h1>Seleccionar Fecha</h1>
 
 <form asp-action="SeleccionarFecha" method="post">
     <div class="form-group">
+        <input type="hidden" name="restauranteId" value="@restauranteId" />
         <label for="fecha">Fecha</label>
         <input type="date" class="form-control" id="fecha" name="fecha" required />
     </div>

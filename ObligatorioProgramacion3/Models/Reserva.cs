@@ -15,7 +15,11 @@ public partial class Reserva
 
     public string Estado { get; set; } = null!;
 
+    public int? IdRestaurante { get; set; }
+
     public virtual Cliente? Cliente { get; set; }
+
+    public virtual Restaurante? IdRestauranteNavigation { get; set; }
 
     public virtual Mesa? Mesa { get; set; }
 

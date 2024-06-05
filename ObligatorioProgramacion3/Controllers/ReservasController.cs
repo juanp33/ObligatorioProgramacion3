@@ -18,19 +18,22 @@ namespace ObligatorioProgramacion3.Controllers
         {
             _context = context;
         }
-        public IActionResult SeleccionarFecha()
+        public IActionResult SeleccionarFecha(int restauranteId)
         {
-            return View();
+          
+            ViewData["RestauranteId"] = restauranteId;
+            return View(restauranteId);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SeleccionarFecha(DateTime fecha)
+        public IActionResult SeleccionarFecha(DateTime fecha, int restauranteId)
         {
-            return RedirectToAction("SeleccionarMesa", new { fecha });
+           
+            return RedirectToAction("SeleccionarMesa", new { fecha, restauranteId });
         }
         
        
-        public IActionResult SeleccionarMesa(DateTime fecha)
+        public IActionResult SeleccionarMesa(DateTime fecha, int restauranteId)
         {
             var mesasOcupadas = _context.Reservas.Where(reserva => reserva.FechaReserva == fecha).Select(reserva => reserva.MesaId).ToList();
 
@@ -39,6 +42,8 @@ namespace ObligatorioProgramacion3.Controllers
             var viewModel = new SelectMesa
             {
                 Fecha = fecha,
+                restauranteId= restauranteId,
+                
                 ChechboxMesa = mesas.Select(m => new ChechboxMesa
                 {
                     MesaId = m.Id,
@@ -50,7 +55,7 @@ namespace ObligatorioProgramacion3.Controllers
             return View(viewModel);
         }
 
-        public IActionResult CrearReserva(int MesaId, DateTime fecha)
+        public IActionResult CrearReserva(int MesaId, DateTime fecha, int restauranteId)
         {
             var mesa = _context.Mesas.FirstOrDefault(m => m.Id == MesaId);
             if (mesa == null)
@@ -63,20 +68,22 @@ namespace ObligatorioProgramacion3.Controllers
                 MesaId = mesa.Id,
                 FechaReserva = fecha,
                 Estado = "Confirmada",
-                ClienteId = 1
-
+                ClienteId = 1,
+                IdRestaurante= restauranteId
 
             };
+           
             ViewData["MesaId"] = mesa.Id;
             ViewData["NumeroMesa"] = mesa.NumeroMesa;
             ViewData["Fecha"] = fecha;
+            ViewData["IdRestaurante"]= restauranteId;
             return View(reserva);
         }
 
       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CrearReserva([Bind("MesaId,FechaReserva,ClienteId,Estado")] Reserva reserva)
+        public async Task<IActionResult> CrearReserva([Bind("MesaId,FechaReserva,ClienteId,Estado,IdRestaurante")] Reserva reserva)
         {
             reserva.Estado = "Confirmada";
             if (ModelState.IsValid)
