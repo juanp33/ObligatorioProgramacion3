@@ -32,10 +32,11 @@ namespace ObligatorioProgramacion3.Controllers
         public async Task<IActionResult> Login(Usuario model)
         {
             ModelState.Remove("Rol");
+            ModelState.Remove("Email");
             if (ModelState.IsValid)
             {
 
-                var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == model.Email && u.Contraseña == model.Contraseña);
+                var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Nombre == model.Nombre && u.Contraseña == model.Contraseña);
                 if (user != null)
                 {
                     var claims = new List<Claim>
