@@ -6,92 +6,184 @@
     <title>@ViewData["Title"] - ObligatorioProgramacion3</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ObligatorioProgramacion3.styles.css" asp-append-version="true" />
+    <style>
+        /* Custom styles for sidebar layout */
+        .sidebar {
+            position: center;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 48px 0 0;
+            width: 400px; /* Width of the sidebar */
+        }
+
+            .sidebar .nav-link {
+                font-size: 1.1rem;
+                color: #333;
+            }
+
+                .sidebar .nav-link.active {
+                    color: #007bff;
+                }
+
+                .sidebar .nav-link:hover {
+                    color: #0056b3;
+                }
+
+        .offcanvas {
+            width: 400px;
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+            .nav-link.active {
+                color: #007bff;
+            }
+
+            .nav-link:hover {
+                color: #0056b3;
+            }
+
+        .main {
+            margin-left: 250px; /* Same as the width of the sidebar */
+            padding-top: 60px; /* Adjust to fit your navbar height */
+            flex: 1;
+        }
+
+        .footer {
+            padding: 1rem 0;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e4e5e7;
+            width: 100%;
+            
+        }
+
+        .navbar-brand-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .auth-buttons {
+            margin-left: auto;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container-fluid {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="d-flex">
+        <nav class="navbar navbar-light bg-light fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ObligatorioProgramacion3</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Login">Home</a>
-                        </li>
-                        @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index")
-                        {
-                            
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Reseña" asp-action="Reseñas">Reseñas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Reserva</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Administracion" asp-action="Index">Administracion</a>
-                            </li>
-                        }
-                        @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Administracion" || ViewContext.RouteData.Values["controller"]?.ToString() == "Clientes" || ViewContext.RouteData.Values["controller"]?.ToString() == "Mesas" || ViewContext.RouteData.Values["controller"]?.ToString() == "OrdenDetalles" || ViewContext.RouteData.Values["controller"]?.ToString() == "Ordenes" || ViewContext.RouteData.Values["controller"]?.ToString() == "Pagos" || ViewContext.RouteData.Values["controller"]?.ToString() == "Platoes" || ViewContext.RouteData.Values["controller"]?.ToString() == "Reseña" || ViewContext.RouteData.Values["controller"]?.ToString() == "Reservas" || ViewContext.RouteData.Values["controller"]?.ToString() == "Restaurantes")
-                        {
-                               
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Mesas" asp-action="Index">Mesas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="OrdenDetalles" asp-action="Index">Orden Detalles</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Ordenes" asp-action="Index">Ordenes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Pagoes" asp-action="Index">Pagos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Platoes" asp-action="Index">Platos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Reseña" asp-action="Index">Reseña</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Reservas" asp-action="Index">Reservas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Restaurantes" asp-action="Index">Restaurantes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
-                            </li>
-                        }
-                            
-                            
-                                   
-
-                        </ul>
-                    </div>
+                <a class="navbar-brand navbar-brand-center" asp-area="" asp-controller="Home" asp-action="Index">TriCampeones</a>
+                <div class="auth-buttons">
+                    <a class="btn btn-outline-primary me-2" asp-area="" asp-controller="Usuarios" asp-action="Login">Iniciar Sesión</a>
+                    <a class="btn btn-primary" asp-area="" asp-controller="Usuarios" asp-action="Register">Registrarse</a>
                 </div>
-            </nav>
-        </header>
-        <div class="container">
-            <main role="main" class="pb-3">
-                                    @RenderBody()
-            </main>
+            </div>
+        </nav>
+
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="sidebarLabel">Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Usuarios" asp-action="Login">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#homeSubmenu" role="button" aria-expanded="false" aria-controls="homeSubmenu">
+                            Home Options
+                        </a>
+                        <div class="collapse" id="homeSubmenu">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Reseña" asp-action="Reseñas">Reseñas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Administracion" asp-action="Index">Administracion</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Usuarios" asp-action="Login">Reserva</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#adminSubmenu" role="button" aria-expanded="false" aria-controls="adminSubmenu">
+                            Administración
+                        </a>
+                        <div class="collapse" id="adminSubmenu">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Mesas" asp-action="Index">Mesas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="OrdenDetalles" asp-action="Index">Orden Detalles</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Ordenes" asp-action="Index">Ordenes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Pagoes" asp-action="Index">Pagos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Platoes" asp-action="Index">Platos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Reseña" asp-action="Index">Reseña</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Reservas" asp-action="Index">Reservas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Restaurantes" asp-action="Index">Restaurantes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; 2024 - ObligatorioProgramacion3 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Terminos y condiciones</a>
-            </div>
-        </footer>
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-                            @await RenderSectionAsync("Scripts", required: false)
-    </body>
-    </html>
+        <main class="container-fluid mt-5 pt-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-muted border-top mt-auto">
+        <div class="container">
+            &copy; 2024 - TriCampeones - <a asp-area="" asp-controller="Home" asp-action="Privacy">Terminos y condiciones</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

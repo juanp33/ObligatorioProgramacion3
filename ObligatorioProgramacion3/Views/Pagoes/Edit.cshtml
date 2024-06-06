@@ -2,6 +2,11 @@
 
 @{
     ViewData["Title"] = "Edit";
+    var metodoPagoOptions = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "Tarjeta", Text = "Tarjeta" },
+        new SelectListItem { Value = "Efectivo", Text = "Efectivo" }
+    };
 }
 
 <h1>Edit</h1>
@@ -30,7 +35,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="MetodoPago" class="control-label"></label>
-                <input asp-for="MetodoPago" class="form-control" />
+                <select asp-for="MetodoPago" class="form-control" asp-items="metodoPagoOptions"></select>
                 <span asp-validation-for="MetodoPago" class="text-danger"></span>
             </div>
             <div class="form-group">

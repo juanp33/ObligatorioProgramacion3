@@ -2,6 +2,12 @@
 
 @{
     ViewData["Title"] = "Create";
+    var estadoOptions = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "Pendiente", Text = "Pendiente" },
+        new SelectListItem { Value = "Confirmada", Text = "Confirmada" },
+        new SelectListItem { Value = "Cancelada", Text = "Cancelada" }
+    };
 }
 
 <h1>Create</h1>
@@ -27,7 +33,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
+                <select asp-for="Estado" class="form-control" asp-items="estadoOptions"></select>
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
             <div class="form-group">
