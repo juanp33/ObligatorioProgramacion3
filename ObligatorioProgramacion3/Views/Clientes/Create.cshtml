@@ -2,6 +2,12 @@
 
 @{
     ViewData["Title"] = "Create";
+    var tipoClienteOptions = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "Nuevo", Text = "Nuevo" },
+        new SelectListItem { Value = "Frecuente", Text = "Frecuente" },
+        new SelectListItem { Value = "VIP", Text = "VIP" }
+    };
 }
 
 <h1>Create</h1>
@@ -29,7 +35,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="TipoCliente" class="control-label"></label>
-                <input asp-for="TipoCliente" class="form-control" />
+                <select asp-for="TipoCliente" class="form-control" asp-items="tipoClienteOptions"></select>
                 <span asp-validation-for="TipoCliente" class="text-danger"></span>
             </div>
             <div class="form-group">
