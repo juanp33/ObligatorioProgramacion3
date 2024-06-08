@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ObligatorioProgramacion3.Models;
 using System.Diagnostics;
 
 namespace ObligatorioProgramacion3.Controllers
 {
+   
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -13,12 +15,22 @@ namespace ObligatorioProgramacion3.Controllers
             _logger = logger;
         }
 
-       
+        public IActionResult AccesoDenegado()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Error");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Usuarios");
+            }
+        }
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult InicioSesion()
+        public IActionResult Error()
         {
             return View();
         }
@@ -29,10 +41,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+     
 
         public IActionResult Reseñas() {
             return View();

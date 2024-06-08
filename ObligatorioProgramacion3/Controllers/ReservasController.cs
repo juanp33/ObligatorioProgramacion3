@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ObligatorioProgramacion3.Models;
+using Microsoft.AspNetCore.Authorization;
+
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ObligatorioProgramacion3.Controllers
 {
+    [Authorize(Policy = "ReservasVer")]
     public class ReservasController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;

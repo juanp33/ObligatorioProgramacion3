@@ -272,9 +272,11 @@ public partial class ObligatorioProgramacion3Context : DbContext
             entity.Property(e => e.Nombre)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Rol)
-                .HasMaxLength(100)
-                .IsUnicode(false);
+            entity.Property(e => e.RolId).HasColumnName("RolID");
+
+            entity.HasOne(d => d.Rol).WithMany(p => p.Usuarios)
+                .HasForeignKey(d => d.RolId)
+                .HasConstraintName("FK__Usuarios__RolID__3493CFA7");
         });
 
         modelBuilder.Entity<UsuarioRole>(entity =>

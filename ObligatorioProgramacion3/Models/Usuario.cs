@@ -13,9 +13,11 @@ public partial class Usuario
 
     public string Contraseña { get; set; } = null!;
 
-    public string? Rol { get; set; }
+    public int? RolId { get; set; }
 
     public virtual ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
+
+    public virtual Role? Rol { get; set; }
 
     public virtual ICollection<UsuarioRole> UsuarioRoles { get; set; } = new List<UsuarioRole>();
 }
