@@ -34,32 +34,32 @@
                 var httpContext = _httpContextAccessor.HttpContext;
                 if (httpContext == null)
                 {
-                    // No hay contexto HTTP, no permitir acceso
+
                     return;
                 }
 
                 var user = httpContext.User;
                 if (user == null || !user.Identity.IsAuthenticated)
                 {
-                    // Usuario no autenticado, no permitir acceso
+                    
                     return;
                 }
 
                 var claim = user.FindFirst(ClaimTypes.NameIdentifier);
                 if (claim == null)
                 {
-                    // No se encuentra el claim del identificador de usuario
+                    
                     return;
                 }
 
                 if (!int.TryParse(claim.Value, out var usuarioId))
                 {
-                    // El valor del claim no se puede convertir a un entero
+                    
                     return;
                 }
 
-                var rolesUsuario = await _context.UsuarioRoles
-                    .Where(ur => ur.UsuarioId == usuarioId)
+                var rolesUsuario = await _context.Usuarios
+                    .Where(ur => ur.Id == usuarioId)
                     .Select(ur => ur.RolId)
                     .ToListAsync();
 

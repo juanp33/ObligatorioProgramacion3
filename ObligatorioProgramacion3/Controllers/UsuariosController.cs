@@ -17,11 +17,11 @@ namespace ObligatorioProgramacion3.Controllers
     public class UsuariosController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
-        
+
         public UsuariosController(ObligatorioProgramacion3Context context)
         {
             _context = context;
-           
+
 
         }
         [HttpGet]
@@ -34,29 +34,32 @@ namespace ObligatorioProgramacion3.Controllers
         {
             ModelState.Remove("Rol");
             ModelState.Remove("Email");
+
             if (ModelState.IsValid)
             {
-
                 var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Nombre == model.Nombre && u.Contraseña == model.Contraseña);
                 if (user != null)
                 {
                     var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, user.Email),
-                      
-                    };
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.Nombre)
+                };
 
-                    var claimsIdentity = new ClaimsIdentity(claims, "Login");
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-                    await HttpContext.SignInAsync(claimsPrincipal);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
 
                     return RedirectToAction("Index", "Home");
                 }
 
+                ModelState.AddModelError(string.Empty, "Nombre de usuario o contraseña incorrectos.");
             }
+
             return View(model);
         }
+
         // GET: Usuarios
 
 
@@ -66,7 +69,7 @@ namespace ObligatorioProgramacion3.Controllers
             return View(await _context.Usuarios.ToListAsync());
         }
 
-       
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -93,7 +96,7 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegistroUsuario([Bind("Id,Nombre,Email,Contraseña,Rol")] Usuario usuario)
         {
-           
+
             ModelState.Remove("Rol");
             if (ModelState.IsValid)
             {
@@ -109,7 +112,7 @@ namespace ObligatorioProgramacion3.Controllers
         // POST: Usuarios/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        
+
         public IActionResult Create()
         {
             return View();
@@ -118,7 +121,7 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Email,Contraseña,Rol")] Usuario usuario)
         {
-           
+
             if (ModelState.IsValid)
             {
                 _context.Add(usuario);
@@ -128,7 +131,7 @@ namespace ObligatorioProgramacion3.Controllers
             return View(usuario);
         }
 
-       
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -149,7 +152,7 @@ namespace ObligatorioProgramacion3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        
+
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Email,Contraseña,Rol")] Usuario usuario)
         {
             if (id != usuario.Id)
@@ -181,7 +184,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Usuarios/Delete/5
-        
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -200,7 +203,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // POST: Usuarios/Delete/5
-       
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
