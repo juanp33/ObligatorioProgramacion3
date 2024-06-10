@@ -1,0 +1,36 @@
+﻿@model RolPermisoViewModel
+
+<h2>Gestionar Permisos</h2>
+
+<form asp-action="ActualizarPermisos" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Rol</th>
+                <th>Permisos</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rol in Model.Roles)
+            {
+                <tr>
+                    <td>
+                        @rol.Nombre
+                        <input type="hidden" name="RolIds" value="@rol.RolId" />
+                    </td>
+                    <td>
+                        @foreach (var permiso in Model.Permisos)
+                        {
+                            <div>
+                                <input type="checkbox" name="PermisoIds_@rol.RolId" value="@permiso.PermisoId"
+                                @(Model.RolPermisos.Any(rp => rp.RolId == rol.RolId && rp.PermisoId == permiso.PermisoId) ? "checked" : "") />
+                                @permiso.Nombre
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>

@@ -27,6 +27,8 @@ public partial class ObligatorioProgramacion3Context : DbContext
 
     public virtual DbSet<Pago> Pagos { get; set; }
 
+    public virtual DbSet<Permiso> Permisos { get; set; }
+
     public virtual DbSet<Plato> Platos { get; set; }
 
     public virtual DbSet<Reserva> Reservas { get; set; }
@@ -35,7 +37,13 @@ public partial class ObligatorioProgramacion3Context : DbContext
 
     public virtual DbSet<Restaurante> Restaurantes { get; set; }
 
+    public virtual DbSet<RolPermiso> RolPermisos { get; set; }
+
+    public virtual DbSet<Role> Roles { get; set; }
+
     public virtual DbSet<Usuario> Usuarios { get; set; }
+
+    public virtual DbSet<UsuarioRole> UsuarioRoles { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -133,6 +141,14 @@ public partial class ObligatorioProgramacion3Context : DbContext
                 .HasConstraintName("FK__Pagos__ReservaID__4E88ABD4");
         });
 
+        modelBuilder.Entity<Permiso>(entity =>
+        {
+            entity.HasKey(e => e.PermisoId).HasName("PK__Permisos__96E0C72399A73101");
+
+            entity.Property(e => e.Descripcion).HasMaxLength(255);
+            entity.Property(e => e.Nombre).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<Plato>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Plato__3214EC274A51F064");
@@ -217,6 +233,31 @@ public partial class ObligatorioProgramacion3Context : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<RolPermiso>(entity =>
+        {
+            entity.HasKey(e => e.RolPermisoId).HasName("PK__RolPermi__A80C547480629F0B");
+
+            entity.HasIndex(e => new { e.RolId, e.PermisoId }, "UQ__RolPermi__D04D0E82D23866A4").IsUnique();
+
+            entity.HasOne(d => d.Permiso).WithMany(p => p.RolPermisos)
+                .HasForeignKey(d => d.PermisoId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__RolPermis__Permi__339FAB6E");
+
+            entity.HasOne(d => d.Rol).WithMany(p => p.RolPermisos)
+                .HasForeignKey(d => d.RolId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__RolPermis__RolId__32AB8735");
+        });
+
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.HasKey(e => e.RolId).HasName("PK__Roles__F92302F1D042D162");
+
+            entity.Property(e => e.Descripcion).HasMaxLength(255);
+            entity.Property(e => e.Nombre).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<Usuario>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Usuarios__3214EC270286101A");
@@ -231,9 +272,28 @@ public partial class ObligatorioProgramacion3Context : DbContext
             entity.Property(e => e.Nombre)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Rol)
-                .HasMaxLength(100)
-                .IsUnicode(false);
+            entity.Property(e => e.RolId).HasColumnName("RolID");
+
+            entity.HasOne(d => d.Rol).WithMany(p => p.Usuarios)
+                .HasForeignKey(d => d.RolId)
+                .HasConstraintName("FK__Usuarios__RolID__3493CFA7");
+        });
+
+        modelBuilder.Entity<UsuarioRole>(entity =>
+        {
+            entity.HasKey(e => e.UsuarioRolId).HasName("PK__UsuarioR__C869CDCACD0EDC02");
+
+            entity.HasIndex(e => new { e.UsuarioId, e.RolId }, "UQ__UsuarioR__24AFD796292EFCF5").IsUnique();
+
+            entity.HasOne(d => d.Rol).WithMany(p => p.UsuarioRoles)
+                .HasForeignKey(d => d.RolId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__UsuarioRo__RolId__2CF2ADDF");
+
+            entity.HasOne(d => d.Usuario).WithMany(p => p.UsuarioRoles)
+                .HasForeignKey(d => d.UsuarioId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__UsuarioRo__Usuar__2BFE89A6");
         });
 
         OnModelCreatingPartial(modelBuilder);
