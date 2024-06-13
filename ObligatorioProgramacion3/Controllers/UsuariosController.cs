@@ -90,22 +90,50 @@ namespace ObligatorioProgramacion3.Controllers
         // GET: Usuarios/Create
         public IActionResult RegistroUsuario()
         {
+            
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegistroUsuario([Bind("Id,Nombre,Email,Contraseña,Rol")] Usuario usuario)
+        public async Task<IActionResult> RegistroUsuario( RegistroViewModel model)
         {
 
+            ModelState.Remove("TipoCliente");
+
             ModelState.Remove("Rol");
+
+            ModelState.Remove("EmailCliente");
+
+            ModelState.Remove("EmailUsuario");
+
+            ModelState.Remove("NombreCliente");
+            ModelState.Remove("NombreUsuario");
+
             if (ModelState.IsValid)
             {
+                var usuario = new Usuario
+                {
+                    Nombre = model.NombreUsuario,
+                    Email = model.EmailUsuario,
+                    Contraseña = model.Contraseña,
+                    RolId = 1
+                };
+
+                var cliente = new Cliente
+                {
+                    Nombre = model.NombreCliente,
+                    Email = model.EmailCliente,
+                    TipoCliente = "FRECUENTE",
+                    IdUsuarios = usuario.Id
+                };
+
+                usuario.Cliente= cliente;
+
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
-                TempData["RegistroCorrecto"] = "Cuenta creada correctamente.";
-                return RedirectToAction(nameof(Login));
+                
             }
-            return View(usuario);
+            return View(model);
         }
 
 

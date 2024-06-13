@@ -24,7 +24,7 @@
                             <div>
                                 <input type="checkbox" name="PermisoIds_@rol.RolId" value="@permiso.PermisoId"
                                 @(Model.RolPermisos.Any(rp => rp.RolId == rol.RolId && rp.PermisoId == permiso.PermisoId) ? "checked" : "") />
-                                @permiso.Nombre
+                                @permiso.Nombre - @permiso.Descripcion
                             </div>
                         }
                     </td>

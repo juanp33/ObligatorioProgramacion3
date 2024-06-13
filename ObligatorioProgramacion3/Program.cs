@@ -4,14 +4,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using ObligatorioProgramacion3.Models;
 var builder = WebApplication.CreateBuilder(args);
-
-
-
-
 builder.Services.AddDbContext<ObligatorioProgramacion3Context>(options =>
 options.UseSqlServer());
-
-
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {

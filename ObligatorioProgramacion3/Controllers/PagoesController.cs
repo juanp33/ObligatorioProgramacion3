@@ -10,7 +10,7 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    [Authorize(Policy = "PagoesVer")]
+    [Authorize(Policy = "PagosVer")]
     public class PagoesController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
