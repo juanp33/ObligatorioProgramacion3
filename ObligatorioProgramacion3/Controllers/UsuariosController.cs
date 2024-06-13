@@ -122,7 +122,7 @@ namespace ObligatorioProgramacion3.Controllers
                 var cliente = new Cliente
                 {
                     Nombre = model.NombreCliente,
-                    Email = model.EmailCliente,
+                    Email = model.EmailUsuario,
                     TipoCliente = "FRECUENTE",
                     IdUsuarios = usuario.Id
                 };
