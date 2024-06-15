@@ -13,8 +13,9 @@
         <form asp-action="CrearReserva" method="post">
             <input asp-for="MesaId" type="hidden" />
             <input asp-for="FechaReserva" type="hidden" />
-            <input asp-for="Estado" type="hidden" value="Confirmada" />
+            <input asp-for="Estado" type="hidden" value="Pendiente" />
             <input asp-for="IdRestaurante" type="hidden" />
+            <input asp-for="UsuarioId" type="hidden" />
             <div class="form-group">
                 <label asp-for="ClienteId" class="control-label"></label>
                 <input asp-for="ClienteId" class="form-control" type="hidden" />

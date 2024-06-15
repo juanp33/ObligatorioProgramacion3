@@ -186,6 +186,7 @@ public partial class ObligatorioProgramacion3Context : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.FechaReserva).HasColumnType("datetime");
             entity.Property(e => e.MesaId).HasColumnName("MesaID");
+            entity.Property(e => e.UsuarioId).HasColumnName("UsuarioID");
 
             entity.HasOne(d => d.Cliente).WithMany(p => p.Reservas)
                 .HasForeignKey(d => d.ClienteId)
@@ -198,6 +199,10 @@ public partial class ObligatorioProgramacion3Context : DbContext
             entity.HasOne(d => d.Mesa).WithMany(p => p.Reservas)
                 .HasForeignKey(d => d.MesaId)
                 .HasConstraintName("FK__Reservas__MesaID__4222D4EF");
+
+            entity.HasOne(d => d.Usuario).WithMany(p => p.Reservas)
+                .HasForeignKey(d => d.UsuarioId)
+                .HasConstraintName("FK__Reservas__Usuari__4D5F7D71");
         });
 
         modelBuilder.Entity<Reseña>(entity =>

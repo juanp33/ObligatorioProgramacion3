@@ -1,5 +1,73 @@
-﻿@model ObligatorioProgramacion3.Models.Reserva
-
+﻿@model IEnumerable<Reserva>
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+<h1>@ViewData["Title"]</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccione su restaurante de preferencia</title>
+    <style>
+
+
+        .reservaContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .ReservaMostrar {
+            display: flex;
+         
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 2s;
+            text-align: left;
+        }
+
+            .ReservaMostrar img {
+                max-width: 200px;
+                margin-right: 40px;
+            }
+
+            .ReservaMostrar:hover {
+                transform: scale(1.05);
+            }
+
+            .ReservaMostrar h2 {
+                margin-top: 1px;
+            }
+
+    </style>
+</head>
+<body>
+
+
+    <div class="reservaContainer">
+
+        @foreach (var Reserva in Model)
+        {
+           
+                <div class="ReservaMostrar">
+                    <img src="https://brandemia.org/contenido/subidas/2022/10/marca-mcdonalds-logo.png" alt="Mcdonalds Logo" id="img" />
+                    <div>
+                        <h4>Mesa numero: @Reserva.MesaId</h4>
+                        <p>Fecha: @Reserva.FechaReserva</p>
+                        <p>Dirección: @Reserva.IdRestauranteNavigation.Nombre</p>
+                        <p>Teléfono: @Reserva.IdRestauranteNavigation.Teléfono</p>
+                       <p> Estado: @Reserva.Estado</p>
+                    </div>
+
+                </div>
+          
+        }
+    </div>
+
+
+</body>

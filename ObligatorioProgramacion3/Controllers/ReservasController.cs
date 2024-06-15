@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace ObligatorioProgramacion3.Controllers
 {
@@ -21,6 +23,19 @@ namespace ObligatorioProgramacion3.Controllers
         public ReservasController(ObligatorioProgramacion3Context context)
         {
             _context = context;
+        }
+
+        public async Task<IActionResult> MostrarReservas()
+        {
+            var IdUsuario = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            var reservas = await _context.Reservas
+                .Include(r => r.IdRestauranteNavigation)
+                .Where(r => r.UsuarioId == IdUsuario)
+                .ToListAsync();
+
+            return View(reservas);
+
         }
         public IActionResult SeleccionarFecha(int restauranteId)
         {
@@ -61,6 +76,10 @@ namespace ObligatorioProgramacion3.Controllers
 
         public IActionResult CrearReserva(int MesaId, DateTime fecha, int restauranteId)
         {
+            var clienteId = _context.Clientes
+                         .Where(r => r.IdUsuarios == int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                         .Select(r => r.Id)
+                         .FirstOrDefault();
             var mesa = _context.Mesas.FirstOrDefault(m => m.Id == MesaId);
             if (mesa == null)
             {
@@ -71,10 +90,10 @@ namespace ObligatorioProgramacion3.Controllers
             {
                 MesaId = mesa.Id,
                 FechaReserva = fecha,
-                Estado = "Confirmada",
-                ClienteId = 1,
-                IdRestaurante= restauranteId
-
+                Estado = "Pendiente",
+                ClienteId = clienteId,
+                IdRestaurante = restauranteId,
+                UsuarioId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))
             };
            
             ViewData["MesaId"] = mesa.Id;
@@ -87,9 +106,8 @@ namespace ObligatorioProgramacion3.Controllers
       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CrearReserva([Bind("MesaId,FechaReserva,ClienteId,Estado,IdRestaurante")] Reserva reserva)
+        public async Task<IActionResult> CrearReserva([Bind("MesaId,FechaReserva,ClienteId,Estado,IdRestaurante,UsuarioId")] Reserva reserva)
         {
-            reserva.Estado = "Confirmada";
             if (ModelState.IsValid)
             {
                 

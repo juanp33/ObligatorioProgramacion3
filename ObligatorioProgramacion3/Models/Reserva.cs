@@ -17,6 +17,8 @@ public partial class Reserva
 
     public int? IdRestaurante { get; set; }
 
+    public int? UsuarioId { get; set; }
+
     public virtual Cliente? Cliente { get; set; }
 
     public virtual Restaurante? IdRestauranteNavigation { get; set; }
@@ -26,4 +28,6 @@ public partial class Reserva
     public virtual ICollection<Ordene> Ordenes { get; set; } = new List<Ordene>();
 
     public virtual ICollection<Pago> Pagos { get; set; } = new List<Pago>();
+
+    public virtual Usuario? Usuario { get; set; }
 }

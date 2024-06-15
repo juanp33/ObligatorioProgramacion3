@@ -12,7 +12,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.LoginPath = "/Usuarios/Login";
     options.LogoutPath = "/Home/Index";
     options.AccessDeniedPath = "/Home/AccesoDenegado";
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(100);
     options.SlidingExpiration = true;
     });
 builder.Services.AddScoped<IAuthorizationHandler, PermisoPaginaManejador>(); 
