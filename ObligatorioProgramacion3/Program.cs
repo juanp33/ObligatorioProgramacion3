@@ -4,21 +4,15 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using ObligatorioProgramacion3.Models;
 var builder = WebApplication.CreateBuilder(args);
-
-
-
-
 builder.Services.AddDbContext<ObligatorioProgramacion3Context>(options =>
 options.UseSqlServer());
-
-
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
     options.LoginPath = "/Usuarios/Login";
     options.LogoutPath = "/Home/Index";
     options.AccessDeniedPath = "/Home/AccesoDenegado";
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(100);
     options.SlidingExpiration = true;
     });
 builder.Services.AddScoped<IAuthorizationHandler, PermisoPaginaManejador>(); 
@@ -114,7 +108,19 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.Use(async (context, next) =>
+{
+    if (context.User.Identity.IsAuthenticated)
+    {
+        var userPermissions = context.User.Claims
+            .Where(c => c.Type == "Permission")
+            .Select(c => c.Value)
+            .ToList();
 
+        context.Items["UserPermissions"] = userPermissions;
+    }
+    await next.Invoke();
+});
 
 app.MapControllerRoute(
     name: "default",

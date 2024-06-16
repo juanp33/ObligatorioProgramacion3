@@ -11,7 +11,7 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    [Authorize(Policy = "ReseñaVer")]
+    [Authorize(Policy = "ReseñasVer")]
     public class ReseñaController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;

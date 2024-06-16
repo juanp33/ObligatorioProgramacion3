@@ -55,6 +55,12 @@ public partial class ObligatorioProgramacion3Context : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__Clientes__3214EC275421FBFD");
 
+            entity.HasIndex(e => e.IdUsuarios, "UQ_Cliente_IdUsuarios").IsUnique();
+
+            entity.HasIndex(e => e.Email, "uEmail").IsUnique();
+
+            entity.HasIndex(e => e.Nombre, "uNombre").IsUnique();
+
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
@@ -66,8 +72,9 @@ public partial class ObligatorioProgramacion3Context : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.IdUsuariosNavigation).WithMany(p => p.Clientes)
-                .HasForeignKey(d => d.IdUsuarios)
+            entity.HasOne(d => d.IdUsuariosNavigation).WithOne(p => p.Cliente)
+                .HasForeignKey<Cliente>(d => d.IdUsuarios)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fkUsuarios");
         });
 
@@ -179,6 +186,7 @@ public partial class ObligatorioProgramacion3Context : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.FechaReserva).HasColumnType("datetime");
             entity.Property(e => e.MesaId).HasColumnName("MesaID");
+            entity.Property(e => e.UsuarioId).HasColumnName("UsuarioID");
 
             entity.HasOne(d => d.Cliente).WithMany(p => p.Reservas)
                 .HasForeignKey(d => d.ClienteId)
@@ -191,6 +199,10 @@ public partial class ObligatorioProgramacion3Context : DbContext
             entity.HasOne(d => d.Mesa).WithMany(p => p.Reservas)
                 .HasForeignKey(d => d.MesaId)
                 .HasConstraintName("FK__Reservas__MesaID__4222D4EF");
+
+            entity.HasOne(d => d.Usuario).WithMany(p => p.Reservas)
+                .HasForeignKey(d => d.UsuarioId)
+                .HasConstraintName("FK__Reservas__Usuari__4D5F7D71");
         });
 
         modelBuilder.Entity<Reseña>(entity =>
@@ -261,6 +273,10 @@ public partial class ObligatorioProgramacion3Context : DbContext
         modelBuilder.Entity<Usuario>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Usuarios__3214EC270286101A");
+
+            entity.HasIndex(e => e.Nombre, "uEmailUsuarios").IsUnique();
+
+            entity.HasIndex(e => e.Email, "uNombreUsuarios").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Contraseña)

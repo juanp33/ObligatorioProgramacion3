@@ -1,47 +1,81 @@
-﻿@model ObligatorioProgramacion3.Models.Usuario
-
-@{
-    ViewData["Title"] = "Registro";
+﻿@model RegistroViewModel
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title><Registro</title>
+    <style>.container {
+    margin-top: 20px;
 }
 
+h3 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #343a40; 
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+#botonRegistro {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2rem;
+}
+
+</style>
+</head>
+
+</html>
+
+<body>
+    <form asp-action="RegistroUsuario" method="post">
 
 
+        <div class="container">
+            <div class="row">
 
-<h1>Registro de Usuario</h1>
+                <div class="col-md-6">
+                    <h3>Datos de Usuario</h3>
+                    <div class="form-group">
+                        <label asp-for="NombreUsuario"></label>
+                        <input asp-for="NombreUsuario" class="form-control" />
+                        <span asp-validation-for="NombreUsuario" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EmailUsuario"></label>
+                        <input asp-for="EmailUsuario" class="form-control" />
+                        <span asp-validation-for="EmailUsuario" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Contraseña"></label>
+                        <input asp-for="Contraseña" type="password" class="form-control" />
+                        <span asp-validation-for="Contraseña" class="text-danger"></span>
+                    </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="RegistroUsuario">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <h3>Datos Personales</h3>
+                    <div class="form-group">
+                        <label asp-for="NombreCliente"></label>
+                        <input asp-for="NombreCliente" class="form-control" />
+                        <span asp-validation-for="NombreCliente" class="text-danger"></span>
+                    </div>
+                   
+
+                </div>
+                <button type="submit" class="btn btn-primary" id="botonRegistro">Registrar</button>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Contraseña" class="control-label"></label>
-                <input asp-for="Contraseña" class="form-control" />
-                <span asp-validation-for="Contraseña" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="RegistroUsuario" class="btn btn-primary" />
-            </div>
-        </form>
-       
-    </div>
-</div>
+        </div>
 
-    <div>
-        <a asp-action="Login">Ya tienes cuenta? Inicia sesion</a>
-    </div>
-
-            @section Scripts {
-            @{
-                    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-                }
-            }
+    </form>
+</body>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
