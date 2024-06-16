@@ -154,5 +154,13 @@ namespace ObligatorioProgramacion3.Controllers
         {
             return _context.Platos.Any(e => e.Id == id);
         }
+        public IActionResult SeleccionarPlato(int ReservaId) 
+        {
+            var platos = _context.Platos.ToList();
+            ViewData["ReservaId"] = ReservaId;
+            return View(platos);
+            
+
+        }
     }
 }
