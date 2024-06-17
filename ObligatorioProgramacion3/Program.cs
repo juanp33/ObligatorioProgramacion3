@@ -17,7 +17,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 builder.Services.AddScoped<IAuthorizationHandler, PermisoPaginaManejador>(); 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+builder.Services.AddSingleton<CarritoService>();
 builder.Services.AddAuthorization(options =>
 {
     // Define políticas para AdministracionController

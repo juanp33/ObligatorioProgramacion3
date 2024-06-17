@@ -1,0 +1,59 @@
+﻿@model CarritoViewModel
+<style>
+     /* Estilos para los ítems del carrito */
+     .carrito-item {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 10px 0;
+         border-bottom: 1px solid #dee2e6;
+     }
+
+         .carrito-item:last-child {
+             border-bottom: none;
+         }
+
+         /* Estilos para la descripción del ítem */
+         .carrito-item p {
+             margin: 0;
+             font-size: 16px;
+         }
+
+         /* Estilos para el botón de eliminar */
+         .carrito-item button {
+             background-color: #dc3545;
+             color: #ffffff;
+             border: none;
+             border-radius: 5px;
+             padding: 5px 10px;
+             cursor: pointer;
+             transition: background-color 0.3s ease;
+         }
+
+             .carrito-item button:hover {
+                 background-color: #c82333;
+             }
+
+     /* Estilos para el total */
+     #carritoTotal {
+         font-size: 18px;
+         font-weight: bold;
+         text-align: right;
+         margin-top: 20px;
+     }
+</style>
+<div>
+    <h1>Mi pedido</h1>
+    @foreach (var item in Model.Items)
+    {
+        <div>
+            <p>@item.NombrePlato - @item.Cantidad x @item.Precio.ToString("C")</p>
+            <p>Guarniciones: @item.Descripción</p>
+            <button onclick="eliminarDelCarrito(@item.PlatoId)">Eliminar</button>
+        </div>
+    }
+    <div>
+        <h3>Total: @Model.Total.ToString("C")</h3>
+        <button onclick="continuar()">Continuar</button>
+    </div>
+</div>
