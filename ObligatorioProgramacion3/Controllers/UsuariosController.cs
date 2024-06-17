@@ -34,6 +34,11 @@ namespace ObligatorioProgramacion3.Controllers
         {
             ModelState.Remove("Rol");
             ModelState.Remove("Email");
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api.currencyfreaks.com/v2.0/rates/latest?apikey=025571b273f84b96aabf1d816224a908");
+            request.Headers.Add("apikey", "025571b273f84b96aabf1d816224a908");
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
 
             if (ModelState.IsValid)
             {

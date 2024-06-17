@@ -20,9 +20,16 @@
         public void EliminarDelCarrito(int platoId)
         {
             var item = _carritoItems.FirstOrDefault(i => i.PlatoId == platoId);
+            var existingItem = _carritoItems.FirstOrDefault(i => i.PlatoId == item.PlatoId);
             if (item != null)
             {
-                _carritoItems.Remove(item);
+                if (existingItem.Cantidad > 1) {
+                    existingItem.Cantidad--;
+                }
+                else
+                {
+                    _carritoItems.Remove(item);
+                }
             }
         }
 

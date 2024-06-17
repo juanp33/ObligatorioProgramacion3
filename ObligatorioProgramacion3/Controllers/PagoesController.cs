@@ -21,6 +21,11 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Pagoes
+        public  IActionResult PagarReserva(string total)
+        {
+            return View(total);
+  
+        }
         public async Task<IActionResult> Index()
         {
             var obligatorioProgramacion3Context = _context.Pagos.Include(p => p.Reserva);

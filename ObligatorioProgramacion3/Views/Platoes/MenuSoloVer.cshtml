@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<style>
+    body {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+
+    .PlatosContainer {
+        flex: 1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    .PlatosMostrar {
+        display: flex;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.1s;
+        align-items: center;
+        width: calc(50% - 20px);
+    }
+
+        .PlatosMostrar img {
+            width: 200px;
+            margin-right: 40px;
+        }
+
+        .PlatosMostrar:hover {
+            transform: scale(1.01);
+        }
+
+</style>
+<body>
+    <div class="PlatosContainer">
+        @foreach (var plato in Model)
+        {
+            <div class="PlatosMostrar">
+                <img src="@plato.Imagen" alt="Imagen del Plato" />
+                <div>
+                    <h4> @plato.NombrePlato</h4>
+                    <p> @plato.Descripción</p>
+                    <p>Precio: @plato.Precio</p>
+                    
+                </div>
+            </div>
+        }
+    </div>
+</body>

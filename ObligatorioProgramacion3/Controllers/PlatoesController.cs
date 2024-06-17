@@ -19,7 +19,11 @@ namespace ObligatorioProgramacion3.Controllers
         {
             _context = context;
         }
-
+        public async Task<IActionResult> MenuSoloVer()
+        {
+            var Platos = await _context.Platos.ToListAsync();
+            return View(Platos);
+        }
         // GET: Platoes
         public async Task<IActionResult> Index()
         {
