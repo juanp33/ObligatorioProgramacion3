@@ -24,9 +24,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Comentario)
             </th>
-            <th>
-                Fecha de la reseña
-            </th>
+            
 
 
             <th></th>
@@ -41,6 +39,8 @@
 
 
             <tr>
+                             
+                
                 <td>
                     @Html.DisplayFor(modelItem => item.Cliente.Nombre)
                 </td>
@@ -53,9 +53,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Comentario)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaReseña)
-                </td>
+                
 
             </tr>
 
@@ -65,6 +63,6 @@
     </tbody>
 </table>
 <p>
-    <a asp-action="Create">Agregar Reseña</a>
+    <a asp-action="CrearReseñaUsuario">Agregar Reseña</a>
 </p>
 

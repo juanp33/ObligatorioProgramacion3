@@ -1,0 +1,41 @@
+﻿@model ObligatorioProgramacion3.Models.Reseña
+
+@{
+    ViewData["Title"] = "CrearReseñaUsuario";
+}
+
+<h1>Crear</h1>
+
+<h4>Reseña</h4>
+<hr />
+<<div class="row">
+    <div class="col-md-12">
+        <form asp-action="CrearReseñaUsuario">
+          
+           
+            <div class="form-group">
+                <label asp-for="Puntaje" class="control-label"></label>
+                <input asp-for="Puntaje" class="form-control" />
+                <span asp-validation-for="Puntaje" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comentario" class="control-label"></label>
+                <input asp-for="Comentario" class="form-control" />
+                <span asp-validation-for="Comentario" class="text-danger"></span>
+            </div>          
+            <div class="form-group">
+                <input type="submit" value="CrearReseñaUsuario" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Cancelar</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

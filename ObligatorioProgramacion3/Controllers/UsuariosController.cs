@@ -47,8 +47,8 @@ namespace ObligatorioProgramacion3.Controllers
                 {
                     var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Nombre)
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.Nombre)
             };
 
                     foreach (var permiso in user.Rol.RolPermisos.Select(rp => rp.Permiso.Nombre))

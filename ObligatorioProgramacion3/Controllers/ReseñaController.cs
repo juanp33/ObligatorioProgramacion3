@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,11 @@ namespace ObligatorioProgramacion3.Controllers
         {
             _context = context;
         }
-
+        public IActionResult CrearReseñaUsuario()
+        {
+      
+            return View();
+        }
         // GET: Reseña
         public async Task<IActionResult> Index()
         {
@@ -40,6 +45,40 @@ namespace ObligatorioProgramacion3.Controllers
                 return View(reseñas);
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CrearReseñaUsuario ([Bind("Id,ClienteId,RestauranteId,Puntaje,Comentario,FechaReseña")] Reseña reseña)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                @reseña.FechaReseña = DateTime.Now;
+                if (User.Identity.IsAuthenticated)
+                {
+                     var claim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (claim == null || !int.TryParse(claim.Value, out var usuarioId))
+                    {
+                        return View();
+                    }
+                  
+                    var clienteID = await _context.Clientes.FirstOrDefaultAsync(cliente => cliente.IdUsuarios == usuarioId);
+                    reseña.ClienteId = clienteID.Id;
+                }
+                else
+                {
+                    reseña.ClienteId = -1;
+                }
+                _context.Add(reseña);               
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id", reseña.ClienteId);
+            ViewData["RestauranteId"] = new SelectList(_context.Restaurantes, "Id", "Nombre", reseña.RestauranteId);
+            return View(reseña);
+        }
+
+
         // GET: Reseña/Details/5
         public async Task<IActionResult> Details(int? id)
         {
