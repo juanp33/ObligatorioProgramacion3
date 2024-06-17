@@ -6,50 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seleccione sus platos de preferencia</title>
     <style>
-
-        /* Estilos para el contenedor del carrito */
-        #carritoContainer {
-            margin-top: 20px;
-            padding: 20px;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            background-color: #affabf;
-            width: 500px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        body {
+            display: flex; /* Alineación horizontal de los contenedores principales */
+            margin: 0;
+            padding: 0;
+            min-height: 100vh; /* Asegura que el body tome todo el alto de la ventana */
         }
-
-            /* Estilos para el título del carrito */
-            #carritoContainer h1 {
-                font-size: 24px;
-                font-weight: bold;
-                margin-bottom: 20px;
-            }
-
-       
-
-        /* Estilos para el botón continuar */
-        #carritoContainer button.continuar {
-            display: block;
-            width: 100%;
-            background-color: #28a745;
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 20px;
-        }
-
-           
-
 
         .PlatosContainer {
+            flex: 1; /* Toma todo el espacio restante después del carrito */
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
+            padding: 20px;
+            overflow-y: auto; /* Permite scrolling vertical si hay muchos platos */
         }
 
         .PlatosMostrar {
@@ -58,10 +29,10 @@
             border: 1px solid #dee2e6;
             border-radius: 10px;
             padding: 20px;
-            width: 500px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-            text-align: left;
+            transition: transform 0.1s;
+            align-items: center;
+            width: calc(50% - 20px); /* Ajuste para que dos platos quepan en una fila */
         }
 
             .PlatosMostrar img {
@@ -70,13 +41,21 @@
             }
 
             .PlatosMostrar:hover {
-                transform: scale(1.05);
+                transform: scale(1.01);
             }
 
-            .PlatosMostrar h2 {
-                margin-top: 1px;
-            }
-
+        #carritoContainer {
+            display:flex;
+            flex-wrap:wrap;
+            width: 100%; /* Ancho fijo para el carrito */
+            height: 100%;
+            background-color: #f3f3f3;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            margin-left: 20px; /* Espacio entre los platos y el carrito */
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
@@ -84,6 +63,8 @@
             $.post('/Carrito/AñadirAlCarrito', { id: platoId }, function (response) {
                 if (response.success) {
                     actualizarCarrito();
+                } else {
+                    alert('Error al añadir al carrito');
                 }
             });
         }
@@ -92,6 +73,8 @@
             $.post('/Carrito/EliminarDelCarrito', { id: platoId }, function (response) {
                 if (response.success) {
                     actualizarCarrito();
+                } else {
+                    alert('Error al eliminar del carrito');
                 }
             });
         }
@@ -114,14 +97,15 @@
             <div class="PlatosMostrar">
                 <img src="@plato.Imagen" alt="Imagen del Plato" />
                 <div>
-                    <h4>Plato: @plato.NombrePlato</h4>
-                    <p>Descripción: @plato.Descripción</p>
+                    <h4> @plato.NombrePlato</h4>
+                    <p> @plato.Descripción</p>
                     <p>Precio: @plato.Precio</p>
                     <button onclick="añadirAlCarrito(@plato.Id)">Añadir al carrito</button>
                 </div>
             </div>
         }
     </div>
-
-    <div id="carritoContainer"></div>
+    <div class="carritoContainer" id="carritoContainer">
+        
+    </div>
 </body>
