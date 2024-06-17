@@ -23,8 +23,9 @@ namespace ObligatorioProgramacion3.Controllers
         }
         public IActionResult CrearReseñaUsuario()
         {
-      
+            ViewData["RestauranteId"] = new SelectList(_context.Restaurantes, "Id", "Nombre");
             return View();
+            
         }
         // GET: Reseña
         public async Task<IActionResult> Index()

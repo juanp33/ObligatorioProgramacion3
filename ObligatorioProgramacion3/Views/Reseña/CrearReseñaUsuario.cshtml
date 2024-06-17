@@ -11,13 +11,23 @@
 <<div class="row">
     <div class="col-md-12">
         <form asp-action="CrearReseñaUsuario">
-          
-           
+            <div class="form-group">
+                <label asp-for="RestauranteId" class="control-label"></label>
+                <select asp-for="RestauranteId" class="form-control" asp-items="ViewBag.RestauranteId"></select>
+            </div>
+            
             <div class="form-group">
                 <label asp-for="Puntaje" class="control-label"></label>
-                <input asp-for="Puntaje" class="form-control" />
+                <select asp-for="Puntaje" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
                 <span asp-validation-for="Puntaje" class="text-danger"></span>
             </div>
+           
             <div class="form-group">
                 <label asp-for="Comentario" class="control-label"></label>
                 <input asp-for="Comentario" class="form-control" />
