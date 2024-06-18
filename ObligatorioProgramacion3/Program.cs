@@ -22,10 +22,7 @@ builder.Services.AddAuthorization(options =>
 {
     // Define políticas para AdministracionController
     options.AddPolicy("AdministracionVer", policy => policy.Requirements.Add(new PermisoPaginaRequisito("AdministracionVer")));
-    options.AddPolicy("AdministracionCrear", policy => policy.Requirements.Add(new PermisoPaginaRequisito("AdministracionCrear")));
-    options.AddPolicy("AdministracionEditar", policy => policy.Requirements.Add(new PermisoPaginaRequisito("AdministracionEditar")));
-    options.AddPolicy("AdministracionEliminar", policy => policy.Requirements.Add(new PermisoPaginaRequisito("AdministracionEliminar")));
-
+    
     // Define políticas para ClientesController
     options.AddPolicy("ClientesVer", policy => policy.Requirements.Add(new PermisoPaginaRequisito("ClientesVer")));
     options.AddPolicy("ClientesCrear", policy => policy.Requirements.Add(new PermisoPaginaRequisito("ClientesCrear")));

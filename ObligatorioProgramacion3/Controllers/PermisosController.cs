@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -37,46 +40,72 @@ namespace ObligatorioProgramacion3.Controllers
             return View(modelo);
         }
 
-        // Acción para actualizar permisos
+        
         [HttpPost]
         public async Task<IActionResult> ActualizarPermisos(List<int> RolIds)
         {
             foreach (var rolId in RolIds)
             {
-                // Obtener los permisos seleccionados para el rol
+                
                 var permisoIds = Request.Form[$"PermisoIds_{rolId}"].Select(int.Parse).ToList();
 
-                // Verificar si el rol existe
+                
                 var rol = await _context.Roles.FindAsync(rolId);
-                if (rol == null)
-                {
-                    continue; // Si el rol no existe, pasa al siguiente
-                }
+               
 
-                // Verificar si los permisos existen
+               
                 var permisosValidos = await _context.Permisos
                     .Where(p => permisoIds.Contains(p.PermisoId))
-                    .Select(p => p.PermisoId)
                     .ToListAsync();
 
-                // Eliminar los permisos existentes para el rol
+              
                 var permisosExistentes = _context.RolPermisos.Where(rp => rp.RolId == rolId);
                 _context.RolPermisos.RemoveRange(permisosExistentes);
 
-                // Agregar los nuevos permisos
-                foreach (var permisoId in permisosValidos)
+               
+                foreach (var permiso in permisosValidos)
                 {
                     _context.RolPermisos.Add(new RolPermiso
                     {
                         RolId = rolId,
-                        PermisoId = permisoId
+                        PermisoId = permiso.PermisoId 
                     });
+                }
+
+               
+                await _context.SaveChangesAsync();
+
+               
+                var usuariosConRol = await _context.Usuarios
+                    .Include(u => u.Rol)
+                    .Where(u => u.RolId == rolId)
+                    .ToListAsync();
+
+                foreach (var usuario in usuariosConRol)
+                {
+                    var claimsActuales = (await HttpContext.AuthenticateAsync()).Principal.Claims.ToList();
+
+                    var permisosARemover = claimsActuales.Where(c => c.Type == "Permission");
+
+                    foreach (var claim in permisosARemover.ToList())
+                    {
+                        claimsActuales.Remove(claim);
+                    }
+
+                   
+                    foreach (var permiso in permisosValidos)
+                    {
+                        claimsActuales.Add(new Claim("Permission", permiso.Nombre));
+                    }
+
+                    var claimsIdentity = new ClaimsIdentity(claimsActuales, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
                 }
             }
 
-            // Guardar los cambios
-            await _context.SaveChangesAsync();
-
+            // Redireccionar a alguna acción deseada después de actualizar los permisos
             return RedirectToAction(nameof(Index));
         }
     }

@@ -1,13 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var userClaims = HttpContextAccessor.HttpContext.User.Claims;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ObligatorioProgramacion3</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <style>
-        
+
         .sidebar {
             position: center;
             top: 0;
@@ -15,7 +22,7 @@
             left: 0;
             z-index: 100;
             padding: 48px 0 0;
-            width: 400px; 
+            width: 400px;
         }
 
             .sidebar .nav-link {
@@ -49,8 +56,8 @@
             }
 
         .main {
-            margin-left: 250px; 
-            padding-top: 60px; 
+            margin-left: 250px;
+            padding-top: 60px;
             flex: 1;
         }
 
@@ -59,7 +66,6 @@
             background-color: #f8f9fa;
             border-top: 1px solid #e4e5e7;
             width: 100%;
-            
         }
 
         .navbar-brand-center {
@@ -109,64 +115,70 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Usuarios" asp-action="Login">Home</a>
                     </li>
-                  
-                        
-                            
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Reseña" asp-action="Reseñas">Reseñas</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Restaurantes" asp-action="SeleccionarRestaurante">Reserva</a>
-                                </li>
-                               
-                           
-                       
-                  
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#adminSubmenu" role="button" aria-expanded="false" aria-controls="adminSubmenu">
-                            Administración
-                        </a>
-                        <div class="collapse" id="adminSubmenu">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Mesas" asp-action="Index">Mesas</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="OrdenDetalles" asp-action="Index">Orden Detalles</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Ordenes" asp-action="Index">Ordenes</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Pagoes" asp-action="Index">Pagos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Platoes" asp-action="Index">Platos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Reseña" asp-action="Index">Reseña</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Reservas" asp-action="Index">Reservas</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Restaurantes" asp-action="Index">Restaurantes</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
 
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Reseña" asp-action="Reseñas">Reseñas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Restaurantes" asp-action="SeleccionarRestaurante">Reserva</a>
+                    </li>
+
+                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "ClientesVer"))
+                    {
+
+
+
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#adminSubmenu" role="button" aria-expanded="false" aria-controls="adminSubmenu">
+                                Administración
+                            </a>
+                            <div class="collapse" id="adminSubmenu">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Mesas" asp-action="Index">Mesas</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="OrdenDetalles" asp-action="Index">Orden Detalles</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Ordenes" asp-action="Index">Ordenes</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Pagoes" asp-action="Index">Pagos</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Platoes" asp-action="Index">Platos</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Reseña" asp-action="Index">Reseña</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Reservas" asp-action="Index">Reservas</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Restaurantes" asp-action="Index">Restaurantes</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        
+                        </li>
+                    }
+                    </ul>
+                </div>
+            </div>
+                    
         <main class="container-fluid mt-5 pt-3">
-            @RenderBody()
+                        @RenderBody()
         </main>
     </div>
 
@@ -179,6 +191,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+            @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
