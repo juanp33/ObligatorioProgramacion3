@@ -2,6 +2,7 @@
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
+    var isAuthenticated = HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
     var userClaims = HttpContextAccessor.HttpContext.User.Claims;
 }
 <!DOCTYPE html>
@@ -14,7 +15,14 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <style>
+       
 
+        
+         a {
+            font-family:  sans-serif;
+            font-size: 16px;
+            color: #007bff; 
+        }
         .sidebar {
             position: center;
             top: 0;
@@ -117,68 +125,119 @@
                     </li>
 
 
-
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Reseña" asp-action="Reseñas">Reseñas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Restaurantes" asp-action="SeleccionarRestaurante">Reserva</a>
-                    </li>
-
-                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "ClientesVer"))
+                    @if (isAuthenticated)
                     {
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#ReservasSubMenu" role="button" aria-expanded="false" aria-controls="ReservasSubMenu">
+                                Reservas
+                            </a>
+                            <div class="collapse" id="ReservasSubMenu">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Restaurantes" asp-action="SeleccionarRestaurante">Crear nueva reserva</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Reservas" asp-action="MostrarReservas">Ver mis reservas</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </li>
+
+                    }
+                   
 
 
 
-
-
+                    @if ((userClaims.Any(c => c.Type == "Permission" && c.Value == "ClientesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenDetallesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PagosVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PlatosVer") || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ResteurantesVer"))) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReseñasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReservasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "UsuariosVer")))
+                    {
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#adminSubmenu" role="button" aria-expanded="false" aria-controls="adminSubmenu">
                                 Administración
                             </a>
                             <div class="collapse" id="adminSubmenu">
                                 <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Mesas" asp-action="Index">Mesas</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="OrdenDetalles" asp-action="Index">Orden Detalles</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Ordenes" asp-action="Index">Ordenes</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Pagoes" asp-action="Index">Pagos</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Platoes" asp-action="Index">Platos</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Reseña" asp-action="Index">Reseña</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Reservas" asp-action="Index">Reservas</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Restaurantes" asp-action="Index">Restaurantes</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
-                                    </li>
+
+                                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "ClientesVer"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
+                                        </li>
+                                    }
+
+                                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Mesas" asp-action="Index">Mesas</a>
+                                        </li>
+                                    }
+
+                                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenDetallesVer"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="OrdenDetalles" asp-action="Index">Orden Detalles</a>
+                                        </li>
+                                    }
+
+                                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenesVer"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Ordenes" asp-action="Index">Ordenes</a>
+                                        </li>
+                                    }
+
+                                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "PagosVer"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Pagoes" asp-action="Index">Pagos</a>
+                                        </li>
+                                    }
+
+                                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "PlatoesVer"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Platoes" asp-action="Index">Platos</a>
+                                        </li>
+                                    }
+
+                                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReseñasVer"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Reseña" asp-action="Index">Reseña</a>
+                                        </li>
+                                    }
+
+                                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReservasVer"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Reservas" asp-action="Index">Reservas</a>
+                                        </li>
+                                    }
+
+                                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "ResteurantesVer"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Restaurantes" asp-action="Index">Restaurantes</a>
+                                        </li>
+                                    }
+
+                                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "UsuariosVer"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+                                        </li>
+                                    }
                                 </ul>
                             </div>
-                        
+
                         </li>
                     }
-                    </ul>
-                </div>
+                </ul>
             </div>
-                    
+        </div>
+
         <main class="container-fluid mt-5 pt-3">
-                        @RenderBody()
+            @RenderBody()
         </main>
     </div>
 
@@ -191,6 +250,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-            @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
