@@ -16,5 +16,5 @@
         <h3>Total: @Model.Total.ToString("C")</h3>
     </div>
    
-    <button class="continuar" onclick="@Url.Action("PagarReserva", "Pagoes", new { Total = @Model.Total, Platos= Model.Items})"()">Continuar</button>
+    <button class="continuar" onclick="location.href='@Url.Action("PagarReserva", "Pagoes" , new {Carrito=@Model})'">Continuar</button>
 </div>

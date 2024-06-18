@@ -14,16 +14,22 @@ namespace ObligatorioProgramacion3.Controllers
     public class PagoesController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
+        private readonly CarritoService _carritoService;
 
-        public PagoesController(ObligatorioProgramacion3Context context)
+        public PagoesController(ObligatorioProgramacion3Context context, CarritoService carritoService)
         {
             _context = context;
+            _carritoService= carritoService;
         }
 
         // GET: Pagoes
-        public  IActionResult PagarReserva(string total)
+        public  IActionResult PagarReserva( )
         {
-            return View(total);
+
+
+           var items= _carritoService.ObtenerCarritoItems();
+            var total=_carritoService.ObtenerTotal();
+            return View();
   
         }
         public async Task<IActionResult> Index()
