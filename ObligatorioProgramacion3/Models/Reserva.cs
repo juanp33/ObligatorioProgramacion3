@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace ObligatorioProgramacion3.Models;
 
@@ -8,28 +7,17 @@ public partial class Reserva
 {
     public int Id { get; set; }
 
-    [Required(ErrorMessage = "El ID del cliente es obligatorio.")]
-    [Range(1, int.MaxValue, ErrorMessage = "El ID del cliente debe ser un número positivo.")]
-    public int ClienteId { get; set; }
+    public int? ClienteId { get; set; }
 
-    [Required(ErrorMessage = "El ID de la mesa es obligatorio.")]
-    [Range(1, int.MaxValue, ErrorMessage = "El ID de la mesa debe ser un número positivo.")]
-    public int MesaId { get; set; }
+    public int? MesaId { get; set; }
 
-    [Required(ErrorMessage = "La fecha de la reserva es obligatoria.")]
     public DateTime FechaReserva { get; set; }
 
-    [Required(ErrorMessage = "El estado es obligatorio.")]
-    [StringLength(50, ErrorMessage = "El estado no puede exceder los 50 caracteres.")]
-    public string Estado { get; set; }
+    public string Estado { get; set; } = null!;
 
-    [Required(ErrorMessage = "El ID del restaurante es obligatorio.")]
-    [Range(1, int.MaxValue, ErrorMessage = "El ID del restaurante debe ser un número positivo.")]
-    public int IdRestaurante { get; set; }
+    public int? IdRestaurante { get; set; }
 
-    [Required(ErrorMessage = "El ID del usuario es obligatorio.")]
-    [Range(1, int.MaxValue, ErrorMessage = "El ID del usuario debe ser un número positivo.")]
-    public int UsuarioId { get; set; }
+    public int? UsuarioId { get; set; }
 
     public virtual Cliente? Cliente { get; set; }
 

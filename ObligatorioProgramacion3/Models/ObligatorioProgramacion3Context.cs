@@ -274,6 +274,10 @@ public partial class ObligatorioProgramacion3Context : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__Usuarios__3214EC270286101A");
 
+            entity.HasIndex(e => e.Email, "UQ_Usuarios_Email").IsUnique();
+
+            entity.HasIndex(e => e.Nombre, "UQ_Usuarios_Nombre").IsUnique();
+
             entity.HasIndex(e => e.Nombre, "uEmailUsuarios").IsUnique();
 
             entity.HasIndex(e => e.Email, "uNombreUsuarios").IsUnique();

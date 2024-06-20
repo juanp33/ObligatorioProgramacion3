@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -25,7 +26,7 @@ namespace ObligatorioProgramacion3.Controllers
 
         }
         [HttpGet]
-        
+
         public IActionResult Login()
         {
             return View();
@@ -107,7 +108,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Usuarios/Create
-        
+
         public IActionResult RegistroUsuario()
         {
 
@@ -127,40 +128,50 @@ namespace ObligatorioProgramacion3.Controllers
 
 
 
-           
-                if (ModelState.IsValid)
+
+            if (ModelState.IsValid)
+            {
+                var usuario = new Usuario
                 {
-                    var usuario = new Usuario
-                    {
-                        Nombre = model.NombreUsuario,
-                        Email = model.EmailUsuario,
-                        Contraseña = model.Contraseña,
-                        RolId = 1 // Asegúrate de que RolID es el nombre correcto
-                    };
-
-                    // Agregar el usuario y guardar los cambios para obtener el Id generado
-                    _context.Add(usuario);
-                    await _context.SaveChangesAsync();
-
-                    var cliente = new Cliente
-                    {
-                        Nombre = model.NombreCliente,
-                        Email = model.EmailUsuario,
-                        TipoCliente = "FRECUENTE",
-                        IdUsuarios = usuario.Id // Usar el Id generado
-                    };
-
-                    // Asociar el cliente con el usuario
-                    usuario.Cliente = cliente;
-
-                    // Agregar el cliente y guardar los cambios
-                    _context.Add(cliente);
-                    await _context.SaveChangesAsync();
-
-                    return RedirectToAction(nameof(Index));
+                    Nombre = model.NombreUsuario,
+                    Email = model.EmailUsuario,
+                    Contraseña = model.Contraseña,
+                    RolId = 1 // Asegúrate de que RolID es el nombre correcto
+                };
+                if (await _context.Usuarios.AnyAsync(u => u.Nombre == usuario.Nombre))
+                {
+                    TempData["ErrorMessage"] = "El nombre del usuario ya existe.";
+                    return RedirectToAction("RegistroUsuario");
                 }
-                return View(model);
-            
+
+                if (await _context.Usuarios.AnyAsync(u => u.Email == usuario.Email))
+                {
+                    TempData["ErrorMessage"] = "El email del usuario ya existe.";
+                    return RedirectToAction("RegistroUsuario");
+                }
+                // Agregar el usuario y guardar los cambios para obtener el Id generado
+                _context.Add(usuario);
+                await _context.SaveChangesAsync();
+
+                var cliente = new Cliente
+                {
+                    Nombre = model.NombreCliente,
+                    Email = model.EmailUsuario,
+                    TipoCliente = "FRECUENTE",
+                    IdUsuarios = usuario.Id // Usar el Id generado
+                };
+
+                // Asociar el cliente con el usuario
+                usuario.Cliente = cliente;
+
+                // Agregar el cliente y guardar los cambios
+                _context.Add(cliente);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+
         }
 
 
