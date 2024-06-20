@@ -10,11 +10,11 @@ public partial class Reserva
 
     [Required(ErrorMessage = "El ID del cliente es obligatorio.")]
     [Range(1, int.MaxValue, ErrorMessage = "El ID del cliente debe ser un número positivo.")]
-    public int ClienteID { get; set; }
+    public int ClienteId { get; set; }
 
     [Required(ErrorMessage = "El ID de la mesa es obligatorio.")]
     [Range(1, int.MaxValue, ErrorMessage = "El ID de la mesa debe ser un número positivo.")]
-    public int MesaID { get; set; }
+    public int MesaId { get; set; }
 
     [Required(ErrorMessage = "La fecha de la reserva es obligatoria.")]
     public DateTime FechaReserva { get; set; }
@@ -29,7 +29,7 @@ public partial class Reserva
 
     [Required(ErrorMessage = "El ID del usuario es obligatorio.")]
     [Range(1, int.MaxValue, ErrorMessage = "El ID del usuario debe ser un número positivo.")]
-    public int UsuarioID { get; set; }
+    public int UsuarioId { get; set; }
 
     public virtual Cliente? Cliente { get; set; }
 

@@ -13,7 +13,7 @@ public partial class Plato
     public string NombrePlato { get; set; }
 
     [StringLength(300, ErrorMessage = "La descripción no puede exceder los 300 caracteres.")]
-    public string Descripcion { get; set; }
+    public string Descripción { get; set; }
 
     [Required(ErrorMessage = "El precio es obligatorio.")]
     [Range(0.01, 9999999999.99, ErrorMessage = "El precio debe ser un valor positivo.")]

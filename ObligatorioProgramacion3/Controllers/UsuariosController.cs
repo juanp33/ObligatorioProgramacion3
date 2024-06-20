@@ -25,7 +25,7 @@ namespace ObligatorioProgramacion3.Controllers
 
         }
         [HttpGet]
-        [Authorize(Policy = "UsuariosLogin")]
+        
         public IActionResult Login()
         {
             return View();
@@ -35,6 +35,7 @@ namespace ObligatorioProgramacion3.Controllers
         {
             ModelState.Remove("Rol");
             ModelState.Remove("Email");
+            ModelState.Remove("RolId");
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Get, "https://api.currencyfreaks.com/v2.0/rates/latest?apikey=025571b273f84b96aabf1d816224a908");
             request.Headers.Add("apikey", "025571b273f84b96aabf1d816224a908");
@@ -106,7 +107,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Usuarios/Create
-        [Authorize(Policy = "UsuariosRegistroUsuario")]
+        
         public IActionResult RegistroUsuario()
         {
 
@@ -123,36 +124,43 @@ namespace ObligatorioProgramacion3.Controllers
 
             ModelState.Remove("EmailCliente");
 
-            ModelState.Remove("EmailUsuario");
 
-            ModelState.Remove("NombreCliente");
-            ModelState.Remove("NombreUsuario");
 
-            if (ModelState.IsValid)
-            {
-                var usuario = new Usuario
+
+           
+                if (ModelState.IsValid)
                 {
-                    Nombre = model.NombreUsuario,
-                    Email = model.EmailUsuario,
-                    Contraseña = model.Contraseña,
-                    RolId = 1
-                };
+                    var usuario = new Usuario
+                    {
+                        Nombre = model.NombreUsuario,
+                        Email = model.EmailUsuario,
+                        Contraseña = model.Contraseña,
+                        RolId = 1 // Asegúrate de que RolID es el nombre correcto
+                    };
 
-                var cliente = new Cliente
-                {
-                    Nombre = model.NombreCliente,
-                    Email = model.EmailUsuario,
-                    TipoCliente = "FRECUENTE",
-                    IdUsuarios = usuario.Id
-                };
+                    // Agregar el usuario y guardar los cambios para obtener el Id generado
+                    _context.Add(usuario);
+                    await _context.SaveChangesAsync();
 
-                usuario.Cliente = cliente;
+                    var cliente = new Cliente
+                    {
+                        Nombre = model.NombreCliente,
+                        Email = model.EmailUsuario,
+                        TipoCliente = "FRECUENTE",
+                        IdUsuarios = usuario.Id // Usar el Id generado
+                    };
 
-                _context.Add(usuario);
-                await _context.SaveChangesAsync();
+                    // Asociar el cliente con el usuario
+                    usuario.Cliente = cliente;
 
-            }
-            return View(model);
+                    // Agregar el cliente y guardar los cambios
+                    _context.Add(cliente);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(model);
+            
         }
 
 

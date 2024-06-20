@@ -12,7 +12,7 @@ public partial class OrdenDetalle
     public int OrdenId { get; set; }
 
     [Required(ErrorMessage = "El ID del plato es obligatorio.")]
-    public int PlatoID { get; set; }
+    public int PlatoId { get; set; }
 
     [Required(ErrorMessage = "La cantidad es obligatoria.")]
     [Range(1, int.MaxValue, ErrorMessage = "La cantidad debe ser un número positivo.")]
