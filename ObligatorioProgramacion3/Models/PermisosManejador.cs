@@ -49,29 +49,6 @@ namespace ObligatorioProgramacion3.Models
                 context.Succeed(requisito);
                 return;
             }
-
-
-
-            //var claim = user.FindFirst(ClaimTypes.NameIdentifier);
-            //if (claim == null || !int.TryParse(claim.Value, out var usuarioId))
-            //{
-            //    return;
-            //}
-
-            //var rolesUsuario = await _context.Usuarios
-            //    .Where(ur => ur.Id == usuarioId)
-            //    .Select(ur => ur.RolId)
-            //    .ToListAsync();
-
-            //var tienePermiso = await _context.RolPermisos
-            //    .Include(rp => rp.Permiso)
-            //    .AnyAsync(rp => rolesUsuario.Contains(rp.RolId) && rp.Permiso.Nombre == requisito.NombrePagina);
-
-            //if (tienePermiso)
-            //{
-               
-            //    context.Succeed(requisito);
-            //}
         }
     }
 }

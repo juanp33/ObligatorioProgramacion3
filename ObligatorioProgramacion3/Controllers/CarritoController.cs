@@ -31,7 +31,7 @@ namespace ObligatorioProgramacion3.Controllers
             {
                 PlatoId = plato.Id,
                 NombrePlato = plato.NombrePlato,
-                Descripción = plato.Descripción,
+                Descripción = plato.Descripcion,
                 Precio = plato.Precio,
                 Cantidad = 1
             };

@@ -105,19 +105,6 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.Use(async (context, next) =>
-{
-    if (context.User.Identity.IsAuthenticated)
-    {
-        var userPermissions = context.User.Claims
-            .Where(c => c.Type == "Permission")
-            .Select(c => c.Value)
-            .ToList();
-
-        context.Items["UserPermissions"] = userPermissions;
-    }
-    await next.Invoke();
-});
 
 app.MapControllerRoute(
     name: "default",
