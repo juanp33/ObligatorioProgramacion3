@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ObligatorioProgramacion3.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ObligatorioProgramacion3.Controllers
 {
@@ -20,6 +21,8 @@ namespace ObligatorioProgramacion3.Controllers
         {
             _context = context;
         }
+
+        [Authorize(Policy = "PermisosRolesYPermisos")]
         public async Task<IActionResult> RolesYPermisos()
         {
           
@@ -106,12 +109,15 @@ namespace ObligatorioProgramacion3.Controllers
             return RedirectToAction(nameof(Index));
         }
         // GET: Permisoes
+
+        [Authorize(Policy = "PermisosVer")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Permisos.ToListAsync());
         }
 
         // GET: Permisoes/Details/5
+        [Authorize(Policy = "PermisosDetalle")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -130,6 +136,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Permisoes/Create
+        [Authorize(Policy = "PermisosCrear")]
         public IActionResult Create()
         {
             return View();
@@ -152,6 +159,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Permisoes/Edit/5
+        [Authorize(Policy = "PermisosEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -203,6 +211,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Permisoes/Delete/5
+        [Authorize(Policy = "PermisosEliminar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

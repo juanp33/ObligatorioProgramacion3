@@ -169,13 +169,19 @@
                                     @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "RolesVer"))
                                     {
                                         <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Roles" asp-action="Index">Clientes</a>
+                                            <a class="nav-link" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
                                         </li>
                                     }
                                     @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "PermisosVer"))
                                     {
                                         <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Permisos" asp-action="Index">Clientes</a>
+                                            <a class="nav-link" asp-area="" asp-controller="Permisos" asp-action="Index">Permisos</a>
+                                        </li>
+                                    }
+                                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "PermisosRolesYPermisos"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Permisos" asp-action="RolesYPermisos">Gestion Roles y Permisos</a>
                                         </li>
                                     }
                                     @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer"))

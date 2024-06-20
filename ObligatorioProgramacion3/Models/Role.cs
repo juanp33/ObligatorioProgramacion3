@@ -13,7 +13,7 @@ public partial class Role
     public string Nombre { get; set; }
 
     [StringLength(255, ErrorMessage = "La descripción no puede exceder los 255 caracteres.")]
-    public string Descripcion { get; set; }
+    public string? Descripcion { get; set; }
 
     public virtual ICollection<RolPermiso> RolPermisos { get; set; } = new List<RolPermiso>();
 

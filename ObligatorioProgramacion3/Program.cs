@@ -126,6 +126,8 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("PermisosCrear", policy => policy.Requirements.Add(new PermisoPaginaRequisito("PermisosCrear")));
     options.AddPolicy("PermisosEditar", policy => policy.Requirements.Add(new PermisoPaginaRequisito("PermisosEditar")));
     options.AddPolicy("PermisosEliminar", policy => policy.Requirements.Add(new PermisoPaginaRequisito("PermisosEliminar")));
+    options.AddPolicy("PermisosDetalle", policy => policy.Requirements.Add(new PermisoPaginaRequisito("PermisosDetalle")));
+    options.AddPolicy("PermisosRolesYPermisos", policy => policy.Requirements.Add(new PermisoPaginaRequisito("PermisosRolesYPermisos")));
 
 });
 builder.Services.AddControllersWithViews();
