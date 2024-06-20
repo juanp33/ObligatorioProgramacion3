@@ -6,7 +6,7 @@ namespace ObligatorioProgramacion3.Models
     {
 
 
-        
+
         [Required(ErrorMessage = "El nombre de usuario es obligatorio.")]
         [StringLength(100, ErrorMessage = "El nombre no puede exceder los 100 caracteres.")]
         public string NombreUsuario { get; set; }
