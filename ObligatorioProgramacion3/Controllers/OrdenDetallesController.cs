@@ -10,7 +10,7 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    [Authorize(Policy = "OrdenDetallesVer")]
+    
     public class OrdenDetallesController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
@@ -21,6 +21,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: OrdenDetalles
+        [Authorize(Policy = "OrdenDetallesVer")]
         public async Task<IActionResult> Index()
         {
             var obligatorioProgramacion3Context = _context.OrdenDetalles.Include(o => o.Orden).Include(o => o.Plato);
@@ -28,6 +29,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: OrdenDetalles/Details/5
+        [Authorize(Policy = "OrdenDetallesDetalle")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -48,6 +50,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: OrdenDetalles/Create
+        [Authorize(Policy = "OrdenDetallesCrear")]
         public IActionResult Create()
         {
             ViewData["OrdenId"] = new SelectList(_context.Ordenes, "Id", "Id");
@@ -74,6 +77,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: OrdenDetalles/Edit/5
+        [Authorize(Policy = "OrdenDetallesEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -129,6 +133,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: OrdenDetalles/Delete/5
+        [Authorize(Policy = "OrdenDetallesEliminar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

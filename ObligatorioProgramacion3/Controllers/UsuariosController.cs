@@ -25,6 +25,7 @@ namespace ObligatorioProgramacion3.Controllers
 
         }
         [HttpGet]
+        [Authorize(Policy = "UsuariosLogin")]
         public IActionResult Login()
         {
             return View();
@@ -75,197 +76,199 @@ namespace ObligatorioProgramacion3.Controllers
             return View(model);
         }
 
-    
-
-    // GET: Usuarios
 
 
-    [Authorize(Policy = "UsuariosVer")]
-    public async Task<IActionResult> Index()
-    {
-        return View(await _context.Usuarios.ToListAsync());
-    }
+        // GET: Usuarios
 
 
-    public async Task<IActionResult> Details(int? id)
-    {
-        if (id == null)
+        [Authorize(Policy = "UsuariosVer")]
+        public async Task<IActionResult> Index()
         {
-            return NotFound();
+            return View(await _context.Usuarios.ToListAsync());
         }
 
-        var usuario = await _context.Usuarios
-            .FirstOrDefaultAsync(m => m.Id == id);
-        if (usuario == null)
+        [Authorize(Policy = "UsuariosDetalle")]
+        public async Task<IActionResult> Details(int? id)
         {
-            return NotFound();
-        }
-
-        return View(usuario);
-    }
-
-    // GET: Usuarios/Create
-    public IActionResult RegistroUsuario()
-    {
-
-        return View();
-    }
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> RegistroUsuario(RegistroViewModel model)
-    {
-
-        ModelState.Remove("TipoCliente");
-
-        ModelState.Remove("Rol");
-
-        ModelState.Remove("EmailCliente");
-
-        ModelState.Remove("EmailUsuario");
-
-        ModelState.Remove("NombreCliente");
-        ModelState.Remove("NombreUsuario");
-
-        if (ModelState.IsValid)
-        {
-            var usuario = new Usuario
+            if (id == null)
             {
-                Nombre = model.NombreUsuario,
-                Email = model.EmailUsuario,
-                Contraseña = model.Contraseña,
-                RolId = 1
-            };
+                return NotFound();
+            }
 
-            var cliente = new Cliente
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (usuario == null)
             {
-                Nombre = model.NombreCliente,
-                Email = model.EmailUsuario,
-                TipoCliente = "FRECUENTE",
-                IdUsuarios = usuario.Id
-            };
+                return NotFound();
+            }
 
-            usuario.Cliente = cliente;
-
-            _context.Add(usuario);
-            await _context.SaveChangesAsync();
-
-        }
-        return View(model);
-    }
-
-
-    // POST: Usuarios/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-
-    public IActionResult Create()
-    {
-        return View();
-    }
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Nombre,Email,Contraseña,Rol")] Usuario usuario)
-    {
-
-        if (ModelState.IsValid)
-        {
-            _context.Add(usuario);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        return View(usuario);
-    }
-
-
-    public async Task<IActionResult> Edit(int? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
+            return View(usuario);
         }
 
-        var usuario = await _context.Usuarios.FindAsync(id);
-        if (usuario == null)
+        // GET: Usuarios/Create
+        [Authorize(Policy = "UsuariosRegistroUsuario")]
+        public IActionResult RegistroUsuario()
         {
-            return NotFound();
+
+            return View();
         }
-        return View(usuario);
-    }
-
-    // POST: Usuarios/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Email,Contraseña,Rol")] Usuario usuario)
-    {
-        if (id != usuario.Id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegistroUsuario(RegistroViewModel model)
         {
-            return NotFound();
-        }
 
-        if (ModelState.IsValid)
-        {
-            try
+            ModelState.Remove("TipoCliente");
+
+            ModelState.Remove("Rol");
+
+            ModelState.Remove("EmailCliente");
+
+            ModelState.Remove("EmailUsuario");
+
+            ModelState.Remove("NombreCliente");
+            ModelState.Remove("NombreUsuario");
+
+            if (ModelState.IsValid)
             {
-                _context.Update(usuario);
+                var usuario = new Usuario
+                {
+                    Nombre = model.NombreUsuario,
+                    Email = model.EmailUsuario,
+                    Contraseña = model.Contraseña,
+                    RolId = 1
+                };
+
+                var cliente = new Cliente
+                {
+                    Nombre = model.NombreCliente,
+                    Email = model.EmailUsuario,
+                    TipoCliente = "FRECUENTE",
+                    IdUsuarios = usuario.Id
+                };
+
+                usuario.Cliente = cliente;
+
+                _context.Add(usuario);
                 await _context.SaveChangesAsync();
+
             }
-            catch (DbUpdateConcurrencyException)
+            return View(model);
+        }
+
+
+        // POST: Usuarios/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Policy = "UsuariosCrear")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Email,Contraseña,Rol")] Usuario usuario)
+        {
+
+            if (ModelState.IsValid)
             {
-                if (!UsuarioExists(usuario.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                _context.Add(usuario);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
+            return View(usuario);
+        }
+
+        [Authorize(Policy = "UsuariosEditar")]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+            return View(usuario);
+        }
+
+        // POST: Usuarios/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Email,Contraseña,Rol")] Usuario usuario)
+        {
+            if (id != usuario.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(usuario);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UsuarioExists(usuario.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(usuario);
+        }
+
+        // GET: Usuarios/Delete/5
+
+        [Authorize(Policy = "UsuariosEliminar")]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            return View(usuario);
+        }
+
+        // POST: Usuarios/Delete/5
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario != null)
+            {
+                _context.Usuarios.Remove(usuario);
+            }
+
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(usuario);
-    }
 
-    // GET: Usuarios/Delete/5
-
-    public async Task<IActionResult> Delete(int? id)
-    {
-        if (id == null)
+        private bool UsuarioExists(int id)
         {
-            return NotFound();
+            return _context.Usuarios.Any(e => e.Id == id);
         }
-
-        var usuario = await _context.Usuarios
-            .FirstOrDefaultAsync(m => m.Id == id);
-        if (usuario == null)
-        {
-            return NotFound();
-        }
-
-        return View(usuario);
     }
-
-    // POST: Usuarios/Delete/5
-
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        var usuario = await _context.Usuarios.FindAsync(id);
-        if (usuario != null)
-        {
-            _context.Usuarios.Remove(usuario);
-        }
-
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-    }
-
-    private bool UsuarioExists(int id)
-    {
-        return _context.Usuarios.Any(e => e.Id == id);
-    }
-}
 }

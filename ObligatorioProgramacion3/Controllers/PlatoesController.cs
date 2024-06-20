@@ -10,7 +10,7 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    [Authorize(Policy = "PlatoesVer")]
+    
     public class PlatoesController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
@@ -19,12 +19,15 @@ namespace ObligatorioProgramacion3.Controllers
         {
             _context = context;
         }
+        
+        [Authorize(Policy = "PlatoesSoloVer")]
         public async Task<IActionResult> MenuSoloVer()
         {
             var Platos = await _context.Platos.ToListAsync();
             return View(Platos);
         }
         // GET: Platoes
+        [Authorize(Policy = "PlatoesVer")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Platos.ToListAsync());
@@ -49,6 +52,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Platoes/Create
+        [Authorize(Policy = "PlatoesCrear")]
         public IActionResult Create()
         {
             return View();
@@ -71,6 +75,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Platoes/Edit/5
+        [Authorize(Policy = "PlatoesEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -122,6 +127,8 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Platoes/Delete/5
+        [Authorize(Policy = "PlatoesEliminar")]
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -157,7 +164,11 @@ namespace ObligatorioProgramacion3.Controllers
         private bool PlatoExists(int id)
         {
             return _context.Platos.Any(e => e.Id == id);
+
         }
+
+
+        [Authorize(Policy = "PlatoesSeleccionarPlato")]
         public IActionResult SeleccionarPlato(int ReservaId) 
         {
             var platos = _context.Platos.ToList();

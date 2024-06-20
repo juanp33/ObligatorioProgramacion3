@@ -10,7 +10,7 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    [Authorize(Policy = "ClientesVer")]
+    
     public class ClientesController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
@@ -21,12 +21,14 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Clientes
+        [Authorize(Policy = "ClientesVer")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Clientes.ToListAsync());
         }
 
         // GET: Clientes/Details/5
+        [Authorize(Policy = "ClientesDetalle")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,7 +46,10 @@ namespace ObligatorioProgramacion3.Controllers
             return View(cliente);
         }
 
+
+
         // GET: Clientes/Create
+        [Authorize(Policy = "ClientesCrear")]
         public IActionResult Create()
         {
             ViewData["IdUsuarios"] = new SelectList(_context.Usuarios, "Id", "Nombre");
@@ -74,6 +79,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Clientes/Edit/5
+        [Authorize(Policy = "ClientesEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -125,6 +131,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Clientes/Delete/5
+        [Authorize(Policy = "ClientesEliminar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

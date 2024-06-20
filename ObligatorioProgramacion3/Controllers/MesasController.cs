@@ -10,7 +10,7 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    [Authorize(Policy = "MesasVer")]
+    
     public class MesasController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
@@ -21,12 +21,14 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Mesas
+        [Authorize(Policy = "MesasVer")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Mesas.ToListAsync());
         }
 
         // GET: Mesas/Details/5
+        [Authorize(Policy = "MesasDetalle")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,6 +47,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Mesas/Create
+        [Authorize(Policy = "MesasCrear")]
         public IActionResult Create()
         {
             return View();
@@ -67,6 +70,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Mesas/Edit/5
+        [Authorize(Policy = "MesasEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -118,6 +122,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Mesas/Delete/5
+        [Authorize(Policy = "MesasEliminar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

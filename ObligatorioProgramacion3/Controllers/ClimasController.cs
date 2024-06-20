@@ -10,7 +10,7 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    [Authorize(Policy = "ClimasVer")]
+    
     public class ClimasController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
@@ -21,12 +21,14 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Climas
+        [Authorize(Policy = "ClimasVer")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Climas.ToListAsync());
         }
 
         // GET: Climas/Details/5
+        [Authorize(Policy = "ClimasDetalle")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,6 +47,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Climas/Create
+        [Authorize(Policy = "ClimasCrear")]
         public IActionResult Create()
         {
             return View();
@@ -67,6 +70,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Climas/Edit/5
+        [Authorize(Policy = "ClimasEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -118,6 +122,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Climas/Delete/5
+        [Authorize(Policy = "ClimasEliminar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

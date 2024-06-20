@@ -10,7 +10,7 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    [Authorize(Policy = "OrdenesVer")]
+    
     public class OrdenesController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
@@ -21,6 +21,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Ordenes
+        [Authorize(Policy = "OrdenesVer")]
         public async Task<IActionResult> Index()
         {
             var obligatorioProgramacion3Context = _context.Ordenes.Include(o => o.Reserva);
@@ -28,6 +29,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Ordenes/Details/5
+        [Authorize(Policy = "OrdenesDetalle")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +49,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Ordenes/Create
+        [Authorize(Policy = "OrdenesCrear")]
         public IActionResult Create()
         {
             ViewData["ReservaId"] = new SelectList(_context.Reservas, "Id", "Id");
@@ -71,6 +74,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Ordenes/Edit/5
+        [Authorize(Policy = "OrdenesEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -124,6 +128,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Ordenes/Delete/5
+        [Authorize(Policy = "OrdenesEliminar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

@@ -10,7 +10,7 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    [Authorize(Policy = "RestaurantesVer")]
+    
     public class RestaurantesController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
@@ -20,18 +20,21 @@ namespace ObligatorioProgramacion3.Controllers
             _context = context;
         }
         // GET: Restaurantes
+        [Authorize(Policy = "RestaurantesSeleccionarRestaurante")]
         public async Task<IActionResult> SeleccionarRestaurante()
         {
             return View(await _context.Restaurantes.ToListAsync());
         }
 
         // GET: Restaurantes
+        [Authorize(Policy = "RestaurantesVer")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Restaurantes.ToListAsync());
         }
 
         // GET: Restaurantes/Details/5
+        [Authorize(Policy = "RestaurantesDetalle")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -50,6 +53,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Restaurantes/Create
+        [Authorize(Policy = "RestaurantesCrear")]
         public IActionResult Create()
         {
             return View();
@@ -72,6 +76,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Restaurantes/Edit/5
+        [Authorize(Policy = "RestaurantesEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -123,6 +128,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Restaurantes/Delete/5
+        [Authorize(Policy = "RestaurantesEliminar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

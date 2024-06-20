@@ -12,7 +12,7 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    [Authorize(Policy = "ReseñasVer")]
+    
     public class ReseñaController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
@@ -21,6 +21,8 @@ namespace ObligatorioProgramacion3.Controllers
         {
             _context = context;
         }
+        
+       [Authorize(Policy = "ReseñasCrearReseñaUsuario")]
         public IActionResult CrearReseñaUsuario()
         {
             ViewData["RestauranteId"] = new SelectList(_context.Restaurantes, "Id", "Nombre");
@@ -28,11 +30,13 @@ namespace ObligatorioProgramacion3.Controllers
             
         }
         // GET: Reseña
+        [Authorize(Policy = "ReseñasReseñas")]
         public async Task<IActionResult> Index()
         {
             var obligatorioProgramacion3Context = _context.Reseñas.Include(o => o.Restaurante).Include(o => o.Cliente);    
             return View(await obligatorioProgramacion3Context.ToListAsync());
         }
+        [Authorize(Policy = "ReseñasVer")]
         public async Task<IActionResult> Reseñas()
         {
 
@@ -48,6 +52,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "ReseñasVer")]
         public async Task<IActionResult> CrearReseñaUsuario ([Bind("Id,ClienteId,RestauranteId,Puntaje,Comentario,FechaReseña")] Reseña reseña)
         {
 
@@ -81,6 +86,8 @@ namespace ObligatorioProgramacion3.Controllers
 
 
         // GET: Reseña/Details/5
+        [Authorize(Policy = "ReseñasDetalle")]
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -101,6 +108,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Reseña/Create
+        [Authorize(Policy = "ReseñasCrear")]
         public IActionResult Create()
         {
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id");
@@ -128,6 +136,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Reseña/Edit/5
+        [Authorize(Policy = "ReseñasEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -183,6 +192,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Reseña/Delete/5
+        [Authorize(Policy = "ReseñasEliminar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

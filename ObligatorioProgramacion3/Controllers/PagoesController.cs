@@ -10,7 +10,7 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    [Authorize(Policy = "PagosVer")]
+    
     public class PagoesController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
@@ -23,6 +23,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Pagoes
+        [Authorize(Policy = "PagosPagarReserva")]
         public  IActionResult PagarReserva( )
         {
 
@@ -32,6 +33,8 @@ namespace ObligatorioProgramacion3.Controllers
             return View();
   
         }
+
+        [Authorize(Policy = "PagosVer")]
         public async Task<IActionResult> Index()
         {
             var obligatorioProgramacion3Context = _context.Pagos.Include(p => p.Reserva);
@@ -39,6 +42,8 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Pagoes/Details/5
+        [Authorize(Policy = "PagosDetalle")]
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -58,6 +63,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Pagoes/Create
+        [Authorize(Policy = "PagosCrear")]
         public IActionResult Create()
         {
             ViewData["ReservaId"] = new SelectList(_context.Reservas, "Id", "Id");
@@ -82,6 +88,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Pagoes/Edit/5
+        [Authorize(Policy = "PagosEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -135,6 +142,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Pagoes/Delete/5
+        [Authorize(Policy = "PagosEliminar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

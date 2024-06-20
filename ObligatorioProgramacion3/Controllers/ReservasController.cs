@@ -15,7 +15,7 @@ using System.Security.Claims;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    [Authorize(Policy = "ReservasVer")]
+    
     public class ReservasController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
@@ -25,6 +25,7 @@ namespace ObligatorioProgramacion3.Controllers
             _context = context;
         }
 
+        [Authorize(Policy = "ReservasMostrarReservas")]
         public async Task<IActionResult> MostrarReservas()
         {
             var IdUsuario = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -37,6 +38,7 @@ namespace ObligatorioProgramacion3.Controllers
             return View(reservas);
 
         }
+        [Authorize(Policy = "ReservasSeleccionarFecha")]
         public IActionResult SeleccionarFecha(int restauranteId)
         {
           
@@ -50,8 +52,8 @@ namespace ObligatorioProgramacion3.Controllers
            
             return RedirectToAction("SeleccionarMesa", new { fecha, restauranteId });
         }
-        
-       
+
+        [Authorize(Policy = "ReservasSeleccionarMesa")]
         public IActionResult SeleccionarMesa(DateTime fecha, int restauranteId)
         {
             var mesasOcupadas = _context.Reservas.Where(reserva => reserva.FechaReserva == fecha).Select(reserva => reserva.MesaId).ToList();
@@ -74,6 +76,7 @@ namespace ObligatorioProgramacion3.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Policy = "ReservasCrearReserva")]
         public IActionResult CrearReserva(int MesaId, DateTime fecha, int restauranteId)
         {
             var clienteId = _context.Clientes
@@ -121,6 +124,8 @@ namespace ObligatorioProgramacion3.Controllers
             return View(reserva);
         }
         // GET: Reservas
+
+        [Authorize(Policy = "ReservasVer")]
         public async Task<IActionResult> Index()
         {
             var obligatorioProgramacion3Context = _context.Reservas.Include(r => r.Cliente).Include(r => r.Mesa);
@@ -128,6 +133,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Reservas/Details/5
+        [Authorize(Policy = "ReservasDetalle")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -148,6 +154,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Reservas/Create
+        [Authorize(Policy = "ReservasCrear")]
         public IActionResult Create()
         {
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id");
@@ -174,6 +181,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Reservas/Edit/5
+        [Authorize(Policy = "ReservasEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -229,6 +237,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Reservas/Delete/5
+        [Authorize(Policy = "ReservasEliminar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
