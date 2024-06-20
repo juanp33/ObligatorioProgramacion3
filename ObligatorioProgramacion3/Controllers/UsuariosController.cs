@@ -136,7 +136,7 @@ namespace ObligatorioProgramacion3.Controllers
                     Nombre = model.NombreUsuario,
                     Email = model.EmailUsuario,
                     Contraseña = model.Contraseña,
-                    RolId = 1 // Asegúrate de que RolID es el nombre correcto
+                    RolId = 1
                 };
                 if (await _context.Usuarios.AnyAsync(u => u.Nombre == usuario.Nombre))
                 {
@@ -149,7 +149,7 @@ namespace ObligatorioProgramacion3.Controllers
                     TempData["ErrorMessage"] = "El email del usuario ya existe.";
                     return RedirectToAction("RegistroUsuario");
                 }
-                // Agregar el usuario y guardar los cambios para obtener el Id generado
+               
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
 
@@ -158,13 +158,12 @@ namespace ObligatorioProgramacion3.Controllers
                     Nombre = model.NombreCliente,
                     Email = model.EmailUsuario,
                     TipoCliente = "FRECUENTE",
-                    IdUsuarios = usuario.Id // Usar el Id generado
+                    IdUsuarios = usuario.Id 
                 };
 
-                // Asociar el cliente con el usuario
+              
                 usuario.Cliente = cliente;
 
-                // Agregar el cliente y guardar los cambios
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
 
