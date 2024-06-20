@@ -119,6 +119,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("RolesCrear", policy => policy.Requirements.Add(new PermisoPaginaRequisito("RolesCrear")));
     options.AddPolicy("RolesEditar", policy => policy.Requirements.Add(new PermisoPaginaRequisito("RolesEditar")));
     options.AddPolicy("RolesEliminar", policy => policy.Requirements.Add(new PermisoPaginaRequisito("RolesEliminar")));
+    options.AddPolicy("RolesDetalle", policy => policy.Requirements.Add(new PermisoPaginaRequisito("RolesDetalle")));
 
     // Políticas para permisos
     options.AddPolicy("PermisosVer", policy => policy.Requirements.Add(new PermisoPaginaRequisito("PermisosVer")));

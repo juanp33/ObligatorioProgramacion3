@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,12 +20,14 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Roles
+        [Authorize(Policy = "RolesVer")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Roles.ToListAsync());
         }
 
         // GET: Roles/Details/5
+        [Authorize(Policy = "RolesDetalle")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,6 +46,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Roles/Create
+        [Authorize(Policy = "RolesCrear")]
         public IActionResult Create()
         {
             return View();
@@ -65,6 +69,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Roles/Edit/5
+        [Authorize(Policy = "RolesEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -116,6 +121,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Roles/Delete/5
+        [Authorize(Policy = "RolesEliminar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
