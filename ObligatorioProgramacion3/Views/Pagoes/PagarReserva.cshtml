@@ -3,10 +3,9 @@
 
 @{
 
-   
-    
-}
-
+    decimal? TipoDeCambio = ViewData["TipoDeCambio"] as decimal?;
+    decimal tipoDeCambioJS = TipoDeCambio ?? 1; 
+    }
 <h2>Pagar Reserva</h2>
 <style>
     #carritoContainer {
@@ -40,6 +39,10 @@
             background-color: #0069d9;
             border-color: #005cbf;
         }</style>
+
+
+
+
 <div id="carritoContainer">
     <h3>Mi Pedido</h3>
     <div>
@@ -51,7 +54,15 @@
         }
     </div>
     <div id="carritoTotal">
-        <h3>Total: @Model.Total.ToString("C")</h3>
+        <h3>Total: <span id="totalDisplay">@Model.Total.ToString("C")</span></h3>
+    </div>
+    <div class="form-group">
+        <label for="currencySelector">Moneda</label>
+        <select id="currencySelector" class="form-control" onchange="updateCurrency()">
+  
+            <option value="USD">Dólares (USD)</option>
+            <option value="UYU">Pesos Uruguayos (UYU)</option>
+        </select>
     </div>
 </div>
 
@@ -66,3 +77,19 @@
     </div>
     <button type="submit" class="btn btn-primary">Confirmar</button>
 </form>
+
+<script>
+        let tipoDeCambio = @tipoDeCambioJS
+    let totalEnUSD = @Html.Raw(Model.Total);
+    let totalEnUYU = totalEnUSD * tipoDeCambio;
+
+    function updateCurrency() {
+        var currency = document.getElementById("currencySelector").value;
+        var display = document.getElementById("totalDisplay");
+        if (currency === "USD") {
+            display.innerHTML = totalEnUSD.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        } else {
+            display.innerHTML = totalEnUYU.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
+        }
+    }
+</script>

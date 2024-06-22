@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
@@ -21,13 +23,55 @@ namespace ObligatorioProgramacion3.Controllers
             _context = context;
             _carritoService= carritoService;
         }
+        private async Task<decimal> ObtenerTipoDeCambio()
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    string url = "http://api.currencylayer.com/live?access_key=b6fb3ee2a8859b4237975e1d708cb64e&currencies=UYU";
+                    HttpResponseMessage response = await client.GetAsync(url);
 
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string content = await response.Content.ReadAsStringAsync();
+                        dynamic data = JsonConvert.DeserializeObject(content);
+                        return data.quotes.USDUYU;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    
+                  
+                }
+                return 1; 
+            }
+        }
         // GET: Pagoes
         [Authorize(Policy = "PagosPagarReserva")]
-        public IActionResult PagarReserva()
+        public async Task<IActionResult> PagarReserva()
         {
             var items = _carritoService.ObtenerCarritoItems();
             var total = _carritoService.ObtenerTotal();
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            var tipoCliente = _context.Clientes
+                          .Where(c => c.IdUsuarios == userId)
+                          .Select(c => c.TipoCliente)
+                          .FirstOrDefault();
+            decimal descuento = 1;
+
+            if (tipoCliente == "Frecuente" )
+            {
+                descuento = descuento - (0.10m);
+            } else if (tipoCliente == "Vip")
+            {
+                descuento = descuento - (0.20m);
+            }
+            
+            decimal tipoDeCambio = await ObtenerTipoDeCambio();
+            total = total * descuento;
+            ViewData["TipoDeCambio"] = tipoDeCambio;
             var carritoViewModel = new CarritoViewModel
             {
                 Items = items,
@@ -68,7 +112,7 @@ namespace ObligatorioProgramacion3.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
+      
         [Authorize(Policy = "PagosVer")]
         public async Task<IActionResult> Index()
         {
