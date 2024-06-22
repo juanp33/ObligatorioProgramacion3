@@ -30,13 +30,13 @@ namespace ObligatorioProgramacion3.Controllers
             
         }
         // GET: Reseña
-        [Authorize(Policy = "ReseñasReseñas")]
+        [Authorize(Policy = "ReseñasVer")]
         public async Task<IActionResult> Index()
         {
             var obligatorioProgramacion3Context = _context.Reseñas.Include(o => o.Restaurante).Include(o => o.Cliente);    
             return View(await obligatorioProgramacion3Context.ToListAsync());
         }
-        [Authorize(Policy = "ReseñasVer")]
+        [Authorize(Policy = "ReseñasReseñas")] 
         public async Task<IActionResult> Reseñas()
         {
 
@@ -67,7 +67,7 @@ namespace ObligatorioProgramacion3.Controllers
                     {
                         return View();
                     }
-                  
+                    
                     var clienteID = await _context.Clientes.FirstOrDefaultAsync(cliente => cliente.IdUsuarios == usuarioId);
                     reseña.ClienteId = clienteID.Id;
                 }

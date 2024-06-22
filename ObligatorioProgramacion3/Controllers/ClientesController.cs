@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +9,6 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    
     public class ClientesController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
@@ -21,14 +19,13 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         // GET: Clientes
-        [Authorize(Policy = "ClientesVer")]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Clientes.ToListAsync());
+            var obligatorioProgramacion3Context = _context.Clientes.Include(c => c.IdUsuariosNavigation);
+            return View(await obligatorioProgramacion3Context.ToListAsync());
         }
 
         // GET: Clientes/Details/5
-        [Authorize(Policy = "ClientesDetalle")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,6 +34,7 @@ namespace ObligatorioProgramacion3.Controllers
             }
 
             var cliente = await _context.Clientes
+                .Include(c => c.IdUsuariosNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cliente == null)
             {
@@ -46,13 +44,10 @@ namespace ObligatorioProgramacion3.Controllers
             return View(cliente);
         }
 
-
-
         // GET: Clientes/Create
-        [Authorize(Policy = "ClientesCrear")]
         public IActionResult Create()
         {
-            ViewData["IdUsuarios"] = new SelectList(_context.Usuarios, "Id", "Nombre");
+            ViewData["IdUsuarios"] = new SelectList(_context.Usuarios, "Id", "Id");
             return View();
         }
 
@@ -61,25 +56,19 @@ namespace ObligatorioProgramacion3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind(@"Id,IdUsuarios,Nombre,Email,TipoCliente")] Cliente cliente) 
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Email,TipoCliente,IdUsuarios")] Cliente cliente)
         {
-            cliente.TipoCliente = cliente.TipoCliente.ToUpper();
-            if (ModelState.IsValid && (cliente.TipoCliente == "NUEVO" || cliente.TipoCliente == "VIP" || cliente.TipoCliente == "FRECUENTE"))
+            if (ModelState.IsValid)
             {
-                
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            } else
-            {
-                ModelState.AddModelError(string.Empty, "Error: El tipo de cliente no es válido.");
             }
-            ViewData["IdUsuarios"] = new SelectList(_context.Usuarios, "Id", "Nombre", cliente.IdUsuarios);
+            ViewData["IdUsuarios"] = new SelectList(_context.Usuarios, "Id", "Id", cliente.IdUsuarios);
             return View(cliente);
         }
 
         // GET: Clientes/Edit/5
-        [Authorize(Policy = "ClientesEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -92,6 +81,7 @@ namespace ObligatorioProgramacion3.Controllers
             {
                 return NotFound();
             }
+            ViewData["IdUsuarios"] = new SelectList(_context.Usuarios, "Id", "Id", cliente.IdUsuarios);
             return View(cliente);
         }
 
@@ -100,7 +90,7 @@ namespace ObligatorioProgramacion3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,IdUsuarios,Nombre,Email,TipoCliente")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Email,TipoCliente,IdUsuarios")] Cliente cliente)
         {
             if (id != cliente.Id)
             {
@@ -127,11 +117,11 @@ namespace ObligatorioProgramacion3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdUsuarios"] = new SelectList(_context.Usuarios, "Id", "Id", cliente.IdUsuarios);
             return View(cliente);
         }
 
         // GET: Clientes/Delete/5
-        [Authorize(Policy = "ClientesEliminar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -140,6 +130,7 @@ namespace ObligatorioProgramacion3.Controllers
             }
 
             var cliente = await _context.Clientes
+                .Include(c => c.IdUsuariosNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cliente == null)
             {

@@ -23,7 +23,7 @@ public partial class Cliente
 
     public int IdUsuarios { get; set; }
 
-    public Usuario Usuario { get; set; }
+    
     public virtual Usuario IdUsuariosNavigation { get; set; } = null!;
 
     public virtual ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
