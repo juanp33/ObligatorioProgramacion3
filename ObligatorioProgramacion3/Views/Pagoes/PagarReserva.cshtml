@@ -1,5 +1,30 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ObligatorioProgramacion3.Models.CarritoViewModel
+
 @{
+    ViewData["Title"] = "Pagar Reserva";
 }
+
+<h2>Pagar Reserva</h2>
+
+<div id="carritoContainer">
+    <h3>Mi Pedido</h3>
+    <div>
+        @foreach (var item in Model.Items)
+        {
+            <div class="carrito-item">
+                <p>@item.NombrePlato - @item.Cantidad x @item.Precio.ToString("C")</p>
+            </div>
+        }
+    </div>
+    <div id="carritoTotal">
+        <h3>Total: @Model.Total.ToString("C")</h3>
+    </div>
+</div>
+
+<form asp-action="ConfirmarPago" method="post">
+    <div class="form-group">
+        <label for="MetodoPago">Método de Pago</label>
+        <input type="text" class="form-control" id="MetodoPago" name="MetodoPago" required maxlength="50">
+    </div>
+    <button type="submit" class="btn btn-primary">Confirmar</button>
+</form>

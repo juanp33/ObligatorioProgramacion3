@@ -18,7 +18,7 @@ public partial class Mesa
 
     [Required(ErrorMessage = "El estado es obligatorio.")]
     [StringLength(50, ErrorMessage = "El estado no puede exceder los 50 caracteres.")]
-    public string Estado { get; set; }
+    public string Estado { get; set; } = null!;
 
     public virtual ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
 }

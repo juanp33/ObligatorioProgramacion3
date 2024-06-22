@@ -10,7 +10,7 @@ public partial class Role
 
     [Required(ErrorMessage = "El nombre es obligatorio.")]
     [StringLength(50, ErrorMessage = "El nombre no puede exceder los 50 caracteres.")]
-    public string Nombre { get; set; }
+    public string Nombre { get; set; } = null!;
 
     [StringLength(255, ErrorMessage = "La descripción no puede exceder los 255 caracteres.")]
     public string? Descripcion { get; set; }

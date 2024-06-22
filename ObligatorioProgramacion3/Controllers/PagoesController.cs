@@ -24,14 +24,49 @@ namespace ObligatorioProgramacion3.Controllers
 
         // GET: Pagoes
         [Authorize(Policy = "PagosPagarReserva")]
-        public  IActionResult PagarReserva( )
+        public IActionResult PagarReserva()
         {
+            var items = _carritoService.ObtenerCarritoItems();
+            var total = _carritoService.ObtenerTotal();
+            var carritoViewModel = new CarritoViewModel
+            {
+                Items = items,
+                Total = total
+            };
+            return View(carritoViewModel);
+        }
+        [HttpPost]
+        [Authorize(Policy = "PagosPagarReserva")]
+        public async Task<IActionResult> ConfirmarPago(string MetodoPago)
+        {
+            if (string.IsNullOrEmpty(MetodoPago) || MetodoPago.Length > 50)
+            {
+                ModelState.AddModelError("MetodoPago", "El método de pago es obligatorio y no puede exceder los 50 caracteres.");
+                return View("PagarReserva", new CarritoViewModel
+                {
+                    Items = _carritoService.ObtenerCarritoItems(),
+                    Total = _carritoService.ObtenerTotal()
+                });
+            }
 
+            var items = _carritoService.ObtenerCarritoItems();
+            var total = _carritoService.ObtenerTotal();
 
-           var items= _carritoService.ObtenerCarritoItems();
-            var total=_carritoService.ObtenerTotal();
-            return View();
-  
+            var pago = new Pago
+            {
+                ReservaId = 0,
+                Monto = total,
+                FechaPago = DateTime.Now,
+                MetodoPago = MetodoPago
+            };
+
+            _context.Pagos.Add(pago);
+            await _context.SaveChangesAsync();
+
+            
+            _carritoService.LimpiarCarrito();
+
+            return RedirectToAction("Index", "Home");
         }
 
         [Authorize(Policy = "PagosVer")]

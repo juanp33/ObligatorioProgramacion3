@@ -42,5 +42,9 @@
         {
             return _carritoItems.Sum(i => i.Precio * i.Cantidad);
         }
+        public void LimpiarCarrito()
+        {
+            _carritoItems.Clear();
+        }
     }
 }

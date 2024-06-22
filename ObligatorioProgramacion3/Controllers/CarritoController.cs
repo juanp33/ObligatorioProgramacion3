@@ -52,5 +52,6 @@ namespace ObligatorioProgramacion3.Controllers
             var total = _carritoService.ObtenerTotal();
             return PartialView("_CarritoPartial", new CarritoViewModel { Items = carritoItems, Total = total });
         }
+
     }
 }
