@@ -1,11 +1,45 @@
-﻿@model ObligatorioProgramacion3.Models.CarritoViewModel
+﻿
+@model ObligatorioProgramacion3.Models.CarritoViewModel
 
 @{
-    ViewData["Title"] = "Pagar Reserva";
+
+   
+    
 }
 
 <h2>Pagar Reserva</h2>
+<style>
+    #carritoContainer {
+        margin: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
 
+    .carrito-item {
+        border-bottom: 1px solid #eee;
+        padding: 10px 0;
+    }
+
+    #carritoTotal {
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+    .form-group {
+        margin: 20px 0;
+    }
+
+    .btn-primary {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #005cbf;
+        }</style>
 <div id="carritoContainer">
     <h3>Mi Pedido</h3>
     <div>
@@ -24,7 +58,11 @@
 <form asp-action="ConfirmarPago" method="post">
     <div class="form-group">
         <label for="MetodoPago">Método de Pago</label>
-        <input type="text" class="form-control" id="MetodoPago" name="MetodoPago" required maxlength="50">
+        <select id="MetodoPago" name="MetodoPago" class="form-control" required>
+            <option value="">Seleccione un método</option>
+            <option value="Tarjeta">Tarjeta</option>
+            <option value="Efectivo">Efectivo</option>
+        </select>
     </div>
     <button type="submit" class="btn btn-primary">Confirmar</button>
 </form>
