@@ -20,7 +20,6 @@
 
         .ReservaMostrar {
             display: flex;
-         
             background-color: #f8f9fa;
             border: 1px solid #dee2e6;
             border-radius: 10px;
@@ -53,7 +52,8 @@
 
         @foreach (var Reserva in Model)
         {
-            <a href="@Url.Action("SeleccionarPlato", "Platoes",  new { ReservaId = Reserva.Id })" style="text-decoration: none; color: black;">
+            @if (Reserva.Estado == "Confirmada" || Reserva.Estado == "Cancelada")
+            {
                 <div class="ReservaMostrar">
                     <img src="https://brandemia.org/contenido/subidas/2022/10/marca-mcdonalds-logo.png" alt="Mcdonalds Logo" id="img" />
                     <div>
@@ -61,11 +61,29 @@
                         <p>Fecha: @Reserva.FechaReserva</p>
                         <p>Dirección: @Reserva.IdRestauranteNavigation.Nombre</p>
                         <p>Teléfono: @Reserva.IdRestauranteNavigation.Teléfono</p>
-                       <p> Estado: @Reserva.Estado</p>
+                        <p> Estado: @Reserva.Estado</p>
                     </div>
 
                 </div>
-          </a>
+            }
+            else
+            {
+
+
+                <a href="@Url.Action("SeleccionarPlato", "Platoes",  new { ReservaId = Reserva.Id })" style="text-decoration: none; color: black;">
+                    <div class="ReservaMostrar">
+                        <img src="https://brandemia.org/contenido/subidas/2022/10/marca-mcdonalds-logo.png" alt="Mcdonalds Logo" id="img" />
+                        <div>
+                            <h4>Mesa numero: @Reserva.MesaId</h4>
+                            <p>Fecha: @Reserva.FechaReserva</p>
+                            <p>Dirección: @Reserva.IdRestauranteNavigation.Nombre</p>
+                            <p>Teléfono: @Reserva.IdRestauranteNavigation.Teléfono</p>
+                            <p> Estado: @Reserva.Estado</p>
+                        </div>
+
+                    </div>
+                </a>
+            }
         }
     </div>
 

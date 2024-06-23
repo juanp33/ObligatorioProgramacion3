@@ -106,7 +106,9 @@ namespace ObligatorioProgramacion3.Controllers
                 FechaPago = DateTime.Now,
                 MetodoPago = MetodoPago
             };
-
+            var reservaActualizado = _context.Reservas.Find(reservaId);
+            reservaActualizado.Estado = "Confirmada";
+            _context.Reservas.Update(reservaActualizado);
             _context.Pagos.Add(pago);
             await _context.SaveChangesAsync();
 
