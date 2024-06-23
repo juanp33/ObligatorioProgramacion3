@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Plato>
-
+@{
+    var reservaId = ViewData["ReservaId"] as int?;
+}
 <h1>@ViewData["Title"]</h1>
 <head>
     <meta charset="UTF-8">
@@ -134,26 +136,26 @@
         }
 
 
-        /* Estilos para el botón "Añadir al carrito" */
+       
         #botonAñadirCarrito {
-            background-color: #007bff; /* Color de fondo azul */
-            color: #ffffff; /* Color del texto blanco */
-            border: none; /* Sin borde */
-            border-radius: 5px; /* Bordes redondeados */
-            padding: 10px 20px; /* Relleno interno */
-            font-size: 16px; /* Tamaño de la fuente */
-            cursor: pointer; /* Cursor de mano para indicar que es clicable */
-            transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves para el fondo y el tamaño */
+            background-color: #007bff;
+            color: #ffffff; 
+            border: none; 
+            border-radius: 5px; 
+            padding: 10px 20px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            transition: background-color 0.3s ease, transform 0.2s ease; 
         }
 
             #botonAñadirCarrito:hover {
-                background-color: #0056b3; /* Color de fondo más oscuro al pasar el ratón */
-                transform: scale(1.05); /* Ligeramente más grande al pasar el ratón */
+                background-color: #0056b3; 
+                transform: scale(1.05); 
             }
 
             #botonAñadirCarrito:active {
-                background-color: #004080; /* Color de fondo aún más oscuro al hacer clic */
-                transform: scale(1); /* Sin escala al hacer clic */
+                background-color: #004080; 
+                transform: scale(1); 
             }
 
 
@@ -181,7 +183,7 @@
         }
 
         function actualizarCarrito() {
-            $.get('/Carrito/ObtenerCarrito', function (data) {
+            $.get('/Carrito/ObtenerCarrito', { reservaId: @reservaId }, function (data) {
                 $('#carritoContainer').html(data);
             });
         }

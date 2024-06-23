@@ -153,7 +153,7 @@ namespace ObligatorioProgramacion3.Controllers
                 {
                     Nombre = model.NombreCliente,
                     Email = model.EmailUsuario,
-                    TipoCliente = "FRECUENTE",
+                    TipoCliente = "NORMAL",
                     IdUsuarios = usuario.Id 
                 };
 

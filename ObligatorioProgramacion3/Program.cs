@@ -15,7 +15,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.ExpireTimeSpan = TimeSpan.FromMinutes(100);
     options.SlidingExpiration = true;
     });
-builder.Services.AddSingleton<CurrencyService>();
+
 builder.Services.AddScoped<IAuthorizationHandler, PermisoPaginaManejador>(); 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<CarritoService>();

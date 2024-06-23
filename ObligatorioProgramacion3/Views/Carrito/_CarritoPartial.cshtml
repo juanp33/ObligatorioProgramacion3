@@ -1,5 +1,8 @@
 ﻿@model CarritoViewModel
+@{
+    var reservaId = ViewData["ReservaId"] as int?;
 
+}
 <div id="carritoContainer">
     <h1>Mi pedido</h1>
     @foreach (var item in Model.Items)
@@ -16,5 +19,5 @@
         <h3>Total: @Model.Total.ToString("C")</h3>
     </div>
    
-    <button class="continuar" onclick="location.href='@Url.Action("PagarReserva", "Pagoes" , new {Carrito=@Model})'">Continuar</button>
+    <button class="continuar" onclick="location.href='@Url.Action("PagarReserva", "Pagoes" ,  new { reservaId = reservaId})'">Continuar</button>
 </div>

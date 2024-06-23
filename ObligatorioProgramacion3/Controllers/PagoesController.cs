@@ -49,8 +49,9 @@ namespace ObligatorioProgramacion3.Controllers
         }
         // GET: Pagoes
         [Authorize(Policy = "PagosPagarReserva")]
-        public async Task<IActionResult> PagarReserva()
+        public async Task<IActionResult> PagarReserva(int reservaId)
         {
+            
             var items = _carritoService.ObtenerCarritoItems();
             var total = _carritoService.ObtenerTotal();
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -61,17 +62,19 @@ namespace ObligatorioProgramacion3.Controllers
                           .FirstOrDefault();
             decimal descuento = 1;
 
-            if (tipoCliente == "Frecuente" )
+            if (tipoCliente == "FRECUENTE" )
             {
                 descuento = descuento - (0.10m);
-            } else if (tipoCliente == "Vip")
+            } else if (tipoCliente == "VIP")
             {
                 descuento = descuento - (0.20m);
             }
             
             decimal tipoDeCambio = await ObtenerTipoDeCambio();
             total = total * descuento;
+            ViewData["descuento"] = descuento;
             ViewData["TipoDeCambio"] = tipoDeCambio;
+            ViewData["reservaId"] = reservaId;
             var carritoViewModel = new CarritoViewModel
             {
                 Items = items,
@@ -81,7 +84,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
         [HttpPost]
         [Authorize(Policy = "PagosPagarReserva")]
-        public async Task<IActionResult> ConfirmarPago(string MetodoPago)
+        public async Task<IActionResult> ConfirmarPago(string MetodoPago, int reservaId, decimal descuento)
         {
             if (string.IsNullOrEmpty(MetodoPago) || MetodoPago.Length > 50)
             {
@@ -94,11 +97,11 @@ namespace ObligatorioProgramacion3.Controllers
             }
 
             var items = _carritoService.ObtenerCarritoItems();
-            var total = _carritoService.ObtenerTotal();
+            var total = _carritoService.ObtenerTotal() * descuento;
 
             var pago = new Pago
             {
-                ReservaId = 0,
+                ReservaId = reservaId,
                 Monto = total,
                 FechaPago = DateTime.Now,
                 MetodoPago = MetodoPago

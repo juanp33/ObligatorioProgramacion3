@@ -2,7 +2,8 @@
 @model ObligatorioProgramacion3.Models.CarritoViewModel
 
 @{
-
+    decimal? descuento = ViewData["descuento"] as decimal?;
+    int? reservaId = ViewData["reservaId"] as int?;
     decimal? TipoDeCambio = ViewData["TipoDeCambio"] as decimal?;
     decimal tipoDeCambioJS = TipoDeCambio ?? 1; 
     }
@@ -73,7 +74,10 @@
             <option value="">Seleccione un método</option>
             <option value="Tarjeta">Tarjeta</option>
             <option value="Efectivo">Efectivo</option>
+            
         </select>
+        <input type="hidden" name="reservaId" value="@reservaId" />
+        <input type="hidden" name="descuento" value="@descuento" />
     </div>
     <button type="submit" class="btn btn-primary">Confirmar</button>
 </form>

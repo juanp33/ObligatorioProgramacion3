@@ -46,11 +46,12 @@ namespace ObligatorioProgramacion3.Controllers
             return Json(new { success = true });
         }
 
-        public IActionResult ObtenerCarrito()
+        public IActionResult ObtenerCarrito(int reservaId)
         {
             var carritoItems = _carritoService.ObtenerCarritoItems();
             var total = _carritoService.ObtenerTotal();
-            return PartialView("_CarritoPartial", new CarritoViewModel { Items = carritoItems, Total = total });
+            ViewData["reservaId"] = reservaId;
+            return PartialView("_CarritoPartial", new CarritoViewModel { Items = carritoItems, Total = total});
         }
 
     }
