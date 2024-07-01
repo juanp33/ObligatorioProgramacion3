@@ -35,19 +35,38 @@
                 margin-right: 40px;
             }
 
-            .ReservaMostrar:hover {
-                transform: scale(1.05);
+            .button-link:hover {
+                transform: scale(1.20);
+            background-color: #C8BE6F;
             }
 
             .ReservaMostrar h2 {
                 margin-top: 1px;
             }
 
+        .button-link {
+            background-color: #F7EFAA;
+            border: none;
+          
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+        .Fondo{
+            background-image: url('/Imagenes/BackgroundLayout2.jpg');
+            background-size: auto;
+            background-repeat: repeat;
+            background-position: top left;
+        }
+
     </style>
 </head>
-<body>
-
-
+<body class="Fondo">
     <div class="reservaContainer">
 
         @foreach (var Reserva in Model)
@@ -70,22 +89,27 @@
             {
 
 
-                <a href="@Url.Action("SeleccionarPlato", "Platoes",  new { ReservaId = Reserva.Id })" style="text-decoration: none; color: black;">
-                    <div class="ReservaMostrar">
-                        <img src="https://brandemia.org/contenido/subidas/2022/10/marca-mcdonalds-logo.png" alt="Mcdonalds Logo" id="img" />
-                        <div>
-                            <h4>Mesa numero: @Reserva.MesaId</h4>
-                            <p>Fecha: @Reserva.FechaReserva</p>
-                            <p>Dirección: @Reserva.IdRestauranteNavigation.Nombre</p>
-                            <p>Teléfono: @Reserva.IdRestauranteNavigation.Teléfono</p>
-                            <p> Estado: @Reserva.Estado</p>
-                        </div>
+
+                <div class="ReservaMostrar">
+                    <img src="https://brandemia.org/contenido/subidas/2022/10/marca-mcdonalds-logo.png" alt="Mcdonalds Logo" id="img" />
+                    <div>
+                        <h4>Mesa numero: @Reserva.MesaId</h4>
+                        <p>Fecha: @Reserva.FechaReserva</p>
+                        <p>Dirección: @Reserva.IdRestauranteNavigation.Nombre</p>
+                        <p>Teléfono: @Reserva.IdRestauranteNavigation.Teléfono</p>
+                        <p> Estado: @Reserva.Estado</p>
+
+                        <form method="post" action="@Url.Action("SeleccionarPlato", "Platoes")">
+                            <input type="hidden" name="ReservaId" value="@Reserva.Id" />
+                            <button type="submit" class="button-link">Pagar</button>
+                        </form>
 
                     </div>
-                </a>
+
+                    
+
+                </div>
             }
         }
-    </div>
-
-
-</body>
+        </div>
+    </body>

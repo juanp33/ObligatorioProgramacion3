@@ -169,6 +169,7 @@ namespace ObligatorioProgramacion3.Controllers
 
 
         [Authorize(Policy = "PlatoesSeleccionarPlato")]
+        [HttpPost]
         public IActionResult SeleccionarPlato(int ReservaId) 
         {
             var platos = _context.Platos.ToList();
