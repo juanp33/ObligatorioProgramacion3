@@ -8,10 +8,10 @@ public partial class Reseña
 {
     public int Id { get; set; }
 
-    [Required(ErrorMessage = "El ID del cliente es obligatorio.")]
+    
     public int? ClienteId { get; set; }
 
-    [Required(ErrorMessage = "El ID del restaurante es obligatorio.")]
+    
     public int? RestauranteId { get; set; }
 
     [Required(ErrorMessage = "El puntaje es obligatorio.")]

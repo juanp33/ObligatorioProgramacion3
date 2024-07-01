@@ -8,11 +8,11 @@ public partial class Reserva
 {
     public int Id { get; set; }
 
-    [Required(ErrorMessage = "El ID del cliente es obligatorio.")]
+   
     
     public int? ClienteId { get; set; }
 
-    [Required(ErrorMessage = "El ID de la mesa es obligatorio.")]
+    ]
     
     public int? MesaId { get; set; }
 
