@@ -3,15 +3,13 @@ using System.Collections.Generic;
 
 namespace ObligatorioProgramacion3.Models;
 
-public partial class Clima
+public partial class Cotizacion
 {
     public int Id { get; set; }
 
-    public DateOnly Fecha { get; set; }
+    public double? Cotizacion1 { get; set; }
 
-    public decimal Temperatura { get; set; }
-
-    public string DescripciónClima { get; set; } = null!;
+    public DateTime? FechaCotizacion { get; set; }
 
     public virtual ICollection<Pago> Pagos { get; set; } = new List<Pago>();
 }

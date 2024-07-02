@@ -20,5 +20,9 @@ public partial class Mesa
     [StringLength(50, ErrorMessage = "El estado no puede exceder los 50 caracteres.")]
     public string Estado { get; set; } = null!;
 
+    public int? IdRestaurante { get; set; }
+
+    public virtual Restaurante? IdRestauranteNavigation { get; set; }
+
     public virtual ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
 }

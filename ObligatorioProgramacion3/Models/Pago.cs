@@ -6,6 +6,7 @@ namespace ObligatorioProgramacion3.Models;
 
 public partial class Pago
 {
+
     public int Id { get; set; }
 
     [Required(ErrorMessage = "El ID de la reserva es obligatorio.")]
@@ -21,6 +22,14 @@ public partial class Pago
     [Required(ErrorMessage = "El método de pago es obligatorio.")]
     [StringLength(50, ErrorMessage = "El método de pago no puede exceder los 50 caracteres.")]
     public string MetodoPago { get; set; } = null!;
+
+    public int? IdClima { get; set; }
+
+    public int? IdCotizacion { get; set; }
+
+    public virtual Clima? IdClimaNavigation { get; set; }
+
+    public virtual Cotizacion? IdCotizacionNavigation { get; set; }
 
     public virtual Reserva? Reserva { get; set; }
 }

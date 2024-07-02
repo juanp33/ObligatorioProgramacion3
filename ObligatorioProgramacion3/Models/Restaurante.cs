@@ -24,6 +24,8 @@ public partial class Restaurante
     [StringLength(200, ErrorMessage = "La descripción no puede exceder los 200 caracteres.")]
     public string? Descripcion { get; set; }
 
+    public virtual ICollection<Mesa> Mesas { get; set; } = new List<Mesa>();
+
     public virtual ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
 
     public virtual ICollection<Reseña> Reseñas { get; set; } = new List<Reseña>();
