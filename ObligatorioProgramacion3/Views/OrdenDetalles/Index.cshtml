@@ -3,11 +3,14 @@
 @{
     ViewData["Title"] = "Index";
 }
+<head>
+    <link rel="stylesheet" href="~/css/StylesCrudeINDEX.css" asp-append-version="true" />
+</head>
 
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="BotonCreate" asp-action="Create">Crear</a>
 </p>
 <table class="table">
     <thead>
@@ -37,10 +40,9 @@
                 @Html.DisplayFor(modelItem => item.Plato.Id)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+                    <a class="botonesEditDetailsDelete boton-edit" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a class="botonesEditDetailsDelete boton-details" asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                    <a class="botonesEditDetailsDelete boton-delete" asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
         </tr>
 }
     </tbody>

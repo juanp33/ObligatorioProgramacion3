@@ -1,0 +1,99 @@
+﻿.BotonCreate {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+    .BotonCreate:hover {
+        background-color: #0056b3;
+    }
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+    .table th, .table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #ffffff; /* Blanco */
+        font-weight: bold;
+    }
+
+    .table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .table td {
+        background-color: #f1f1f1; /* Gris claro */
+    }
+
+.botonesEditDetailsDelete {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.boton-edit {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+    .boton-edit:hover {
+        background-color: #45a049;
+    }
+
+.boton-details {
+    background-color: violet; /* Verde */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+.boton-edit:details {
+    background-color: violet;
+}
+
+.boton-delete {
+    background-color: #f44336; /* Rojo */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+.btn-delete:hover {
+    background-color: #da190b;
+}
+
+/* Estilo para el contenedor de la tabla */
+.table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+}

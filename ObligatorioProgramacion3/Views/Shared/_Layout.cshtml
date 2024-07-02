@@ -16,9 +16,6 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <style>
        
-
-        
-        
         .sidebar {
             position: center;
             top: 0;
@@ -27,6 +24,7 @@
             z-index: 100;
             padding: 48px 0 0;
             width: 400px;
+           
         }
 
             .sidebar .nav-link {
@@ -44,6 +42,7 @@
 
         .offcanvas {
             width: 400px;
+            background-color: #DFDCB6;
         }
 
         .nav-link {
@@ -72,10 +71,15 @@
             width: 100%;
         }
 
-        .navbar-brand-center {
+        
+        #imgLogo {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
+            width:150px;
+            height:auto;
+            border-radius:90%;
+            margin-top:50px;
         }
 
         .auth-buttons {
@@ -86,25 +90,22 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            margin: 0;
+            margin-top: 100px;
         }
 
         .container-fluid {
             flex: 1;
         }
          .Fondo{
-            background-image: url('/Imagenes/Imagensol.png');
-            background-size: 200px;
-            background-repeat: repeat;
-            background-position: top left;
+            background-color: #DFCCB6;
         }
 
-        .btn {
-            background-color: #e6e27a;
+        .btnauth {
+            background-color: #DFDCB6;
             border: 2px solid black; /* Agrega un borde de 2px sólido con color #333 */
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Agrega una sombra */
-            padding: 10px 20px; /* Opcional: Agrega un poco de padding */
-            border-radius: 5px; /* Opcional: Hace que las esquinas sean redondeadas */
+            padding: 15px 30px; 
+            border-radius: 5px; 
             color:black;
         }
 
@@ -119,13 +120,13 @@
         <nav class="navbar fixed-top navbar-dark shadow-5-strong">
             
             <div class="container-fluid">
-                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+                <button class="btnauth" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-              
+                <img id="imgLogo" src="/imagenes/Imagensol.png" />
                 <div class="auth-buttons">
-                    <a class="btn btn-outline-primary me-2" asp-area="" asp-controller="Usuarios" asp-action="Login">Iniciar Sesión</a>
-                    <a class="btn btn-primary" asp-area="" asp-controller="Usuarios" asp-action="RegistroUsuario">Registrarse</a>
+                    <a class="btn btn-outline-primary me-2 btnauth" asp-area="" asp-controller="Usuarios" asp-action="Login">Iniciar Sesión</a>
+                    <a class="btn btn-primary btnauth" asp-area="" asp-controller="Usuarios" asp-action="RegistroUsuario">Registrarse</a>
                 </div>
             </div>
         </nav>
