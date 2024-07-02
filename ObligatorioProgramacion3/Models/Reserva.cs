@@ -12,7 +12,7 @@ public partial class Reserva
     
     public int? ClienteId { get; set; }
 
-    ]
+    
     
     public int? MesaId { get; set; }
 

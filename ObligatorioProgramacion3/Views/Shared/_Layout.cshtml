@@ -35,11 +35,11 @@
             }
 
                 .sidebar .nav-link.active {
-                    color: #007bff;
+                    color: black;
                 }
 
                 .sidebar .nav-link:hover {
-                    color: #0056b3;
+                    color: black;
                 }
 
         .offcanvas {
@@ -52,11 +52,11 @@
         }
 
             .nav-link.active {
-                color: #007bff;
+                color: black;
             }
 
             .nav-link:hover {
-                color: #0056b3;
+                color: black;
             }
 
         .main {
@@ -92,16 +92,37 @@
         .container-fluid {
             flex: 1;
         }
+         .Fondo{
+            background-image: url('/Imagenes/Imagensol.png');
+            background-size: 200px;
+            background-repeat: repeat;
+            background-position: top left;
+        }
+
+        .btn {
+            background-color: #e6e27a;
+            border: 2px solid black; /* Agrega un borde de 2px sólido con color #333 */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Agrega una sombra */
+            padding: 10px 20px; /* Opcional: Agrega un poco de padding */
+            border-radius: 5px; /* Opcional: Hace que las esquinas sean redondeadas */
+            color:black;
+        }
+
+        .navbar-toggler-icon{
+           
+            color:black;
+        }
     </style>
 </head>
-<body>
+<body class="Fondo">
     <div class="d-flex">
-        <nav class="navbar navbar-light bg-light fixed-top">
+        <nav class="navbar fixed-top navbar-dark shadow-5-strong">
+            
             <div class="container-fluid">
-                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand navbar-brand-center" asp-area="" asp-controller="Home" asp-action="Index">TriCampeones</a>
+              
                 <div class="auth-buttons">
                     <a class="btn btn-outline-primary me-2" asp-area="" asp-controller="Usuarios" asp-action="Login">Iniciar Sesión</a>
                     <a class="btn btn-primary" asp-area="" asp-controller="Usuarios" asp-action="RegistroUsuario">Registrarse</a>
