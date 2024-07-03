@@ -30,7 +30,8 @@ namespace ObligatorioProgramacion3.Controllers
         [Authorize(Policy = "PlatoesVer")]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Platos.ToListAsync());
+            var obligatorioProgramacion3Context = _context.Platos.Include(p => p.IdRestauranteNavigation);
+            return View(await obligatorioProgramacion3Context.ToListAsync());
         }
 
         // GET: Platoes/Details/5
@@ -42,6 +43,7 @@ namespace ObligatorioProgramacion3.Controllers
             }
 
             var plato = await _context.Platos
+                .Include(p => p.IdRestauranteNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (plato == null)
             {
@@ -50,20 +52,23 @@ namespace ObligatorioProgramacion3.Controllers
 
             return View(plato);
         }
-
-        // GET: Platoes/Create
+        
+        
         [Authorize(Policy = "PlatoesCrear")]
+        // GET: Platoes1/Create
         public IActionResult Create()
         {
+            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección");
             return View();
         }
 
-        // POST: Platoes/Create
+
+        // POST: Platoes1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NombrePlato,Descripción,Precio,Imagen")] Plato plato)
+        public async Task<IActionResult> Create([Bind("Id,NombrePlato,Descripción,Precio,Imagen,IdRestaurante")] Plato plato)
         {
             if (ModelState.IsValid)
             {
@@ -71,6 +76,7 @@ namespace ObligatorioProgramacion3.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", plato.IdRestaurante);
             return View(plato);
         }
 
@@ -88,15 +94,16 @@ namespace ObligatorioProgramacion3.Controllers
             {
                 return NotFound();
             }
+            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", plato.IdRestaurante);
             return View(plato);
         }
 
-        // POST: Platoes/Edit/5
+        // POST: Platoes1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NombrePlato,Descripción,Precio,Imagen")] Plato plato)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NombrePlato,Descripción,Precio,Imagen,IdRestaurante")] Plato plato)
         {
             if (id != plato.Id)
             {
@@ -123,6 +130,7 @@ namespace ObligatorioProgramacion3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", plato.IdRestaurante);
             return View(plato);
         }
 
@@ -137,6 +145,7 @@ namespace ObligatorioProgramacion3.Controllers
             }
 
             var plato = await _context.Platos
+                .Include(p => p.IdRestauranteNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (plato == null)
             {
@@ -146,7 +155,7 @@ namespace ObligatorioProgramacion3.Controllers
             return View(plato);
         }
 
-        // POST: Platoes/Delete/5
+        // POST: Platoes1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -164,7 +173,6 @@ namespace ObligatorioProgramacion3.Controllers
         private bool PlatoExists(int id)
         {
             return _context.Platos.Any(e => e.Id == id);
-
         }
 
 

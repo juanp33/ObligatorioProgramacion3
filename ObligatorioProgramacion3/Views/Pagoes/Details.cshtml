@@ -29,10 +29,22 @@
             @Html.DisplayFor(model => model.MetodoPago)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdClimaNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdClimaNavigation.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdCotizacionNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdCotizacionNavigation.Id)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Reserva)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Reserva.Id)
+            @Html.DisplayFor(model => model.Reserva.Estado)
         </dd>
     </dl>
 </div>

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,26 +9,22 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    
-    public class MesasController : Controller
+    public class CotizacionsController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
 
-        public MesasController(ObligatorioProgramacion3Context context)
+        public CotizacionsController(ObligatorioProgramacion3Context context)
         {
             _context = context;
         }
 
-        // GET: Mesas
-        [Authorize(Policy = "MesasVer")]
+        // GET: Cotizacions
         public async Task<IActionResult> Index()
         {
-            var obligatorioProgramacion3Context = _context.Mesas.Include(m => m.IdRestauranteNavigation);
-            return View(await obligatorioProgramacion3Context.ToListAsync());
+            return View(await _context.Cotizacions.ToListAsync());
         }
 
-        // GET: Mesas/Details/5
-        [Authorize(Policy = "MesasDetalle")]
+        // GET: Cotizacions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,44 +32,39 @@ namespace ObligatorioProgramacion3.Controllers
                 return NotFound();
             }
 
-            var mesa = await _context.Mesas
-                .Include(m => m.IdRestauranteNavigation)
+            var cotizacion = await _context.Cotizacions
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (mesa == null)
+            if (cotizacion == null)
             {
                 return NotFound();
             }
 
-            return View(mesa);
+            return View(cotizacion);
         }
 
-        // GET: Mesas/Create
-        [Authorize(Policy = "MesasCrear")]
+        // GET: Cotizacions/Create
         public IActionResult Create()
         {
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección");
             return View();
         }
 
-        // POST: Mesas1/Create
+        // POST: Cotizacions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NumeroMesa,Capacidad,Estado,IdRestaurante")] Mesa mesa)
+        public async Task<IActionResult> Create([Bind("Id,Cotizacion1,FechaCotizacion")] Cotizacion cotizacion)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(mesa);
+                _context.Add(cotizacion);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", mesa.IdRestaurante);
-            return View(mesa);
+            return View(cotizacion);
         }
 
-        // GET: Mesas/Edit/5
-        [Authorize(Policy = "MesasEditar")]
+        // GET: Cotizacions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,23 +72,22 @@ namespace ObligatorioProgramacion3.Controllers
                 return NotFound();
             }
 
-            var mesa = await _context.Mesas.FindAsync(id);
-            if (mesa == null)
+            var cotizacion = await _context.Cotizacions.FindAsync(id);
+            if (cotizacion == null)
             {
                 return NotFound();
             }
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", mesa.IdRestaurante);
-            return View(mesa);
+            return View(cotizacion);
         }
 
-        // POST: Mesas1/Edit/5
+        // POST: Cotizacions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NumeroMesa,Capacidad,Estado,IdRestaurante")] Mesa mesa)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Cotizacion1,FechaCotizacion")] Cotizacion cotizacion)
         {
-            if (id != mesa.Id)
+            if (id != cotizacion.Id)
             {
                 return NotFound();
             }
@@ -107,12 +96,12 @@ namespace ObligatorioProgramacion3.Controllers
             {
                 try
                 {
-                    _context.Update(mesa);
+                    _context.Update(cotizacion);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MesaExists(mesa.Id))
+                    if (!CotizacionExists(cotizacion.Id))
                     {
                         return NotFound();
                     }
@@ -123,12 +112,10 @@ namespace ObligatorioProgramacion3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", mesa.IdRestaurante);
-            return View(mesa);
+            return View(cotizacion);
         }
 
-        // GET: Mesas/Delete/5
-        [Authorize(Policy = "MesasEliminar")]
+        // GET: Cotizacions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,36 +123,34 @@ namespace ObligatorioProgramacion3.Controllers
                 return NotFound();
             }
 
-            var mesa = await _context.Mesas
-                .Include(m => m.IdRestauranteNavigation)
+            var cotizacion = await _context.Cotizacions
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (mesa == null)
+            if (cotizacion == null)
             {
                 return NotFound();
             }
 
-            return View(mesa);
+            return View(cotizacion);
         }
 
-        // POST: Mesas1/Delete/5
+        // POST: Cotizacions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var mesa = await _context.Mesas.FindAsync(id);
-            if (mesa != null)
+            var cotizacion = await _context.Cotizacions.FindAsync(id);
+            if (cotizacion != null)
             {
-                _context.Mesas.Remove(mesa);
+                _context.Cotizacions.Remove(cotizacion);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MesaExists(int id)
+        private bool CotizacionExists(int id)
         {
-            return _context.Mesas.Any(e => e.Id == id);
+            return _context.Cotizacions.Any(e => e.Id == id);
         }
     }
 }
-

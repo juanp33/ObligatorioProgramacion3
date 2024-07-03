@@ -26,6 +26,8 @@ public partial class Restaurante
 
     public virtual ICollection<Mesa> Mesas { get; set; } = new List<Mesa>();
 
+    public virtual ICollection<Plato> Platos { get; set; } = new List<Plato>();
+
     public virtual ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
 
     public virtual ICollection<Reseña> Reseñas { get; set; } = new List<Reseña>();

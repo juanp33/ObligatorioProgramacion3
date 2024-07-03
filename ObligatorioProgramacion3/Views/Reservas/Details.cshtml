@@ -10,29 +10,41 @@
     <h4>Reserva</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FechaReserva)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FechaReserva)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Estado)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Estado)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Cliente)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cliente.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cliente.Email)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IdRestauranteNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdRestauranteNavigation.Dirección)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Mesa)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Mesa.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Mesa.Estado)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Usuario)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Usuario.Id)
         </dd>
     </dl>
 </div>
