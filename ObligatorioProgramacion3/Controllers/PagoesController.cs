@@ -57,6 +57,11 @@ namespace ObligatorioProgramacion3.Controllers
 
             }
         }
+
+        //private async Task<string> ObtenerClima(int lat, int lon)
+        //{
+
+        //}
         // GET: Pagoes
         [Authorize(Policy = "PagosPagarReserva")]
         public async Task<IActionResult> PagarReserva(int reservaId)

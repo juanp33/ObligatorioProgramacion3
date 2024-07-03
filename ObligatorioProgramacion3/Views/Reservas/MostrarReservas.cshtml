@@ -105,13 +105,13 @@
                         <p>Teléfono: @Reserva.IdRestauranteNavigation.Teléfono</p>
                         <p> Estado: @Reserva.Estado</p>
                         <div class="BtnsCrearEliminar">
-                            @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "PoderPagarReserva"))
-                            {
+                            @* @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "PoderPagarReserva"))
+                            { *@
                                 <form method="post" action="@Url.Action("SeleccionarPlato", "Platoes")">
                                     <input type="hidden" name="ReservaId" value="@Reserva.Id" />
                                     <button type="submit" class="button-link">Pagar</button>
                                 </form>
-                            }
+                           @*  } *@
                             <form method="post" action="@Url.Action("Cancelar", "Reservas")">
                                 <input type="hidden" name="ReservaId" value="@Reserva.Id" />
                                 <button type="submit" class="button-link button-delete">Cancelar</button>
