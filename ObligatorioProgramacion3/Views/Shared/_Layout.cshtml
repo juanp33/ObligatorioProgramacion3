@@ -17,14 +17,18 @@
   
 </head>
 <body class="Fondo">
-    <div class="d-flex">
+    <header class="d-flex">
+        <img class="fotologo" src="~/Imagenes/ImagenSolRecortada.png"/>
+
+        
+
         <nav class="navbar fixed-top navbar-dark shadow-5-strong">
             
             <div class="container-fluid">
                 <button class="btnauth" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <img id="imgLogo" src="/imagenes/ImagenSolRecortada.png" />
+                
                 <div class="auth-buttons">
                     @if(!User.Identity.IsAuthenticated){
                     <a class="btn btn-outline-primary me-2 btnauth" asp-area="" asp-controller="Usuarios" asp-action="Login">Iniciar Sesión</a>
@@ -185,10 +189,11 @@
             </div>
         </div>
 
-        <main class="container-fluid mt-5 pt-3">
-            @RenderBody()
-        </main>
-    </div>
+        
+    </header>
+    <main class="container-fluid mt-5 pt-3">
+        @RenderBody()
+    </main>
 
     <footer class="footer text-muted border-top mt-auto">
         <div class="container">
