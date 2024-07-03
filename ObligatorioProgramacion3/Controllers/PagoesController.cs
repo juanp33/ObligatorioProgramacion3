@@ -45,6 +45,13 @@ namespace ObligatorioProgramacion3.Controllers
                     {
                         string content = await response.Content.ReadAsStringAsync();
                         dynamic data = JsonConvert.DeserializeObject(content);
+                        var tipoDeCambio = new Cotizacion
+                        {
+                            Cotizacion1 = data.quotes.USDUYU,
+                            FechaCotizacion = DateTime.Now
+                        };
+                        _context.Cotizacions.Add(tipoDeCambio);
+                        await _context.SaveChangesAsync();
                         if (restauranteId == 1){
                             return data.quotes.USDUYU;
                         }else if(restauranteId == 2){
