@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.TipoCliente)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdUsuariosNavigation)
+                @Html.DisplayNameFor(model => model.IdUsuarios)
             </th>
             <th></th>
         </tr>
@@ -43,7 +43,7 @@
                 @Html.DisplayFor(modelItem => item.TipoCliente)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdUsuariosNavigation.Id)
+                    @Html.DisplayFor(modelItem => item.IdUsuarios)
             </td>
             <td>
                     <a class="botonesEditDetailsDelete boton-edit" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |

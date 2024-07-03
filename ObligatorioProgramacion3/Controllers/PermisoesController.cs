@@ -106,7 +106,7 @@ namespace ObligatorioProgramacion3.Controllers
             }
 
             // Redireccionar a alguna acción deseada después de actualizar los permisos
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(RolesYPermisos));
         }
         // GET: Permisoes
 

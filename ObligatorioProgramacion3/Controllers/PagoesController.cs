@@ -150,7 +150,7 @@ namespace ObligatorioProgramacion3.Controllers
         [Authorize(Policy = "PagosVer")]
         public async Task<IActionResult> Index()
         {
-            var obligatorioProgramacion3Context = _context.Pagos.Include(p => p.Reserva);
+            var obligatorioProgramacion3Context = _context.Pagos.Include(p => p.IdClimaNavigation).Include(p => p.IdCotizacionNavigation).Include(p => p.Reserva);
             return View(await obligatorioProgramacion3Context.ToListAsync());
         }
 
@@ -165,6 +165,8 @@ namespace ObligatorioProgramacion3.Controllers
             }
 
             var pago = await _context.Pagos
+                .Include(p => p.IdClimaNavigation)
+                .Include(p => p.IdCotizacionNavigation)
                 .Include(p => p.Reserva)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pago == null)
@@ -179,16 +181,18 @@ namespace ObligatorioProgramacion3.Controllers
         [Authorize(Policy = "PagosCrear")]
         public IActionResult Create()
         {
-            ViewData["ReservaId"] = new SelectList(_context.Reservas, "Id", "Id");
+            ViewData["IdClima"] = new SelectList(_context.Climas, "Id", "Id");
+            ViewData["IdCotizacion"] = new SelectList(_context.Cotizacions, "Id", "Id");
+            ViewData["ReservaId"] = new SelectList(_context.Reservas, "Id", "Estado");
             return View();
         }
 
-        // POST: Pagoes/Create
+        // POST: Pagoes1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ReservaId,Monto,FechaPago,MetodoPago")] Pago pago)
+        public async Task<IActionResult> Create([Bind("Id,ReservaId,Monto,FechaPago,MetodoPago,IdClima,IdCotizacion")] Pago pago)
         {
             if (ModelState.IsValid)
             {
@@ -196,7 +200,9 @@ namespace ObligatorioProgramacion3.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReservaId"] = new SelectList(_context.Reservas, "Id", "Id", pago.ReservaId);
+            ViewData["IdClima"] = new SelectList(_context.Climas, "Id", "Id", pago.IdClima);
+            ViewData["IdCotizacion"] = new SelectList(_context.Cotizacions, "Id", "Id", pago.IdCotizacion);
+            ViewData["ReservaId"] = new SelectList(_context.Reservas, "Id", "Estado", pago.ReservaId);
             return View(pago);
         }
 
@@ -214,16 +220,18 @@ namespace ObligatorioProgramacion3.Controllers
             {
                 return NotFound();
             }
-            ViewData["ReservaId"] = new SelectList(_context.Reservas, "Id", "Id", pago.ReservaId);
+            ViewData["IdClima"] = new SelectList(_context.Climas, "Id", "Id", pago.IdClima);
+            ViewData["IdCotizacion"] = new SelectList(_context.Cotizacions, "Id", "Id", pago.IdCotizacion);
+            ViewData["ReservaId"] = new SelectList(_context.Reservas, "Id", "Estado", pago.ReservaId);
             return View(pago);
         }
 
-        // POST: Pagoes/Edit/5
+        // POST: Pagoes1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ReservaId,Monto,FechaPago,MetodoPago")] Pago pago)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ReservaId,Monto,FechaPago,MetodoPago,IdClima,IdCotizacion")] Pago pago)
         {
             if (id != pago.Id)
             {
@@ -250,10 +258,11 @@ namespace ObligatorioProgramacion3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReservaId"] = new SelectList(_context.Reservas, "Id", "Id", pago.ReservaId);
+            ViewData["IdClima"] = new SelectList(_context.Climas, "Id", "Id", pago.IdClima);
+            ViewData["IdCotizacion"] = new SelectList(_context.Cotizacions, "Id", "Id", pago.IdCotizacion);
+            ViewData["ReservaId"] = new SelectList(_context.Reservas, "Id", "Estado", pago.ReservaId);
             return View(pago);
         }
-
         // GET: Pagoes/Delete/5
         [Authorize(Policy = "PagosEliminar")]
         public async Task<IActionResult> Delete(int? id)
@@ -264,6 +273,8 @@ namespace ObligatorioProgramacion3.Controllers
             }
 
             var pago = await _context.Pagos
+                .Include(p => p.IdClimaNavigation)
+                .Include(p => p.IdCotizacionNavigation)
                 .Include(p => p.Reserva)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pago == null)
@@ -274,7 +285,7 @@ namespace ObligatorioProgramacion3.Controllers
             return View(pago);
         }
 
-        // POST: Pagoes/Delete/5
+        // POST: Pagoes1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
