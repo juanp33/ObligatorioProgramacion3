@@ -58,7 +58,7 @@ namespace ObligatorioProgramacion3.Controllers
         // GET: Platoes1/Create
         public IActionResult Create()
         {
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección");
+            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Nombre");
             return View();
         }
 
