@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -34,9 +37,12 @@ namespace ObligatorioProgramacion3.Controllers
                     if (restauranteId == 1)
                     {
                         moneda = "UYU";
-                    }else if(restauranteId == 2) {
-                        moneda = "MXN"; 
-                    }else { moneda = "EUR"; }
+                    }
+                    else if (restauranteId == 2)
+                    {
+                        moneda = "MXN";
+                    }
+                    else { moneda = "EUR"; }
                     string url = $"http://api.currencylayer.com/live?access_key=b6fb3ee2a8859b4237975e1d708cb64e&currencies={moneda}";
                     HttpResponseMessage response = await client.GetAsync(url);
 
@@ -52,25 +58,103 @@ namespace ObligatorioProgramacion3.Controllers
                         };
                         _context.Cotizacions.Add(tipoDeCambio);
                         await _context.SaveChangesAsync();
-                        if (restauranteId == 1){
+                        if (restauranteId == 1)
+                        {
                             return data.quotes.USDUYU;
-                        }else if(restauranteId == 2){
-                            
+                        }
+                        else if (restauranteId == 2)
+                        {
+
                             return data.quotes.USDMXN;
                         }
-                        else {
+                        else
+                        {
                             return data.quotes.USDEUR;
-                          }
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    
-                  
+
+
                 }
-                return 1; 
+                return 1;
             }
         }
+        private async Task<bool> ObtenerClima(int reservaID)
+        {
+            var restauranteId = _context.Reservas.Where(r => r.Id == reservaID).Select(r => r.IdRestaurante).FirstOrDefault();
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    string lat;
+                    string lon;
+
+                    if (restauranteId == 1)
+                    {
+                        lon = "-56.1913095";
+                        lat = "-34.9058916"; // Coordenadas para Montevideo, Uruguay
+                    }
+                    else if (restauranteId == 2)
+                    {
+                        lon = "-99.1331785";
+                        lat = "19.4326296"; // Coordenadas para Ciudad de México, México
+                    }
+                    else
+                    {
+                        lon = "-3.7035825";
+                        lat = "40.4167047"; // Coordenadas para Madrid, España
+                    }
+
+                    string apiKey = "13c5e50bbda5f27893d4e5fc19a4f058";
+                    string url = $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={apiKey}";
+
+                    HttpResponseMessage response = await client.GetAsync(url);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string content = await response.Content.ReadAsStringAsync();
+                        using JsonDocument doc = JsonDocument.Parse(content);
+                        JsonElement weatherArray = doc.RootElement.GetProperty("weather");
+                        JsonElement mainElement = doc.RootElement.GetProperty("main");
+
+                        bool isRaining = false;
+                        string descripcion = string.Empty;
+                        foreach (JsonElement element in weatherArray.EnumerateArray())
+                        {
+                            string main = element.GetProperty("main").GetString();
+                            descripcion = element.GetProperty("description").GetString();
+
+                            if (main == "Rain")
+                            {
+                                isRaining = true;
+                                break;
+                            }
+                        }
+
+                        decimal temperatura = mainElement.GetProperty("temp").GetDecimal();
+
+                        Clima clima = new Clima
+                        {
+                            DescripciónClima = descripcion,
+                            Temperatura = temperatura,
+                            Fecha = DateOnly.FromDateTime(DateTime.Now),
+                        };
+
+
+                        return isRaining;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return false;
+            }
+        }
+
         // GET: Pagoes
         [Authorize(Policy = "PagosPagarReserva")]
         public async Task<IActionResult> PagarReserva(int reservaId)
@@ -93,7 +177,23 @@ namespace ObligatorioProgramacion3.Controllers
             {
                 descuento = descuento - (0.20m);
             }
-            
+            bool EstaLloviendo = await ObtenerClima(reservaId);
+            var ultimoClima = await _context.Climas
+                                        .OrderByDescending(c => c.Fecha)
+                                        .FirstOrDefaultAsync();
+            var temperatura = ultimoClima.Temperatura;
+            if(temperatura < 10)
+            {
+                descuento = descuento - (0.05m);
+            }
+            else
+            {
+                descuento = descuento - (0.10m);
+            }
+            if (EstaLloviendo)
+            {
+                descuento = descuento - (0.05m);
+            } 
             decimal tipoDeCambio = await ObtenerTipoDeCambio(reservaId);
             total = total * descuento;
             var restauranteId = _context.Reservas.Where(r => r.Id == reservaId).Select(r => r.IdRestaurante).FirstOrDefault();
@@ -101,6 +201,9 @@ namespace ObligatorioProgramacion3.Controllers
             ViewData["descuento"] = descuento;
             ViewData["TipoDeCambio"] = tipoDeCambio;
             ViewData["reservaId"] = reservaId;
+            ViewData["temperatura"] = temperatura;
+            ViewData["estaLloviendo"] = EstaLloviendo;
+
             var carritoViewModel = new CarritoViewModel
             {
                 Items = items,
@@ -124,13 +227,21 @@ namespace ObligatorioProgramacion3.Controllers
 
             var items = _carritoService.ObtenerCarritoItems();
             var total = _carritoService.ObtenerTotal() * descuento;
-
+            var ultimoClima = await _context.Climas
+                                        .OrderByDescending(c => c.Fecha)
+                                        .FirstOrDefaultAsync();
+            var ultimaCotizacion = await _context.Cotizacions
+                                        .OrderByDescending(c => c.Id)
+                                        .FirstOrDefaultAsync();
             var pago = new Pago
             {
                 ReservaId = reservaId,
                 Monto = total,
                 FechaPago = DateTime.Now,
-                MetodoPago = MetodoPago
+                MetodoPago = MetodoPago,
+                IdCotizacion=ultimaCotizacion.Id,
+                IdClima=ultimoClima.Id
+
             };
             var reservaActualizado = _context.Reservas.Find(reservaId);
             reservaActualizado.Estado = "Confirmada";
