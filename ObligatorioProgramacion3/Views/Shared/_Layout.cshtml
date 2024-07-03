@@ -14,106 +14,7 @@
     <title>@ViewData["Title"] - ObligatorioProgramacion3</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <style>
-       
-        .sidebar {
-            position: center;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 100;
-            padding: 48px 0 0;
-            width: 400px;
-           
-        }
-
-            .sidebar .nav-link {
-                font-size: 1.1rem;
-                color: #333;
-            }
-
-                .sidebar .nav-link.active {
-                    color: black;
-                }
-
-                .sidebar .nav-link:hover {
-                    color: black;
-                }
-
-        .offcanvas {
-            width: 400px;
-            background-color: #DFDCB6;
-        }
-
-        .nav-link {
-            font-size: 1.1rem;
-            color: #333;
-        }
-
-            .nav-link.active {
-                color: black;
-            }
-
-            .nav-link:hover {
-                color: black;
-            }
-
-        .main {
-            margin-left: 250px;
-            padding-top: 60px;
-            flex: 1;
-        }
-
-        .footer {
-            padding: 1rem 0;
-            background-color: #f8f9fa;
-            border-top: 1px solid #e4e5e7;
-            width: 100%;
-        }
-
-        
-        #imgLogo {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width:110px;
-            height:auto;
-            border-radius:90%;
-            margin-top:50px;
-        }
-
-        .auth-buttons {
-            margin-left: auto;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin-top: 100px;
-        }
-
-        .container-fluid {
-            flex: 1;
-        }
-         .Fondo{
-            background-color: #DFCCB6;
-        }
-
-        .btnauth {
-            background-color: #DFDCB6;
-            border: 2px solid black; /* Agrega un borde de 2px sólido con color #333 */
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Agrega una sombra */
-            padding: 15px 30px; 
-            border-radius: 5px; 
-            color:black;
-        }
-
-        .navbar-toggler-icon{
-           
-            color:black;
-        }
-    </style>
+  
 </head>
 <body class="Fondo">
     <div class="d-flex">
@@ -125,8 +26,15 @@
                 </button>
                 <img id="imgLogo" src="/imagenes/ImagenSolRecortada.png" />
                 <div class="auth-buttons">
+                    @if(!User.Identity.IsAuthenticated){
                     <a class="btn btn-outline-primary me-2 btnauth" asp-area="" asp-controller="Usuarios" asp-action="Login">Iniciar Sesión</a>
-                    <a class="btn btn-primary btnauth" asp-area="" asp-controller="Usuarios" asp-action="RegistroUsuario">Registrarse</a>
+                        <a class="btn btn-primary btnauth" asp-area="" asp-controller="Usuarios" asp-action="RegistroUsuario">Registrarse</a>
+                    }else
+                    {
+                        <a class="btn btn-primary btnauth" asp-area="" asp-controller="Usuarios" asp-action="Logout">Cerrar Sesión</a>
+                    }
+
+
                 </div>
             </div>
         </nav>
