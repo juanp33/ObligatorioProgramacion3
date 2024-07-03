@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -14,7 +12,7 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-
+    
     public class PagoesController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
@@ -23,45 +21,54 @@ namespace ObligatorioProgramacion3.Controllers
         public PagoesController(ObligatorioProgramacion3Context context, CarritoService carritoService)
         {
             _context = context;
-            _carritoService = carritoService;
+            _carritoService= carritoService;
         }
-        private async Task<decimal> ObtenerTipoDeCambio()
+        private async Task<decimal> ObtenerTipoDeCambio(int reservaID)
         {
+            var restauranteId = _context.Reservas.Where(r => r.Id == reservaID).Select(r => r.IdRestaurante).FirstOrDefault();
             using (var client = new HttpClient())
             {
                 try
                 {
-                    string url = "http://api.currencylayer.com/live?access_key=b6fb3ee2a8859b4237975e1d708cb64e&currencies=UYU";
+                    string moneda;
+                    if (restauranteId == 1)
+                    {
+                        moneda = "UYU";
+                    }else if(restauranteId == 2) {
+                        moneda = "MXN"; 
+                    }else { moneda = "EUR"; }
+                    string url = $"http://api.currencylayer.com/live?access_key=b6fb3ee2a8859b4237975e1d708cb64e&currencies={moneda}";
                     HttpResponseMessage response = await client.GetAsync(url);
+
 
                     if (response.IsSuccessStatusCode)
                     {
                         string content = await response.Content.ReadAsStringAsync();
                         dynamic data = JsonConvert.DeserializeObject(content);
-                        var tipoDeCambio = new Cotizacion
-                        {
-                            Cotizacion1 = data.quotes.USDUYU,
-                            FechaCotizacion = DateTime.Now
-                        };
-                        _context.Cotizacions.Add(tipoDeCambio);
-                        await _context.SaveChangesAsync();
-                        return (data.quotes.USDUYU);
+                        if (restauranteId == 1){
+                            return data.quotes.USDUYU;
+                        }else if(restauranteId == 2){
+                            
+                            return data.quotes.USDMXN;
+                        }
+                        else {
+                            return data.quotes.USDEUR;
+                          }
                     }
-                    return 1;
                 }
                 catch (Exception ex)
                 {
-                    return 1;
-
+                    
+                  
                 }
-
+                return 1; 
             }
         }
         // GET: Pagoes
         [Authorize(Policy = "PagosPagarReserva")]
         public async Task<IActionResult> PagarReserva(int reservaId)
         {
-
+            
             var items = _carritoService.ObtenerCarritoItems();
             var total = _carritoService.ObtenerTotal();
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -72,17 +79,18 @@ namespace ObligatorioProgramacion3.Controllers
                           .FirstOrDefault();
             decimal descuento = 1;
 
-            if (tipoCliente == "FRECUENTE")
+            if (tipoCliente == "FRECUENTE" )
             {
                 descuento = descuento - (0.10m);
-            }
-            else if (tipoCliente == "VIP")
+            } else if (tipoCliente == "VIP")
             {
                 descuento = descuento - (0.20m);
             }
-
-            decimal tipoDeCambio = await ObtenerTipoDeCambio();
+            
+            decimal tipoDeCambio = await ObtenerTipoDeCambio(reservaId);
             total = total * descuento;
+            var restauranteId = _context.Reservas.Where(r => r.Id == reservaId).Select(r => r.IdRestaurante).FirstOrDefault();
+            ViewData["restauranteId"]=restauranteId;
             ViewData["descuento"] = descuento;
             ViewData["TipoDeCambio"] = tipoDeCambio;
             ViewData["reservaId"] = reservaId;
@@ -109,25 +117,7 @@ namespace ObligatorioProgramacion3.Controllers
 
             var items = _carritoService.ObtenerCarritoItems();
             var total = _carritoService.ObtenerTotal() * descuento;
-            var orden = new Ordene
-            {
-                ReservaId = reservaId,
-                Total = _carritoService.ObtenerTotal(),
-            };
-            _context.Add(orden);
-            await _context.SaveChangesAsync();
-            
-            foreach (var item in items)
-            {
-                _context.OrdenDetalles.Add(new OrdenDetalle
-                {
-                    Cantidad = item.Cantidad,
-                    PlatoId = item.PlatoId,
-                    OrdenId = orden.Id
-                });
 
-            }
-            await _context.SaveChangesAsync();
             var pago = new Pago
             {
                 ReservaId = reservaId,
@@ -141,12 +131,12 @@ namespace ObligatorioProgramacion3.Controllers
             _context.Pagos.Add(pago);
             await _context.SaveChangesAsync();
 
-
+            
             _carritoService.LimpiarCarrito();
 
             return RedirectToAction("Index", "Home");
         }
-
+      
         [Authorize(Policy = "PagosVer")]
         public async Task<IActionResult> Index()
         {

@@ -168,7 +168,7 @@
                                         </li>
                                     }
 
-                                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "ResteurantesVer"))
+                                    @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "RestaurantesVer"))
                                     {
                                         <li class="nav-item">
                                             <a class="nav-link" asp-area="" asp-controller="Restaurantes" asp-action="Index">Restaurantes</a>
