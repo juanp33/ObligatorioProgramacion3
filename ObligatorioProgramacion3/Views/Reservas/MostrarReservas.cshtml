@@ -57,13 +57,7 @@
             cursor: pointer;
             border-radius: 6px;
         }
-        .Fondo{
-            background-image: url('/Imagenes/Imagensol.png');
-            background-size: 200px;
-            background-repeat: repeat;
-            background-position: top left;
-        }
-
+       
     </style>
 </head>
 <body class="Fondo">
@@ -74,7 +68,7 @@
             @if (Reserva.Estado == "Confirmada" || Reserva.Estado == "Cancelada")
             {
                 <div class="ReservaMostrar">
-                    <img src="https://brandemia.org/contenido/subidas/2022/10/marca-mcdonalds-logo.png" alt="Mcdonalds Logo" id="img" />
+                   
                     <div>
                         <h4>Mesa numero: @Reserva.MesaId</h4>
                         <p>Fecha: @Reserva.FechaReserva</p>
@@ -91,7 +85,7 @@
 
 
                 <div class="ReservaMostrar">
-                    <img src="https://brandemia.org/contenido/subidas/2022/10/marca-mcdonalds-logo.png" alt="Mcdonalds Logo" id="img" />
+                    
                     <div>
                         <h4>Mesa numero: @Reserva.MesaId</h4>
                         <p>Fecha: @Reserva.FechaReserva</p>

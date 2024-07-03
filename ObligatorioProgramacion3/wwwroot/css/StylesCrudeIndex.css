@@ -31,7 +31,7 @@
     }
 
     .table tr:nth-child(even) {
-        background-color: #f9f9f9;
+        background-color: #DFCCB6;
     }
 
     .table tr:hover {
@@ -39,7 +39,7 @@
     }
 
     .table td {
-        background-color: #f1f1f1; /* Gris claro */
+        background-color: #FFFBD7; /* Gris claro */
     }
 
 .botonesEditDetailsDelete {

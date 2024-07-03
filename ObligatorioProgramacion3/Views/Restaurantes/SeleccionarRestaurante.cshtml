@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<ObligatorioProgramacion3.Models.Restaurante>
 
 @{
-    ViewData["Title"] = "SeleccionRestaurante";
+    int contador = 0;
+    string restauranteString;
 }
 
 
-<h1>@ViewData["Title"]</h1>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +31,9 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 1s;
             text-align: left;
+            cursor: pointer;
         }
+        
 
             .CartaRestaurante img {
                 max-width: 200px;
@@ -54,21 +57,36 @@
 
             @foreach (var restaurante in Model)
             {
-            <a href="@Url.Action("SeleccionarFecha", "Reservas",  new { restauranteId = restaurante.Id })" style="text-decoration: none; color: black;">
-                <div class="CartaRestaurante">
-                    <img src="https://brandemia.org/contenido/subidas/2022/10/marca-mcdonalds-logo.png" alt="Mcdonalds Logo" id="img" />
+            @if (contador == 0)
+            {
+                restauranteString = "/Imagenes/Restaurante1.png";
+            } else if (contador == 1)
+            {
+                restauranteString = "/Imagenes/Restaurante2.png";
+            }
+            else
+            {
+                restauranteString = "/Imagenes/Restaurante3.png";
+            }
+
+
+            <form action="@Url.Action("SeleccionarFecha", "Reservas", new { restauranteId = restaurante.Id })" method="post" style="text-decoration: none; color: black;">
+                <!-- Contenedor del restaurante -->
+                <div class="CartaRestaurante" onclick="this.closest('form').submit();">
+                    <!-- Imagen del restaurante -->
+                    <img src="@restauranteString" alt="Mcdonalds Logo" id="img" />
+                    <!-- Información del restaurante -->
                     <div>
                         <h4>@restaurante.Nombre</h4>
                         <p>Dirección: @restaurante.Dirección</p>
                         <p>Teléfono: @restaurante.Teléfono</p>
-                        
                     </div>
-                
                 </div>
-                </a>
+            </form>
+                contador++;
             }
         </div>
-    
+    }
     
 </body>
 

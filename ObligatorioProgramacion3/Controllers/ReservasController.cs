@@ -39,6 +39,7 @@ namespace ObligatorioProgramacion3.Controllers
 
         }
         [Authorize(Policy = "ReservasSeleccionarFecha")]
+        [HttpPost]
         public IActionResult SeleccionarFecha(int restauranteId)
         {
           
@@ -47,7 +48,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SeleccionarFecha(DateTime fecha, int restauranteId)
+        public IActionResult EnviarFecha(DateTime fecha, int restauranteId)
         {
            
             return RedirectToAction("SeleccionarMesa", new { fecha, restauranteId });

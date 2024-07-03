@@ -16,8 +16,7 @@ public partial class Reserva
     
     public int? MesaId { get; set; }
 
-    [Required(ErrorMessage = "La fecha de la reserva es obligatoria.")]
-    public DateTime FechaReserva { get; set; }
+    public DateTime FechaReserva { get; set; } 
 
     [Required(ErrorMessage = "El estado es obligatorio.")]
     [StringLength(50, ErrorMessage = "El estado no puede exceder los 50 caracteres.")]
@@ -27,7 +26,6 @@ public partial class Reserva
 
     public int? IdRestaurante { get; set; }
 
-    [Required(ErrorMessage = "El ID del usuario es obligatorio.")]
 
     public int? UsuarioId { get; set; }
 
