@@ -20,3 +20,101 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.sidebar {
+    position: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 48px 0 0;
+    width: 400px;
+    color:black
+}
+.line {
+    width: 100%;
+    height: 4px;
+    background-color: black; /* Color original */
+    transition: background-color 0.3s;
+}
+
+
+
+.offcanvas {
+    width: 400px;
+    background-color: #deccb4;
+}
+
+.nav-link {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+    .nav-link.active {
+        color: black;
+    }
+
+    .nav-link:hover {
+        color: black;
+    }
+
+.main {
+    margin-left: 250px;
+    padding-top: 60px;
+    flex: 1;
+}
+
+.footer {
+    padding: 1rem 0;
+    background-color: #f8f9fa;
+    border-top: 1px solid #998577;
+    width: 100%;
+   
+}
+
+
+.fotologo {
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 125px;
+    height: auto;
+    border-radius: 90%;
+    margin-top: 50px;
+    position: absolute;
+}
+
+.auth-buttons {
+    margin-left: auto;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin-top: 100px;
+}
+
+.container-fluid {
+    flex: 1;
+}
+
+.Fondo {
+    background-color: #FFF8E7;
+   
+
+}
+
+.btnauth {
+    background-color: #DFDCB6;
+    border: 2px solid black; /* Agrega un borde de 2px sólido con color #333 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Agrega una sombra */
+    padding: 15px 30px;
+    border-radius: 5px;
+    color: black;
+}
+
+.navbar-toggler-icon {
+    color: black;
+}

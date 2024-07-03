@@ -25,6 +25,13 @@ namespace ObligatorioProgramacion3.Controllers
 
 
         }
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpGet]
 
         public IActionResult Login()

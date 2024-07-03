@@ -1,99 +1,110 @@
-﻿.BotonCreate {
+﻿.BotonCreate,
+.botonesEditDetailsDelete,
+.boton-edit,
+.boton-details,
+.boton-delete {
     display: inline-block;
     margin-bottom: 15px;
     padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
+    width: 150px;
+    text-align: center;
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
+    box-sizing: border-box;
+}
+
+    .BotonCreate:hover,
+    .botonesEditDetailsDelete:hover,
+    .boton-edit:hover,
+    .boton-details:hover,
+    .boton-delete:hover {
+        filter: brightness(90%);
+    }
+
+.BotonCreate {
+    background-color: #42a1f5;
+    color: #FFF8E7;
 }
 
     .BotonCreate:hover {
         background-color: #0056b3;
+        color: #FFFFFF;
+    }
+
+.botonesEditDetailsDelete,
+.boton-edit,
+.boton-details {
+    background-color: #42a1f5;
+    color: #FFF8E7;
+}
+
+    .botonesEditDetailsDelete:hover,
+    .boton-edit:hover,
+    .boton-details:hover {
+        background-color: #0056b3;
+        color: #FFFFFF;
+    }
+
+.boton-delete {
+    background-color: transparent;
+    color: #FF6F61;
+    border: 2px solid #FF6F61;
+}
+
+    .boton-delete:hover {
+        background-color: #FF6F61;
+        color: #FFFFFF;
+        border-color: #FF6F61;
     }
 
 .table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
     .table th, .table td {
         padding: 12px;
         text-align: left;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #DDD;
     }
 
     .table th {
-        background-color: #ffffff; /* Blanco */
-        font-weight: bold;
+        background-color: #5D4037;
+        color: #FFF8E7;
+        padding: 10px;
+        text-align: left;
+        border-bottom: 2px solid #FFF8E7;
     }
 
     .table tr:nth-child(even) {
-        background-color: #DFCCB6;
+        background-color: #FFFFF0;
     }
 
     .table tr:hover {
-        background-color: #f1f1f1;
+        background-color: #FFDAB9;
     }
 
     .table td {
-        background-color: #FFFBD7; /* Gris claro */
+        background-color: #FFF8E7;
     }
 
-.botonesEditDetailsDelete {
-    display: inline-block;
-    margin-bottom: 15px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.boton-edit {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    transition: background-color 0.3s;
-}
-
-    .boton-edit:hover {
-        background-color: #45a049;
-    }
-
-.boton-details {
-    background-color: violet; /* Verde */
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    transition: background-color 0.3s;
-}
-
-.boton-edit:details {
-    background-color: violet;
-}
-
-.boton-delete {
-    background-color: #f44336; /* Rojo */
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    transition: background-color 0.3s;
-}
-
-.btn-delete:hover {
-    background-color: #da190b;
-}
-
-/* Estilo para el contenedor de la tabla */
 .table-container {
     overflow-x: auto;
     margin-top: 20px;
+}
+.header {
+    background-image: url('../Imagenes/ImagenSolRecortada.png');
+    background-position: top center;
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding-top: 50px;
 }

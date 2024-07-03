@@ -19,11 +19,11 @@ namespace ObligatorioProgramacion3.Controllers
         {
             _context = context;
         }
-        
-        [Authorize(Policy = "PlatoesSoloVer")]
-        public async Task<IActionResult> MenuSoloVer()
+
+
+        public async Task<IActionResult> MenuSoloVer(int restauranteId)
         {
-            var Platos = await _context.Platos.ToListAsync();
+            var Platos = await _context.Platos.Where(p => p.IdRestaurante == restauranteId).ToListAsync();
             return View(Platos);
         }
         // GET: Platoes

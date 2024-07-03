@@ -36,7 +36,7 @@ namespace ObligatorioProgramacion3.Controllers
             var obligatorioProgramacion3Context = _context.Reseñas.Include(o => o.Restaurante).Include(o => o.Cliente);    
             return View(await obligatorioProgramacion3Context.ToListAsync());
         }
-        [Authorize(Policy = "ReseñasReseñas")] 
+        
         public async Task<IActionResult> Reseñas()
         {
 

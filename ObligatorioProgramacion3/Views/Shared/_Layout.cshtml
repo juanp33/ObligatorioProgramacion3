@@ -14,119 +14,31 @@
     <title>@ViewData["Title"] - ObligatorioProgramacion3</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <style>
-       
-        .sidebar {
-            position: center;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 100;
-            padding: 48px 0 0;
-            width: 400px;
-           
-        }
-
-            .sidebar .nav-link {
-                font-size: 1.1rem;
-                color: #333;
-            }
-
-                .sidebar .nav-link.active {
-                    color: black;
-                }
-
-                .sidebar .nav-link:hover {
-                    color: black;
-                }
-
-        .offcanvas {
-            width: 400px;
-            background-color: #DFDCB6;
-        }
-
-        .nav-link {
-            font-size: 1.1rem;
-            color: #333;
-        }
-
-            .nav-link.active {
-                color: black;
-            }
-
-            .nav-link:hover {
-                color: black;
-            }
-
-        .main {
-            margin-left: 250px;
-            padding-top: 60px;
-            flex: 1;
-        }
-
-        .footer {
-            padding: 1rem 0;
-            background-color: #f8f9fa;
-            border-top: 1px solid #e4e5e7;
-            width: 100%;
-        }
-
-        
-        #imgLogo {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width:110px;
-            height:auto;
-            border-radius:90%;
-            margin-top:50px;
-        }
-
-        .auth-buttons {
-            margin-left: auto;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin-top: 100px;
-        }
-
-        .container-fluid {
-            flex: 1;
-        }
-         .Fondo{
-            background-color: #DFCCB6;
-        }
-
-        .btnauth {
-            background-color: #DFDCB6;
-            border: 2px solid black; /* Agrega un borde de 2px sólido con color #333 */
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Agrega una sombra */
-            padding: 15px 30px; 
-            border-radius: 5px; 
-            color:black;
-        }
-
-        .navbar-toggler-icon{
-           
-            color:black;
-        }
-    </style>
+  
 </head>
 <body class="Fondo">
-    <div class="d-flex">
+    <header class="d-flex">
+        <img class="fotologo" src="~/Imagenes/ImagenSolRecortada.png"/>
+
+        
+
         <nav class="navbar fixed-top navbar-dark shadow-5-strong">
             
             <div class="container-fluid">
                 <button class="btnauth" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <img id="imgLogo" src="/imagenes/ImagenSolRecortada.png" />
+                
                 <div class="auth-buttons">
+                    @if(!User.Identity.IsAuthenticated){
                     <a class="btn btn-outline-primary me-2 btnauth" asp-area="" asp-controller="Usuarios" asp-action="Login">Iniciar Sesión</a>
-                    <a class="btn btn-primary btnauth" asp-area="" asp-controller="Usuarios" asp-action="RegistroUsuario">Registrarse</a>
+                        <a class="btn btn-primary btnauth" asp-area="" asp-controller="Usuarios" asp-action="RegistroUsuario">Registrarse</a>
+                    }else
+                    {
+                        <a class="btn btn-primary btnauth" asp-area="" asp-controller="Usuarios" asp-action="Logout">Cerrar Sesión</a>
+                    }
+
+
                 </div>
             </div>
         </nav>
@@ -142,7 +54,7 @@
                         <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Platoes" asp-action="MenuSoloVer">Menu</a>
+                        <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Restaurantes" asp-action="SeleccionarRestauranteMenu">Menu</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Reseña" asp-action="Reseñas">Reseñas</a>
@@ -173,7 +85,7 @@
 
 
 
-                    @if ((userClaims.Any(c => c.Type == "Permission" && c.Value == "ClientesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenDetallesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PagosVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PlatosVer") || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ResteurantesVer"))) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReseñasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReservasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "UsuariosVer")))
+                    @if ((userClaims.Any(c => c.Type == "Permission" && c.Value == "ClientesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenDetallesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PagosVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PlatosVer") || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ResteurantesVer"))) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReseñasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReservasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "UsuariosVer"))||(userClaims.Any(c => c.Type == "Permission" && c.Value == "PermisosRolesYPermisos")))
                     {
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#adminSubmenu" role="button" aria-expanded="false" aria-controls="adminSubmenu">
@@ -203,9 +115,10 @@
                                     @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "PermisosRolesYPermisos"))
                                     {
                                         <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Permisoes" asp-action="RolesYPermisos">Gestion Roles y Permisos</a>
+                                            <a class="nav-link" asp-area="" asp-controller="Permisoes" asp-action="RolesYPermisos">Permisos en roles</a>
                                         </li>
                                     }
+                                    
                                     @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer"))
                                     {
                                         <li class="nav-item">
@@ -277,10 +190,11 @@
             </div>
         </div>
 
-        <main class="container-fluid mt-5 pt-3">
-            @RenderBody()
-        </main>
-    </div>
+        
+    </header>
+    <main class="container-fluid mt-5 pt-3">
+        @RenderBody()
+    </main>
 
     <footer class="footer text-muted border-top mt-auto">
         <div class="container">
