@@ -1,0 +1,93 @@
+﻿@model IEnumerable<ObligatorioProgramacion3.Models.Restaurante>
+
+@{
+    int contador = 0;
+    string restauranteString;
+}
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccione su restaurante de preferencia</title>
+    <style>
+
+
+        .restauranteContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .CartaRestaurante {
+            display: flex;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 1s;
+            text-align: left;
+            cursor: pointer;
+        }
+
+
+            .CartaRestaurante img {
+                max-width: 200px;
+                margin-right: 40px;
+            }
+
+            .CartaRestaurante:hover {
+                transform: scale(1.05);
+            }
+
+            .CartaRestaurante h2 {
+                margin-top: 1px;
+            }
+
+    </style>
+</head>
+<body>
+
+
+    <div class="restauranteContainer">
+
+        @foreach (var restaurante in Model)
+        {
+            @if (contador == 0)
+            {
+                restauranteString = "/Imagenes/Restaurante1.png";
+            }
+            else if (contador == 1)
+            {
+                restauranteString = "/Imagenes/Restaurante2.png";
+            }
+            else
+            {
+                restauranteString = "/Imagenes/Restaurante3.png";
+            }
+
+
+            <form action="@Url.Action("MenuSoloVer", "Platoes", new { restauranteId = restaurante.Id })" method="post" style="text-decoration: none; color: black;">
+                <!-- Contenedor del restaurante -->
+                <div class="CartaRestaurante" onclick="this.closest('form').submit();">
+                    <!-- Imagen del restaurante -->
+                    <img src="@restauranteString" alt="Mcdonalds Logo" id="img" />
+                    <!-- Información del restaurante -->
+                    <div>
+                        <h4>@restaurante.Nombre</h4>
+                        <p>Dirección: @restaurante.Dirección</p>
+                        <p>Teléfono: @restaurante.Teléfono</p>
+                    </div>
+                </div>
+            </form>
+            contador++;
+        }
+    </div>
+    }
+
+</body>
+
