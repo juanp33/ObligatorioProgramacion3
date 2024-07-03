@@ -81,7 +81,7 @@
 
 
 
-                    @if ((userClaims.Any(c => c.Type == "Permission" && c.Value == "ClientesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenDetallesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PagosVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PlatosVer") || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ResteurantesVer"))) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReseñasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReservasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "UsuariosVer")))
+                    @if ((userClaims.Any(c => c.Type == "Permission" && c.Value == "ClientesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenDetallesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PagosVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PlatosVer") || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ResteurantesVer"))) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReseñasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReservasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "UsuariosVer"))||(userClaims.Any(c => c.Type == "Permission" && c.Value == "PermisosRolesYPermisos")))
                     {
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#adminSubmenu" role="button" aria-expanded="false" aria-controls="adminSubmenu">
@@ -105,15 +105,16 @@
                                     @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "PermisosVer"))
                                     {
                                         <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Permisos" asp-action="Index">Permisos</a>
+                                            <a class="nav-link" asp-area="" asp-controller="Permisoes" asp-action="Index">Permisos</a>
                                         </li>
                                     }
                                     @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "PermisosRolesYPermisos"))
                                     {
                                         <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Permisos" asp-action="RolesYPermisos">Gestion Roles y Permisos</a>
+                                            <a class="nav-link" asp-area="" asp-controller="Permisoes" asp-action="RolesYPermisos">Permisos en roles</a>
                                         </li>
                                     }
+                                    
                                     @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer"))
                                     {
                                         <li class="nav-item">

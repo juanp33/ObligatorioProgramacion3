@@ -22,7 +22,7 @@ namespace ObligatorioProgramacion3.Controllers
             _context = context;
         }
 
-        //[Authorize(Policy = "PermisosRolesYPermisos")]
+        [Authorize(Policy = "PermisosRolesYPermisos")]
         public async Task<IActionResult> RolesYPermisos()
         {
           
