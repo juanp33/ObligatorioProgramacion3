@@ -97,3 +97,14 @@
     overflow-x: auto;
     margin-top: 20px;
 }
+.header {
+    background-image: url('../Imagenes/ImagenSolRecortada.png');
+    background-position: top center;
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding-top: 50px;
+}
