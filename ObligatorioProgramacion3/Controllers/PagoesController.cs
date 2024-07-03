@@ -163,6 +163,7 @@ namespace ObligatorioProgramacion3.Controllers
             
             var items = _carritoService.ObtenerCarritoItems();
             var total = _carritoService.ObtenerTotal();
+            ViewData["SubTotal"] = total;
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             var tipoCliente = _context.Clientes
@@ -198,6 +199,7 @@ namespace ObligatorioProgramacion3.Controllers
             decimal tipoDeCambio = await ObtenerTipoDeCambio(reservaId);
             total = total * descuento;
             var restauranteId = _context.Reservas.Where(r => r.Id == reservaId).Select(r => r.IdRestaurante).FirstOrDefault();
+            ViewData["TipoCliente"] = tipoCliente;
             ViewData["restauranteId"]=restauranteId;
             ViewData["descuento"] = descuento;
             ViewData["TipoDeCambio"] = tipoDeCambio;

@@ -32,6 +32,10 @@
                 }
             }
         }
+        public bool TieneItems()
+        {
+            return _carritoItems.Any();
+        }
 
         public IEnumerable<CarritoItem> ObtenerCarritoItems()
         {

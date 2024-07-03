@@ -7,6 +7,34 @@
     decimal? TipoDeCambio = ViewData["TipoDeCambio"] as decimal?;
     string tipoDeCambioJS = TipoDeCambio.ToString();
     tipoDeCambioJS = tipoDeCambioJS.Replace(",", ".");
+    decimal? temperatura = ViewData["temperatura"] as decimal?;
+    bool? estaLloviendo = ViewData["estaLloviendo"] as bool?;
+    string tipoCliente = ViewData["TipoCliente"] as string;
+    decimal? subtotalDec = ViewData["Subtotal"] as decimal?;
+    decimal? descuentoRaw = (1 - @descuento) *100;
+    int descuentoRawInt;
+
+
+    if (descuentoRaw.HasValue)
+    {
+        descuentoRawInt = (int)descuentoRaw.Value;
+    }
+    else
+    {
+
+        descuentoRawInt = 0; 
+    }
+    double? subtotal = null;
+    if (subtotalDec.HasValue)
+    {
+        subtotal = (double)subtotalDec.Value;
+    }
+    else
+    {
+
+        subtotal = 0;
+    }
+    double? tipoDeCambioDouble = (double)TipoDeCambio.Value;
 
 }
 <h2>Pagar Reserva</h2>
@@ -57,7 +85,8 @@
         }
     </div>
     <div id="carritoTotal">
-        <h3>Total: <span id="totalDisplay">@Model.Total.ToString("C")</span></h3>
+        <h5> Subtotal: $@subtotal (USD)</h5>
+       
     </div>
     <div class="form-group">
         <label for="currencySelector">Moneda</label>
@@ -77,8 +106,64 @@
             {
                 <option value="EUR">Euros (EUR)</option>
             }
-
+         
+        
         </select>
+        @if (tipoCliente == "NORMAL")
+        {
+            <p> Tu tipo de cliente es @tipoCliente</p>
+        }
+        else if (tipoCliente == "FRECUENTE")
+        {
+            <p> Tu tipo de cliente es @tipoCliente, obtienes un descuento de 10%</p>
+        }
+        else
+        {
+            <p> Tu tipo de cliente es @tipoCliente, obtienes un descuento de 20%</p>
+        }
+
+        @if (temperatura < 10 && temperatura > 0)
+        {
+            <p>La temperatura es °C @temperatura, obtienes un descuento de 5% </p>
+
+        }
+        else if (temperatura <= 0)
+        {
+            <p>La temperatura es °C @temperatura, obtienes un descuento de 10% </p>
+        }
+        else
+        {
+            <p>La temperatura es °C @temperatura </p>
+        }
+        @if (estaLloviendo == true)
+        {
+            <p>En este momento esta lloviendo en la ciudad, obtienes un descuento de 5% </p>
+        }
+        else
+        {
+            <p>En este momento no esta lloviendo en la ciudad </p>
+        }
+        @if (descuento > 0)
+        {
+            <p>Su descuento total es @descuentoRawInt%</p>
+        }
+        else
+        {
+            <p>No posees un descuento</p>
+        }
+        <h3>Total: <span id="totalDisplay">@Model.Total.ToString("C")</span></h3>
+        @if(restauranteId == 1)
+        {
+            <p> El tipo de cambio al dia de la fecha es: 1 (USD) = @TipoDeCambio (UYU)</p>
+        } else if (restauranteId == 2)
+        {
+            <p> El tipo de cambio al dia de la fecha es: 1 (USD) = @TipoDeCambio (MXN)</p>
+        }
+        else
+        {
+            <p> El tipo de cambio al dia de la fecha es: 1 (USD) = @TipoDeCambio (€)</p>
+        }
+
     </div>
 </div>
 

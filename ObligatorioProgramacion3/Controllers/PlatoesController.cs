@@ -14,10 +14,12 @@ namespace ObligatorioProgramacion3.Controllers
     public class PlatoesController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
+        private readonly CarritoService _carritoService;
 
-        public PlatoesController(ObligatorioProgramacion3Context context)
+        public PlatoesController(ObligatorioProgramacion3Context context, CarritoService carritoService)
         {
             _context = context;
+            _carritoService= carritoService;
         }
 
 
@@ -180,6 +182,11 @@ namespace ObligatorioProgramacion3.Controllers
         [HttpPost]
         public async Task<IActionResult> SeleccionarPlato(int ReservaId) 
         {
+            if(_carritoService.TieneItems())
+            {
+                _carritoService.LimpiarCarrito();
+            }
+           
             var restauranteId = _context.Reservas.Where(r => r.Id == ReservaId).Select(r => r.IdRestaurante).FirstOrDefault();
             var Platos = await _context.Platos.Where(p => p.IdRestaurante == restauranteId).ToListAsync();
             ViewData["ReservaId"] = ReservaId;
