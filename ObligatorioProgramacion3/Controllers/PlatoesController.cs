@@ -76,7 +76,7 @@ namespace ObligatorioProgramacion3.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", plato.IdRestaurante);
+            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Nombre", plato.IdRestaurante);
             return View(plato);
         }
 
@@ -94,7 +94,7 @@ namespace ObligatorioProgramacion3.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", plato.IdRestaurante);
+            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Nombre", plato.IdRestaurante);
             return View(plato);
         }
 
@@ -130,7 +130,7 @@ namespace ObligatorioProgramacion3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", plato.IdRestaurante);
+            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Nombre", plato.IdRestaurante);
             return View(plato);
         }
 
