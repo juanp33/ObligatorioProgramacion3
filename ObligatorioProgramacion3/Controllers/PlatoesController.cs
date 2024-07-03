@@ -20,7 +20,7 @@ namespace ObligatorioProgramacion3.Controllers
             _context = context;
         }
         
-        [Authorize(Policy = "PlatoesSoloVer")]
+        
         public async Task<IActionResult> MenuSoloVer()
         {
             var Platos = await _context.Platos.ToListAsync();
