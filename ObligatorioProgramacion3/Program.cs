@@ -16,11 +16,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.SlidingExpiration = true;
     });
 
-builder.Services.AddScoped<IAuthorizationHandler, PermisoPaginaManejador>(); 
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<IAuthorizationHandler, PermisoPaginaManejador>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<CarritoService>();
 builder.Services.AddAuthorization(options =>
 {
+    options.AddPolicy("PoderPagarReserva", policy => policy.Requirements.Add(new PermisoPaginaRequisito("PoderPagarReserva")));
     // Define políticas para AdministracionController
     options.AddPolicy("AdministracionVer", policy => policy.Requirements.Add(new PermisoPaginaRequisito("AdministracionVer")));
     
