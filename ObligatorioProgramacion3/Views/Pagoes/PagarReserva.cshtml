@@ -1,14 +1,14 @@
-﻿
-@model ObligatorioProgramacion3.Models.CarritoViewModel
+﻿@model ObligatorioProgramacion3.Models.CarritoViewModel
 
 @{
     int? restauranteId = ViewData["restauranteId"] as int?;
     decimal? descuento = ViewData["descuento"] as decimal?;
     int? reservaId = ViewData["reservaId"] as int?;
     decimal? TipoDeCambio = ViewData["TipoDeCambio"] as decimal?;
-    decimal tipoDeCambioJS = TipoDeCambio ?? 1; 
-    
-    }
+    string tipoDeCambioJS = TipoDeCambio.ToString();
+    tipoDeCambioJS = tipoDeCambioJS.Replace(",", ".");
+
+}
 <h2>Pagar Reserva</h2>
 <style>
     #carritoContainer {
@@ -62,13 +62,14 @@
     <div class="form-group">
         <label for="currencySelector">Moneda</label>
         <select id="currencySelector" class="form-control" onchange="updateCurrency()">
-  
+
             <option value="USD">Dólares (USD)</option>
-            
-            @if (restauranteId==1){
+
+            @if (restauranteId == 1)
+            {
                 <option value="UYU">Pesos Uruguayos (UYU)</option>
             }
-            else if (restauranteId==2)
+            else if (restauranteId == 2)
             {
                 <option value="MXN">Pesos Mexicanos (MXN)</option>
             }
@@ -76,7 +77,7 @@
             {
                 <option value="EUR">Euros (EUR)</option>
             }
-           
+
         </select>
     </div>
 </div>
@@ -88,7 +89,7 @@
             <option value="">Seleccione un método</option>
             <option value="Tarjeta">Tarjeta</option>
             <option value="Efectivo">Efectivo</option>
-            
+
         </select>
         <input type="hidden" name="reservaId" value="@reservaId" />
         <input type="hidden" name="descuento" value="@descuento" />
@@ -97,8 +98,11 @@
 </form>
 
 <script>
-    let tipoDeCambio = @tipoDeCambioJS;
-    let totalEnUSD = @Model.Total;
+    
+    
+    let tipoDeCambio = parseFloat('@tipoDeCambioJS');
+    let totalEnUSD = parseFloat('@Model.Total');
+
     let totalEnUYU = totalEnUSD * tipoDeCambio;
     let totalEnMXN = totalEnUSD * tipoDeCambio;
     let totalEnEUR = totalEnUSD * tipoDeCambio;
