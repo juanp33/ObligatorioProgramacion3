@@ -23,20 +23,37 @@ namespace ObligatorioProgramacion3.Controllers
             _context = context;
             _carritoService= carritoService;
         }
-        private async Task<decimal> ObtenerTipoDeCambio()
+        private async Task<decimal> ObtenerTipoDeCambio(int reservaID)
         {
+            var restauranteId = _context.Reservas.Where(r => r.Id == reservaID).Select(r => r.IdRestaurante).FirstOrDefault();
             using (var client = new HttpClient())
             {
                 try
                 {
-                    string url = "http://api.currencylayer.com/live?access_key=b6fb3ee2a8859b4237975e1d708cb64e&currencies=UYU";
+                    string moneda;
+                    if (restauranteId == 1)
+                    {
+                        moneda = "UYU";
+                    }else if(restauranteId == 2) {
+                        moneda = "MXN"; 
+                    }else { moneda = "EUR"; }
+                    string url = $"http://api.currencylayer.com/live?access_key=b6fb3ee2a8859b4237975e1d708cb64e&currencies={moneda}";
                     HttpResponseMessage response = await client.GetAsync(url);
+
 
                     if (response.IsSuccessStatusCode)
                     {
                         string content = await response.Content.ReadAsStringAsync();
                         dynamic data = JsonConvert.DeserializeObject(content);
-                        return data.quotes.USDUYU;
+                        if (restauranteId == 1){
+                            return data.quotes.USDUYU;
+                        }else if(restauranteId == 2){
+                            
+                            return data.quotes.USDMXN;
+                        }
+                        else {
+                            return data.quotes.USDEUR;
+                          }
                     }
                 }
                 catch (Exception ex)
@@ -70,8 +87,10 @@ namespace ObligatorioProgramacion3.Controllers
                 descuento = descuento - (0.20m);
             }
             
-            decimal tipoDeCambio = await ObtenerTipoDeCambio();
+            decimal tipoDeCambio = await ObtenerTipoDeCambio(reservaId);
             total = total * descuento;
+            var restauranteId = _context.Reservas.Where(r => r.Id == reservaId).Select(r => r.IdRestaurante).FirstOrDefault();
+            ViewData["restauranteId"]=restauranteId;
             ViewData["descuento"] = descuento;
             ViewData["TipoDeCambio"] = tipoDeCambio;
             ViewData["reservaId"] = reservaId;

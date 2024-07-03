@@ -2,10 +2,12 @@
 @model ObligatorioProgramacion3.Models.CarritoViewModel
 
 @{
+    int? restauranteId = ViewData["restauranteId"] as int?;
     decimal? descuento = ViewData["descuento"] as decimal?;
     int? reservaId = ViewData["reservaId"] as int?;
     decimal? TipoDeCambio = ViewData["TipoDeCambio"] as decimal?;
     decimal tipoDeCambioJS = TipoDeCambio ?? 1; 
+    
     }
 <h2>Pagar Reserva</h2>
 <style>
@@ -62,7 +64,19 @@
         <select id="currencySelector" class="form-control" onchange="updateCurrency()">
   
             <option value="USD">Dólares (USD)</option>
-            <option value="UYU">Pesos Uruguayos (UYU)</option>
+            
+            @if (restauranteId==1){
+                <option value="UYU">Pesos Uruguayos (UYU)</option>
+            }
+            else if (restauranteId==2)
+            {
+                <option value="MXN">Pesos Mexicanos (MXN)</option>
+            }
+            else
+            {
+                <option value="EUR">Euros (EUR)</option>
+            }
+           
         </select>
     </div>
 </div>
@@ -83,17 +97,24 @@
 </form>
 
 <script>
-        let tipoDeCambio = @tipoDeCambioJS
-    let totalEnUSD = @Html.Raw(Model.Total);
+    let tipoDeCambio = @tipoDeCambioJS;
+    let totalEnUSD = @Model.Total;
     let totalEnUYU = totalEnUSD * tipoDeCambio;
+    let totalEnMXN = totalEnUSD * tipoDeCambio;
+    let totalEnEUR = totalEnUSD * tipoDeCambio;
 
     function updateCurrency() {
         var currency = document.getElementById("currencySelector").value;
         var display = document.getElementById("totalDisplay");
+
         if (currency === "USD") {
             display.innerHTML = totalEnUSD.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-        } else {
+        } else if (currency === "UYU") {
             display.innerHTML = totalEnUYU.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
+        } else if (currency === "MXN") {
+            display.innerHTML = totalEnMXN.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+        } else if (currency === "EUR") {
+            display.innerHTML = totalEnEUR.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
         }
     }
 </script>

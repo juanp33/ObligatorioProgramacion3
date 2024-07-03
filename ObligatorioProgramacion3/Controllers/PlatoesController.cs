@@ -178,11 +178,12 @@ namespace ObligatorioProgramacion3.Controllers
 
         [Authorize(Policy = "PlatoesSeleccionarPlato")]
         [HttpPost]
-        public IActionResult SeleccionarPlato(int ReservaId) 
+        public async Task<IActionResult> SeleccionarPlato(int ReservaId) 
         {
-            var platos = _context.Platos.ToList();
+            var restauranteId = _context.Reservas.Where(r => r.Id == ReservaId).Select(r => r.IdRestaurante).FirstOrDefault();
+            var Platos = await _context.Platos.Where(p => p.IdRestaurante == restauranteId).ToListAsync();
             ViewData["ReservaId"] = ReservaId;
-            return View(platos);
+            return View(Platos);
             
 
         }
