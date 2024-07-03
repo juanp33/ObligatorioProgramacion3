@@ -141,7 +141,8 @@ namespace ObligatorioProgramacion3.Controllers
                             Temperatura = temperatura,
                             Fecha = DateOnly.FromDateTime(DateTime.Now),
                         };
-
+                        _context.Add(clima);
+                        await _context.SaveChangesAsync();
 
                         return isRaining;
                     }
@@ -182,11 +183,11 @@ namespace ObligatorioProgramacion3.Controllers
                                         .OrderByDescending(c => c.Fecha)
                                         .FirstOrDefaultAsync();
             var temperatura = ultimoClima.Temperatura;
-            if(temperatura < 10)
+            if(temperatura < 10 && temperatura > 0)
             {
                 descuento = descuento - (0.05m);
             }
-            else
+            else if(temperatura <= 0)
             {
                 descuento = descuento - (0.10m);
             }
@@ -224,9 +225,32 @@ namespace ObligatorioProgramacion3.Controllers
                     Total = _carritoService.ObtenerTotal()
                 });
             }
-
+           
             var items = _carritoService.ObtenerCarritoItems();
             var total = _carritoService.ObtenerTotal() * descuento;
+
+            Ordene orden = new Ordene
+            {
+                ReservaId = reservaId,
+                Total = _carritoService.ObtenerTotal()
+            };
+
+            _context.Ordenes.Add(orden);
+            await _context.SaveChangesAsync();
+          
+            foreach(var item in items)
+            {
+                OrdenDetalle ordenDetalle = new OrdenDetalle
+                {
+                    OrdenId = orden.Id,
+                    PlatoId = item.PlatoId,
+                    Cantidad = item.Cantidad,
+
+                };
+                _context.OrdenDetalles.Add(ordenDetalle);
+                await _context.SaveChangesAsync();
+            }
+            
             var ultimoClima = await _context.Climas
                                         .OrderByDescending(c => c.Fecha)
                                         .FirstOrDefaultAsync();
