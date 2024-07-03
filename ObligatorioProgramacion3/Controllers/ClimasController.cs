@@ -10,7 +10,7 @@ using ObligatorioProgramacion3.Models;
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    
+
     public class ClimasController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
@@ -53,7 +53,7 @@ namespace ObligatorioProgramacion3.Controllers
             return View();
         }
 
-        // POST: Climas/Create
+        // POST: Climas1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -67,6 +67,7 @@ namespace ObligatorioProgramacion3.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(clima);
+
         }
 
         // GET: Climas/Edit/5
@@ -86,7 +87,7 @@ namespace ObligatorioProgramacion3.Controllers
             return View(clima);
         }
 
-        // POST: Climas/Edit/5
+        // POST: Climas1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -140,7 +141,7 @@ namespace ObligatorioProgramacion3.Controllers
             return View(clima);
         }
 
-        // POST: Climas/Delete/5
+        // POST: Climas1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

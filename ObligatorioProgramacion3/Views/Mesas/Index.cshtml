@@ -24,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRestaurante)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -38,6 +41,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.IdRestaurante)
             </td>
             <td>
                     <a class="botonesEditDetailsDelete boton-edit" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
