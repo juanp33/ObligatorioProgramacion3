@@ -72,35 +72,40 @@ namespace ObligatorioProgramacion3.Controllers
         }
 
         [Authorize(Policy = "ReservasSeleccionarMesa")]
-        public IActionResult SeleccionarMesa(DateTime fecha, int restauranteId)
+        public async Task<IActionResult> SeleccionarMesa(DateTime fecha, int restauranteId)
         {
-            var mesasOcupadas = _context.Reservas.Where(reserva => reserva.FechaReserva == fecha).Select(reserva => reserva.MesaId).ToList();
+            
+            var mesasOcupadas = await _context.Reservas.Where(reserva => reserva.FechaReserva == fecha && reserva.IdRestaurante == restauranteId).Select(reserva => reserva.MesaId).ToListAsync();
 
-            var mesas = _context.Mesas.ToList();
+            var mesas = await _context.Mesas
+         .Where(m => m.IdRestaurante == restauranteId)
+         .ToListAsync();
 
             var viewModel = new SelectMesa
             {
                 Fecha = fecha,
-                restauranteId= restauranteId,
-                
+                restauranteId = restauranteId,
+
                 ChechboxMesa = mesas.Select(m => new ChechboxMesa
                 {
                     MesaId = m.Id,
-                    
+
                     EstaOcupada = mesasOcupadas.Contains(m.Id)
                 }).ToList()
-            };
+            }; 
 
             return View(viewModel);
         }
 
         [Authorize(Policy = "ReservasCrearReserva")]
+        [Authorize(Policy = "ReservasCrearReserva")]
         public IActionResult CrearReserva(int MesaId, DateTime fecha, int restauranteId)
         {
             var clienteId = _context.Clientes
-                         .Where(r => r.IdUsuarios == int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)))
-                         .Select(r => r.Id)
-                         .FirstOrDefault();
+                .Where(r => r.IdUsuarios == int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                .Select(r => r.Id)
+                .FirstOrDefault();
+
             var mesa = _context.Mesas.FirstOrDefault(m => m.Id == MesaId);
             if (mesa == null)
             {
@@ -116,15 +121,16 @@ namespace ObligatorioProgramacion3.Controllers
                 IdRestaurante = restauranteId,
                 UsuarioId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))
             };
-           
+
             ViewData["MesaId"] = mesa.Id;
             ViewData["NumeroMesa"] = mesa.NumeroMesa;
             ViewData["Fecha"] = fecha;
-            ViewData["IdRestaurante"]= restauranteId;
+            ViewData["IdRestaurante"] = restauranteId;
+
             return View(reserva);
         }
 
-      
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CrearReserva([Bind("MesaId,FechaReserva,ClienteId,Estado,IdRestaurante,UsuarioId")] Reserva reserva)
