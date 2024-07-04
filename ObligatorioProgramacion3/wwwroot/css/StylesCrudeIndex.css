@@ -23,27 +23,27 @@
     }
 
 .BotonCreate {
-    background-color: #42a1f5;
-    color: #FFF8E7;
+    background-color: #5d4037;
+    color: white;
 }
 
     .BotonCreate:hover {
-        background-color: #0056b3;
-        color: #FFFFFF;
+        background-color: #a6896f;
+        color: black;
     }
 
 .botonesEditDetailsDelete,
 .boton-edit,
 .boton-details {
-    background-color: #42a1f5;
-    color: #FFF8E7;
+    background-color: #5d4037;
+    color: white;
 }
 
     .botonesEditDetailsDelete:hover,
     .boton-edit:hover,
     .boton-details:hover {
-        background-color: #0056b3;
-        color: #FFFFFF;
+        background-color: #a6896f;
+        color: black;
     }
 
 .boton-delete {
@@ -74,7 +74,7 @@
     }
 
     .table th {
-        background-color: #5D4037;
+        background-color: #5d4037;
         color: #FFF8E7;
         padding: 10px;
         text-align: left;
@@ -108,16 +108,6 @@
     align-items: start;
     padding-top: 50px;
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

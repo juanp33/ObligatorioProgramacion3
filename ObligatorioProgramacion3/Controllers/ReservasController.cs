@@ -89,7 +89,9 @@ namespace ObligatorioProgramacion3.Controllers
                 ChechboxMesa = mesas.Select(m => new ChechboxMesa
                 {
                     MesaId = m.Id,
-
+                    NumeroMesa = m.NumeroMesa,
+                    Capacidad = m.Capacidad,
+                    
                     EstaOcupada = mesasOcupadas.Contains(m.Id)
                 }).ToList()
             }; 
@@ -107,6 +109,7 @@ namespace ObligatorioProgramacion3.Controllers
                 .FirstOrDefault();
 
             var mesa = _context.Mesas.FirstOrDefault(m => m.Id == MesaId);
+            var restaurante = _context.Restaurantes.FirstOrDefault(r=> r.Id == restauranteId);
             if (mesa == null)
             {
                 return NotFound();
@@ -126,6 +129,8 @@ namespace ObligatorioProgramacion3.Controllers
             ViewData["NumeroMesa"] = mesa.NumeroMesa;
             ViewData["Fecha"] = fecha;
             ViewData["IdRestaurante"] = restauranteId;
+            ViewData["NombreRestaurante"] = restaurante.Nombre;
+            ViewData["Capacidad"] = mesa.Capacidad;
 
             return View(reserva);
         }
@@ -141,7 +146,7 @@ namespace ObligatorioProgramacion3.Controllers
 
                 _context.Add(reserva);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(MostrarReservas));
             }
             ViewData["MesaId"] = reserva.Id;
             ViewData["Fecha"] = reserva.FechaReserva;

@@ -47,18 +47,18 @@ body {
 }
 
 .nav-link {
-    font-size: 1.1rem;
-    color: #333;
+    color: black; /* Color del texto */
+    font-size: 18px; /* Tamaño de la fuente */
+    text-decoration: none; /* Quitar subrayado del enlace */
+    padding: 8px 15px; /* Espaciado interno */
 }
 
-    .nav-link.active {
-        color: black;
-    }
-
     .nav-link:hover {
-        color: black;
+        color: black; /* Color del texto al pasar el mouse */
+        background-color: #f0f0f0; /* Color de fondo al pasar el mouse */
+        border-radius: 4px; /* Bordes redondeados */
+        cursor:pointer;
     }
-
 .main {
     margin-left: 250px;
     padding-top: 60px;
@@ -107,14 +107,19 @@ body {
 }
 
 .btnauth {
-    background-color: #DFDCB6;
-    border: 2px solid black; /* Agrega un borde de 2px s�lido con color #333 */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Agrega una sombra */
+    background-color: #5D4037;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 1); /* Agrega una sombra completamente negra */
     padding: 15px 30px;
     border-radius: 5px;
-    color: black;
+    color: white
+ 
 }
+    .btnauth:hover {
+        background-color: #a6896f;
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
+        cursor: pointer;
+    }
 
 .navbar-toggler-icon {
-    color: black;
+    color: #5D4037;
 }

@@ -1,36 +1,50 @@
-﻿@model ObligatorioProgramacion3.Models.Reserva
+﻿
+
+@model ObligatorioProgramacion3.Models.Reserva
 
 @{
+    string NombreRestaurante = ViewData["NombreRestaurante"] as string;
+    int? Capacidad = ViewData["Capacidad"] as int?;
+    int? numeroMesa = ViewData["NumeroMesa"] as int?;
     ViewData["Title"] = "Crear Reserva";
+    var fechaReserva = Model.FechaReserva.ToString("dd/MM/yyyy");
+    var estadoReserva = Model.Estado;
 }
+<head>
+    <link rel="stylesheet" href="~/css/StylesCrudeINDEX.css" asp-append-version="true" />
+</head>
 
+<h1>Detalles de la Reserva para Mesa @Model.MesaId</h1>
 
-<h1>Crear Reserva para Mesa @ViewData["MesaId"] el @ViewData["Fecha"]</h1>
-
-<h4>Reserva</h4>
+<h4>Información de la Reserva</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form asp-action="CrearReserva" method="post">
             <input asp-for="MesaId" type="hidden" />
             <input asp-for="FechaReserva" type="hidden" />
             <input asp-for="Estado" type="hidden" value="Pendiente" />
             <input asp-for="IdRestaurante" type="hidden" />
             <input asp-for="UsuarioId" type="hidden" />
+            <input asp-for="ClienteId" type="hidden" />
+            
+
+            <!-- Mostrar los detalles de la reserva -->
+            <p>Sucursal: @NombreRestaurante</p>
+            <p>Fecha Reserva: @fechaReserva </p>
+            <p>Numero de mesa: @numeroMesa </p>
+            <p>Capacidad: @Capacidad</p>
+
+
             <div class="form-group">
-                <label asp-for="ClienteId" class="control-label"></label>
-                <input asp-for="ClienteId" class="form-control" type="hidden" />
-                <span asp-validation-for="ClienteId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-primary" />
+                <input type="submit" value="Confirmar Reserva" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="SeleccionarMesa" asp-route-fecha="@ViewData["Fecha"]">Volver a Selección de Mesa</a>
+    <a asp-action="SeleccionarMesa" asp-route-fecha="@Model.FechaReserva.ToString("yyyy-MM-dd")">Volver a Selección de Mesa</a>
 </div>
 
 @section Scripts {
