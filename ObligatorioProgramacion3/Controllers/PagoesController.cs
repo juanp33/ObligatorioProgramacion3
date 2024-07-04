@@ -84,7 +84,7 @@ namespace ObligatorioProgramacion3.Controllers
                    
 
                     string apiKey = "13c5e50bbda5f27893d4e5fc19a4f058";
-                    string url = $"https://api.openweathermap.org/data/2.5/weather?q={ciudad}&appid={apiKey}";
+                    string url = $"https://api.openweathermap.org/data/2.5/weather?q={ciudad}&units=metric&appid={apiKey}";
 
 
 
