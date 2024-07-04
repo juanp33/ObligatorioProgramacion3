@@ -57,25 +57,13 @@
 
         @foreach (var restaurante in Model)
         {
-            @if (contador == 0)
-            {
-                restauranteString = "/Imagenes/FotoUruguay.png";
-            }
-            else if (contador == 1)
-            {
-                restauranteString = "/Imagenes/FotoMexico.png";
-            }
-            else
-            {
-                restauranteString = "/Imagenes/FotoEspaña.png";
-            }
-
+            
 
             <form action="@Url.Action("MenuSoloVer", "Platoes", new { restauranteId = restaurante.Id })" method="post" style="text-decoration: none; color: black;">
                 <!-- Contenedor del restaurante -->
                 <div class="CartaRestaurante" onclick="this.closest('form').submit();">
                     <!-- Imagen del restaurante -->
-                    <img src="@restauranteString" alt="Mcdonalds Logo" id="img" />
+                    <img src="@restaurante.Imagen" alt="Imagen del restaurante en @restaurante.Nombre" />
                     <!-- Información del restaurante -->
                     <div>
                         <h4>@restaurante.Nombre</h4>
@@ -84,7 +72,7 @@
                     </div>
                 </div>
             </form>
-            contador++;
+            
         }
     </div>
     }
