@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Seleccionar Fecha";
     var restauranteId = ViewData["RestauranteId"] as int?;
+    var today = DateTime.Now.ToString("yyyy-MM-dd");
 }
 
 <!DOCTYPE html>
@@ -10,9 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/StylesCrudeINDEX.css" asp-append-version="true" />
-    
-
-   
 </head>
 <body>
     <div class="container">
@@ -21,7 +19,7 @@
             <div class="form-group">
                 <input type="hidden" name="restauranteId" value="@restauranteId" />
                 <label for="fecha">Fecha</label>
-                <input type="date" id="fecha" name="fecha" required />
+                <input type="date" id="fecha" name="fecha" min="@today" required />
             </div>
             <button type="submit" class="btn-primary">Seleccionar</button>
         </form>
