@@ -21,6 +21,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<CarritoService>();
 builder.Services.AddAuthorization(options =>
 {
+
     options.AddPolicy("PoderPagarReserva", policy => policy.Requirements.Add(new PermisoPaginaRequisito("PoderPagarReserva")));
     // Define políticas para AdministracionController
     options.AddPolicy("AdministracionVer", policy => policy.Requirements.Add(new PermisoPaginaRequisito("AdministracionVer")));

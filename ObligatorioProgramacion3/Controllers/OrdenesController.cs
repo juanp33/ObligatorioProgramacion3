@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ObligatorioProgramacion3.Models;
+using System.Security.Claims;
+
 
 namespace ObligatorioProgramacion3.Controllers
 {
@@ -28,39 +31,82 @@ namespace ObligatorioProgramacion3.Controllers
 
             var items = _carritoService.ObtenerCarritoItems();
             var total = _carritoService.ObtenerTotal();
+            var ordenExiste = _context.Ordenes.Any(o => o.ReservaId == reservaId);
 
-            Ordene orden = new Ordene
+            if (ordenExiste)
             {
-                ReservaId = reservaId,
-                Total = _carritoService.ObtenerTotal()
-            };
+                var ordenYaExistente = await _context.Ordenes.FirstOrDefaultAsync(o => o.ReservaId == reservaId);
 
-            _context.Ordenes.Add(orden);
-            await _context.SaveChangesAsync();
+                
+                var ordenDetalles = await _context.OrdenDetalles.Where(od => od.OrdenId == ordenYaExistente.Id).ToListAsync();
 
-            foreach (var item in items)
-            {
-                OrdenDetalle ordenDetalle = new OrdenDetalle
-                {
-                    OrdenId = orden.Id,
-                    PlatoId = item.PlatoId,
-                    Cantidad = item.Cantidad,
-
-                };
-                _context.OrdenDetalles.Add(ordenDetalle);
+               
+                _context.OrdenDetalles.RemoveRange(ordenDetalles);
                 await _context.SaveChangesAsync();
-            }
 
-            return View();
+                foreach (var item in items)
+                {
+                    OrdenDetalle ordenDetalle = new OrdenDetalle
+                    {
+                        OrdenId = ordenYaExistente.Id,
+                        PlatoId = item.PlatoId,
+                        Cantidad = item.Cantidad,
+
+                    };
+                    _context.OrdenDetalles.Add(ordenDetalle);
+
+
+                }
+                ordenYaExistente.Total = total;
+                _context.Ordenes.Update(ordenYaExistente);
+                await _context.SaveChangesAsync();
+               
+            }
+            else
+            {
+
+                Ordene orden = new Ordene
+                {
+                    ReservaId = reservaId,
+                    Total = _carritoService.ObtenerTotal()
+                };
+
+                _context.Ordenes.Add(orden);
+                await _context.SaveChangesAsync();
+
+                foreach (var item in items)
+                {
+                    OrdenDetalle ordenDetalle = new OrdenDetalle
+                    {
+                        OrdenId = orden.Id,
+                        PlatoId = item.PlatoId,
+                        Cantidad = item.Cantidad,
+
+                    };
+                    _context.OrdenDetalles.Add(ordenDetalle);
+                    await _context.SaveChangesAsync();
+                }
+                
+            }
+            _carritoService.LimpiarCarrito();
+
+            return RedirectToAction("MostrarOrdenes");
         }
 
 
         public async Task<IActionResult> MostrarOrdenes()
         {
-            var ordenesSinPago = await _context.Ordenes.Where(o => !_context.Pagos.Any(p => p.ReservaId == o.ReservaId)).ToListAsync();
+            var userClaims = User.Claims.Where(c => c.Type == "Permission").Select(c => c.Value).ToList();
+
+            var ordenesSinPago = await _context.Ordenes
+                .Include(o => o.Reserva) 
+                .Where(o => !_context.Pagos.Any(p => p.ReservaId == o.ReservaId))
+                .ToListAsync();
+
+            ViewBag.UserClaims = userClaims;
+
             return View(ordenesSinPago);
         }
-
         // GET: Ordenes
         [Authorize(Policy = "OrdenesVer")]
         public async Task<IActionResult> Index()

@@ -19,5 +19,5 @@
         <h3>Total: @Model.Total.ToString("C")</h3>
     </div>
    
-    <button class="continuar" onclick="location.href='@Url.Action("PagarReserva", "Pagoes" ,  new { reservaId = reservaId})'">Continuar</button>
+    <button class="continuar" onclick="location.href='@Url.Action("GenerarOrden", "Ordenes" ,  new { reservaId = reservaId})'">Continuar</button>
 </div>

@@ -80,52 +80,56 @@
 
         @foreach (var Reserva in Model)
         {
-            @if (Reserva.Estado == "Confirmada" || Reserva.Estado == "Cancelada")
+            @if ((userClaims.Any(c => c.Type == "Permission" && c.Value == "EmpleadoRestauranteUruguay") && Reserva.IdRestaurante == 1) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "EmpleadoRestauranteMexico") && Reserva.IdRestaurante == 2) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "EmpleadoRestauranteEspaña") && Reserva.IdRestaurante == 3))
             {
-                <div class="ReservaMostrar">
+                @if (Reserva.Estado == "Confirmada" || Reserva.Estado == "Cancelada")
+                {
+                    <div class="ReservaMostrar">
 
-                    <div>
-                        <h4>Reserva numero: @Reserva.Id</h4>
-                        <p>Mesa numero = @Reserva.MesaId</p>
-                        <p>Fecha: @Reserva.FechaReserva</p>
-                        <p>Dirección: @Reserva.IdRestauranteNavigation.Nombre</p>
-                        <p>Teléfono: @Reserva.IdRestauranteNavigation.Teléfono</p>
-                        <p> Estado: @Reserva.Estado</p>
+                        <div>
+                            <h4>Reserva numero: @Reserva.Id</h4>
+                            <p>Mesa numero = @Reserva.MesaId</p>
+                            <p>Fecha: @Reserva.FechaReserva</p>
+                            <p>Dirección: @Reserva.IdRestauranteNavigation.Nombre</p>
+                            <p>Teléfono: @Reserva.IdRestauranteNavigation.Teléfono</p>
+                            <p> Estado: @Reserva.Estado</p>
+                        </div>
+
                     </div>
+                }
+                else
+                {
+                    <div class="ReservaMostrar">
 
-                </div>
-            }
-            else
-            {
-                <div class="ReservaMostrar">
-
-                    <div>
-                        <h4>Reserva numero: @Reserva.Id</h4>
-                        <p>Mesa numero : @Reserva.MesaId</p>
-                        <p>Fecha: @Reserva.FechaReserva</p>
-                        <p>Dirección: @Reserva.IdRestauranteNavigation.Nombre</p>
-                        <p>Teléfono: @Reserva.IdRestauranteNavigation.Teléfono</p>
-                        <p> Estado: @Reserva.Estado</p>
-                        <div class="BtnsCrearEliminar">
-                           @*  @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "PoderPagarReserva"))
-                            { *@
+                        <div>
+                            <h4>Reserva numero: @Reserva.Id</h4>
+                            <p>Mesa numero : @Reserva.MesaId</p>
+                            <p>Fecha: @Reserva.FechaReserva</p>
+                            <p>Dirección: @Reserva.IdRestauranteNavigation.Nombre</p>
+                            <p>Teléfono: @Reserva.IdRestauranteNavigation.Teléfono</p>
+                            <p> Estado: @Reserva.Estado</p>
+                            <div class="BtnsCrearEliminar">
+                                  @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "PoderPagarReserva"))
+                                 { 
                                 <form method="post" action="@Url.Action("SeleccionarPlato", "Platoes")">
                                     <input type="hidden" name="ReservaId" value="@Reserva.Id" />
                                     <button type="submit" class="button-link">Pagar</button>
                                 </form>
-                           @*  } *@
-                            <form method="post" action="@Url.Action("Cancelar", "Reservas")">
-                                <input type="hidden" name="ReservaId" value="@Reserva.Id" />
-                                <button type="submit" class="button-link button-delete">Cancelar</button>
-                            </form>
+                                 } 
+                                <form method="post" action="@Url.Action("Cancelar", "Reservas")">
+                                    <input type="hidden" name="ReservaId" value="@Reserva.Id" />
+                                    <button type="submit" class="button-link button-delete">Cancelar</button>
+                                </form>
 
+                            </div>
                         </div>
+
+
+
                     </div>
-
-
-
-                </div>
+                }
             }
+           
         }
     </div>
 </body>

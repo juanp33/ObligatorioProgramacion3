@@ -3,7 +3,7 @@
 
 @{
     var isAuthenticated = ViewBag.IsAuthenticated as bool? ?? false;
-    var userClaims = ViewBag.UserClaims as IEnumerable<Claim> ?? Enumerable.Empty<Claim>();
+    var userClaims = ViewBag.UserClaims as List<string>;
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -71,25 +71,28 @@
     <div class="ordenContainer">
         @foreach (var orden in Model)
         {
-            <div class="OrdenMostrar">
-                <div>
-                    <h4>Orden número: @orden.Id</h4>
-                    
-                    <p>Reserva ID: @orden.ReservaId</p>
-                    <p>Total: @orden.Total</p>
-                    <div class="BtnsCrearEliminar">
-                        <form method="post" action="@Url.Action("SeleccionarPlato", "Platoes")">
-                            <input type="hidden" name="OrdenId" value="@orden.Id" />
-                            <button type="submit" class="button-link">Pagar</button>
-                        </form>
-                        
-                        <form method="post" action="@Url.Action("Cancelar", "Reservas")">
-                            <input type="hidden" name="OrdenId" value="@orden.Id" />
-                            <button type="submit" class="button-link button-delete">Cancelar</button>
-                        </form>
+            if ((userClaims.Contains("EmpleadoRestauranteUruguay") && orden.Reserva.IdRestaurante == 1) ||
+                (userClaims.Contains("EmpleadoRestauranteMexico") && orden.Reserva.IdRestaurante == 2) ||
+            (userClaims.Contains("EmpleadoRestauranteEspaña") && orden.Reserva.IdRestaurante == 3))
+            {
+                <div class="OrdenMostrar">
+                    <div>
+                        <h4>Orden número: @orden.Id</h4>
+                        <p>Reserva ID: @orden.ReservaId</p>
+                        <p>Total: @orden.Total</p>
+                        <div class="BtnsCrearEliminar">
+                            <form method="post" action="@Url.Action("PagarReserva", "Reservas")">
+                                <input type="hidden" name="ReservaId" value="@orden.ReservaId" />
+                                <button type="submit" class="button-link">Editar</button>
+                            </form>
+                            <form method="post" action="@Url.Action("SeleccionarPlato", "Platoes")">
+                                <input type="hidden" name="ReservaId" value="@orden.ReservaId" />
+                                <button type="submit" class="button-link ">Pagar</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         }
     </div>
 </body>

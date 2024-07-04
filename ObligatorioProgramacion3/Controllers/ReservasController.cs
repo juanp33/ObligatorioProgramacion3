@@ -149,7 +149,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
         // GET: Reservas
 
-        [Authorize(Policy = "ReservasVer")]
+        [Authorize(Policy = "ReservasVer")] 
         public async Task<IActionResult> Index()
         {
             var obligatorioProgramacion3Context = _context.Reservas.Include(r => r.Cliente).Include(r => r.Mesa);

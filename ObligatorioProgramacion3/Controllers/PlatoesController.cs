@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ObligatorioProgramacion3.Models;
+using System.Security.Claims;
+
 
 namespace ObligatorioProgramacion3.Controllers
 {
-    
+
     public class PlatoesController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
@@ -19,7 +22,7 @@ namespace ObligatorioProgramacion3.Controllers
         public PlatoesController(ObligatorioProgramacion3Context context, CarritoService carritoService)
         {
             _context = context;
-            _carritoService= carritoService;
+            _carritoService = carritoService;
         }
 
 
@@ -54,8 +57,8 @@ namespace ObligatorioProgramacion3.Controllers
 
             return View(plato);
         }
-        
-        
+
+
         [Authorize(Policy = "PlatoesCrear")]
         // GET: Platoes1/Create
         public IActionResult Create()
@@ -180,19 +183,40 @@ namespace ObligatorioProgramacion3.Controllers
 
         [Authorize(Policy = "PlatoesSeleccionarPlato")]
         [HttpPost]
-        public async Task<IActionResult> SeleccionarPlato(int ReservaId) 
+        public async Task<IActionResult> SeleccionarPlato(int ReservaId)
         {
-            if(_carritoService.TieneItems())
+            int? OrdenId = await _context.Ordenes.Where(r => r.ReservaId == ReservaId).Select(r => r.Id).FirstOrDefaultAsync();
+
+            if (_carritoService.TieneItems() && OrdenId == 0)
             {
                 _carritoService.LimpiarCarrito();
             }
-           
+            else
+            {
+                var orden = await _context.Ordenes.Where(orden => orden.Id == OrdenId).Select(orden => orden.Id).FirstOrDefaultAsync();
+                var listaDePlatos = await _context.OrdenDetalles.Where(orden => orden.OrdenId == OrdenId).ToListAsync();
+                foreach (var plato in listaDePlatos)
+                {
+                    var nombrePlato = await _context.Platos.Where(c => c.Id == plato.PlatoId).Select(x => x.NombrePlato).FirstOrDefaultAsync();
+                    var descripcion = await _context.Platos.Where(c => c.Id == plato.PlatoId).Select(x => x.Descripción).FirstOrDefaultAsync();
+                    var precio = await _context.Platos.Where(c => c.Id == plato.PlatoId).Select(x => x.Precio).FirstOrDefaultAsync();
+                    CarritoItem carritoItem = new CarritoItem
+                    {
+                        PlatoId = plato.PlatoId.Value,
+                        NombrePlato = nombrePlato,
+                        Cantidad = plato.Cantidad,
+                        Precio = precio,
+                        Descripción = descripcion
+                    };
+                    _carritoService.AñadirAlCarrito(carritoItem);
+                }
+
+
+            }
             var restauranteId = _context.Reservas.Where(r => r.Id == ReservaId).Select(r => r.IdRestaurante).FirstOrDefault();
             var Platos = await _context.Platos.Where(p => p.IdRestaurante == restauranteId).ToListAsync();
             ViewData["ReservaId"] = ReservaId;
             return View(Platos);
-            
-
         }
     }
 }
