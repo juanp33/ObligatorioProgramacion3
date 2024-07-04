@@ -47,10 +47,10 @@ body {
 }
 
 .nav-link {
-    color: black; /* Color del texto */
-    font-size: 18px; /* Tamaño de la fuente */
-    text-decoration: none; /* Quitar subrayado del enlace */
-    padding: 8px 15px; /* Espaciado interno */
+    color: black; 
+    font-size: 14px; 
+    text-decoration: none; 
+    padding: 8px 15px; 
 }
 
     .nav-link:hover {
@@ -123,3 +123,17 @@ body {
 .navbar-toggler-icon {
     color: #5D4037;
 }
+.btnPrincipal {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btnPrincipal:focus,
+.btnPrincipal:active {
+    color: inherit; /* O el color que desees */
+    background-color: inherit; /* O el color que desees */
+    border: none; /* Si hay un borde que no deseas */
+    box-shadow: none; /* Remover el contorno de Bootstrap */
+}
+
+

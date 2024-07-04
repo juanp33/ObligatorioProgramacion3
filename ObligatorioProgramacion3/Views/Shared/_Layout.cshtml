@@ -51,20 +51,20 @@
             <div class="offcanvas-body">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link btnPrincipal" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Restaurantes" asp-action="SeleccionarRestauranteMenu">Menu</a>
+                        <a class="nav-link btnPrincipal" aria-current="page" asp-area="" asp-controller="Restaurantes" asp-action="SeleccionarRestauranteMenu">Menu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Reseña" asp-action="Reseñas">Reseñas</a>
+                        <a class="nav-link btnPrincipal" aria-current="page" asp-area="" asp-controller="Reseña" asp-action="Reseñas">Reseñas</a>
                     </li>
 
 
                     @if (isAuthenticated)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="collapse" href="#ReservasSubMenu" role="button" aria-expanded="false" aria-controls="ReservasSubMenu">
+                            <a class="nav-link btnPrincipal" data-bs-toggle="collapse" href="#ReservasSubMenu" role="button" aria-expanded="false" aria-controls="ReservasSubMenu">
                                 Reservas
                             </a>
                             <div class="collapse" id="ReservasSubMenu">
@@ -88,7 +88,7 @@
                     @if ((userClaims.Any(c => c.Type == "Permission" && c.Value == "ClientesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenDetallesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PagosVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PlatosVer") || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ResteurantesVer"))) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReseñasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReservasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "UsuariosVer"))||(userClaims.Any(c => c.Type == "Permission" && c.Value == "PermisosRolesYPermisos")))
                     {
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="collapse" href="#adminSubmenu" role="button" aria-expanded="false" aria-controls="adminSubmenu">
+                            <a class="nav-link btnPrincipal" data-bs-toggle="collapse" href="#adminSubmenu" role="button" aria-expanded="false" aria-controls="adminSubmenu">
                                 Administración
                             </a>
                             <div class="collapse" id="adminSubmenu">
