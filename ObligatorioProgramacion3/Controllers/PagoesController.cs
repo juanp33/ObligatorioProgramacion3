@@ -76,31 +76,17 @@ namespace ObligatorioProgramacion3.Controllers
         private async Task<bool> ObtenerClima(int reservaID)
         {
             var restauranteId = _context.Reservas.Where(r => r.Id == reservaID).Select(r => r.IdRestaurante).FirstOrDefault();
+            var ciudad = _context.Restaurantes.Where(r => r.Id == restauranteId).Select(r => r.Dirección).FirstOrDefault();
             using (var client = new HttpClient())
             {
                 try
                 {
-                    string lat;
-                    string lon;
-
-                    if (restauranteId == 1)
-                    {
-                        lon = "-56.1913095";
-                        lat = "-34.9058916"; // Coordenadas para Montevideo, Uruguay
-                    }
-                    else if (restauranteId == 2)
-                    {
-                        lon = "-99.1331785";
-                        lat = "19.4326296"; // Coordenadas para Ciudad de México, México
-                    }
-                    else
-                    {
-                        lon = "-3.7035825";
-                        lat = "40.4167047"; // Coordenadas para Madrid, España
-                    }
+                   
 
                     string apiKey = "13c5e50bbda5f27893d4e5fc19a4f058";
-                    string url = $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={apiKey}";
+                    string url = $"https://api.openweathermap.org/data/2.5/weather?q={ciudad}&appid={apiKey}";
+
+
 
                     HttpResponseMessage response = await client.GetAsync(url);
 
