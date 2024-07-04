@@ -1,51 +1,72 @@
 ﻿@model ObligatorioProgramacion3.Models.Reseña
 
 @{
-    ViewData["Title"] = "CrearReseñaUsuario";
+    ViewData["Title"] = "Crear Reseña Usuario";
 }
 
-<h1>Crear</h1>
+<head>
+    <link rel="stylesheet" href="~/css/StylesCrudeINDEX.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
 
-<h4>Reseña</h4>
-<hr />
-<<div class="row">
-    <div class="col-md-12">
-        <form asp-action="CrearReseñaUsuario">
-            <div class="form-group">
-                <label asp-for="RestauranteId" class="control-label"></label>
-                <select asp-for="RestauranteId" class="form-control" asp-items="ViewBag.RestauranteId"></select>
+<body class="Fondo">
+    <div class="container">
+        <h1 class="text-center">@ViewData["Title"]</h1>
+        <h4 class="center-text">Reseña</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <form asp-action="CrearReseñaUsuario">
+                    <!-- Selección del Restaurante -->
+                    <div class="form-group">
+                        <label asp-for="RestauranteId" class="control-label"></label>
+                        <select asp-for="RestauranteId" class="form-control">
+                            <option value="">Seleccione un restaurante</option>
+                            @foreach (var restaurante in ViewBag.RestauranteId)
+                            {
+                                <option value="@restaurante.Value">@restaurante.Text</option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Selección del Puntaje -->
+                    <div class="form-group">
+                        <label asp-for="Puntaje" class="control-label"></label>
+                        <select asp-for="Puntaje" class="form-control">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <span asp-validation-for="Puntaje" class="text-danger"></span>
+                    </div>
+
+                    <!-- Comentario -->
+                    <div class="form-group">
+                        <label asp-for="Comentario" class="control-label"></label>
+                        <input asp-for="Comentario" class="form-control" />
+                        <span asp-validation-for="Comentario" class="text-danger"></span>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="form-group">
+                        <div class="btn-group">
+                            <input type="submit" value="Agregar Reseña" class="btn btn-agregar-reseña" />
+                        </div>
+                        <div class="btn-group">
+                            <a asp-action="Index" class="btn btn-cancelar">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
             </div>
-            
-            <div class="form-group">
-                <label asp-for="Puntaje" class="control-label"></label>
-                <select asp-for="Puntaje" class="form-control">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-                <span asp-validation-for="Puntaje" class="text-danger"></span>
-            </div>
-           
-            <div class="form-group">
-                <label asp-for="Comentario" class="control-label"></label>
-                <input asp-for="Comentario" class="form-control" />
-                <span asp-validation-for="Comentario" class="text-danger"></span>
-            </div>          
-            <div class="form-group">
-                <input type="submit" value="CrearReseñaUsuario" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Cancelar</a>
-</div>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
     }
-}
+</body>

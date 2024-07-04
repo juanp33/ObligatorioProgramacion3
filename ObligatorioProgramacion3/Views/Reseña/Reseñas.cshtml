@@ -1,69 +1,43 @@
 ﻿@using Microsoft.Data.SqlClient;
 @model IEnumerable<ObligatorioProgramacion3.Models.Reseña>
 
+<head>
+    <link rel="stylesheet" href="~/css/StylesCrudeINDEX.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+</head>
+  
+
 
 @{
     ViewData["Title"] = "Reseñas";
 }
-<h1>Reseñas</h1>
 
+<h1 style="text-align: center;">¡Tu opinion nos ayuda a mejorar!</h1>
 
 <table class="table">
     <thead>
         <tr>
-
-            <th>
-                Nombre del cliente
-            </th>
-            <th>
-                Nombre del restaurante
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Puntaje)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comentario)
-            </th>
-            
-
-
+            <th>Nombre del cliente</th>
+            <th>Nombre del restaurante</th>
+            <th>@Html.DisplayNameFor(model => model.Puntaje)</th>
+            <th>@Html.DisplayNameFor(model => model.Comentario)</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-
-
-
         @foreach (var item in Model)
         {
-
-
             <tr>
-
-                
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cliente.Nombre)
-                </td>
-                
-                <td>
-                    @Html.DisplayFor(modelItem => item.Restaurante.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Puntaje)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comentario)
-                </td>
-                
-
+                <td>@Html.DisplayFor(modelItem => item.Cliente.Nombre)</td>
+                <td>@Html.DisplayFor(modelItem => item.Restaurante.Nombre)</td>
+                <td>@Html.DisplayFor(modelItem => item.Puntaje)</td>
+                <td>@Html.DisplayFor(modelItem => item.Comentario)</td>
             </tr>
-
-
-
         }
     </tbody>
 </table>
-<p>
-    <a asp-action="CrearReseñaUsuario">Agregar Reseña</a>
-</p>
 
+<p>
+    <a asp-action="CrearReseñaUsuario" class="btn-primary">Agregar Reseña</a>
+</p>
