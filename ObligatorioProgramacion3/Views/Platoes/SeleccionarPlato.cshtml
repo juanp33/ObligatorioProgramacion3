@@ -95,15 +95,6 @@
             }
 
 
-
-
-        body {
-            display: flex;  
-            margin: 0;
-            padding: 0;
-            min-height: 100vh; 
-        }
-
         .PlatosContainer {
             flex: 1; 
             display: flex;
@@ -202,7 +193,7 @@
                 <div>
                     <h4> @plato.NombrePlato</h4>
                     <p> @plato.Descripción</p>
-                    <p>Precio: @plato.Precio</p>
+                    <p>$@plato.Precio (USD)</p>
                     <button id="botonAñadirCarrito" onclick="añadirAlCarrito(@plato.Id)">Añadir al carrito</button>
                 </div>
             </div>

@@ -14,16 +14,18 @@ namespace ObligatorioProgramacion3.Controllers
     public class PlatoesController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
+        private readonly CarritoService _carritoService;
 
-        public PlatoesController(ObligatorioProgramacion3Context context)
+        public PlatoesController(ObligatorioProgramacion3Context context, CarritoService carritoService)
         {
             _context = context;
+            _carritoService= carritoService;
         }
-        
-        [Authorize(Policy = "PlatoesSoloVer")]
-        public async Task<IActionResult> MenuSoloVer()
+
+
+        public async Task<IActionResult> MenuSoloVer(int restauranteId)
         {
-            var Platos = await _context.Platos.ToListAsync();
+            var Platos = await _context.Platos.Where(p => p.IdRestaurante == restauranteId).ToListAsync();
             return View(Platos);
         }
         // GET: Platoes
@@ -58,7 +60,7 @@ namespace ObligatorioProgramacion3.Controllers
         // GET: Platoes1/Create
         public IActionResult Create()
         {
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección");
+            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Nombre");
             return View();
         }
 
@@ -76,7 +78,7 @@ namespace ObligatorioProgramacion3.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", plato.IdRestaurante);
+            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Nombre", plato.IdRestaurante);
             return View(plato);
         }
 
@@ -94,7 +96,7 @@ namespace ObligatorioProgramacion3.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", plato.IdRestaurante);
+            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Nombre", plato.IdRestaurante);
             return View(plato);
         }
 
@@ -130,7 +132,7 @@ namespace ObligatorioProgramacion3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", plato.IdRestaurante);
+            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Nombre", plato.IdRestaurante);
             return View(plato);
         }
 
@@ -178,11 +180,17 @@ namespace ObligatorioProgramacion3.Controllers
 
         [Authorize(Policy = "PlatoesSeleccionarPlato")]
         [HttpPost]
-        public IActionResult SeleccionarPlato(int ReservaId) 
+        public async Task<IActionResult> SeleccionarPlato(int ReservaId) 
         {
-            var platos = _context.Platos.ToList();
+            if(_carritoService.TieneItems())
+            {
+                _carritoService.LimpiarCarrito();
+            }
+           
+            var restauranteId = _context.Reservas.Where(r => r.Id == ReservaId).Select(r => r.IdRestaurante).FirstOrDefault();
+            var Platos = await _context.Platos.Where(p => p.IdRestaurante == restauranteId).ToListAsync();
             ViewData["ReservaId"] = ReservaId;
-            return View(platos);
+            return View(Platos);
             
 
         }

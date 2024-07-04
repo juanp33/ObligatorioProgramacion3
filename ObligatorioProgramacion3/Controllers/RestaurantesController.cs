@@ -19,6 +19,11 @@ namespace ObligatorioProgramacion3.Controllers
         {
             _context = context;
         }
+
+        public async Task<IActionResult> SeleccionarRestauranteMenu()
+        {
+            return View(await _context.Restaurantes.ToListAsync());
+        }
         // GET: Restaurantes
         [Authorize(Policy = "RestaurantesSeleccionarRestaurante")]
         public async Task<IActionResult> SeleccionarRestaurante()
@@ -59,12 +64,12 @@ namespace ObligatorioProgramacion3.Controllers
             return View();
         }
 
-        // POST: Restaurantes/Create
+        // POST: Restaurantes1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Dirección,Teléfono")] Restaurante restaurante)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Dirección,Teléfono,Descripcion,Imagen,Moneda")] Restaurante restaurante)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +102,7 @@ namespace ObligatorioProgramacion3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Dirección,Teléfono")] Restaurante restaurante)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Dirección,Teléfono,Descripcion,Imagen,Moneda")] Restaurante restaurante)
         {
             if (id != restaurante.Id)
             {
@@ -146,7 +151,7 @@ namespace ObligatorioProgramacion3.Controllers
             return View(restaurante);
         }
 
-        // POST: Restaurantes/Delete/5
+        // POST: Restaurantes1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seleccione su restaurante de preferencia</title>
     <style>
-        
+
 
         .restauranteContainer {
             display: flex;
@@ -33,7 +33,7 @@
             text-align: left;
             cursor: pointer;
         }
-        
+
 
             .CartaRestaurante img {
                 max-width: 200px;
@@ -51,33 +51,31 @@
     </style>
 </head>
 <body>
-     
-   
-        <div class="restauranteContainer">
 
-            @foreach (var restaurante in Model)
-            {
+
+    <div class="restauranteContainer">
+
+        @foreach (var restaurante in Model)
+        {
             
 
-
-            <form action="@Url.Action("SeleccionarFecha", "Reservas", new { restauranteId = restaurante.Id })" method="post" style="text-decoration: none; color: black;">
+            <form action="@Url.Action("MenuSoloVer", "Platoes", new { restauranteId = restaurante.Id })" method="post" style="text-decoration: none; color: black;">
                 <!-- Contenedor del restaurante -->
                 <div class="CartaRestaurante" onclick="this.closest('form').submit();">
                     <!-- Imagen del restaurante -->
-                    <img src="@restaurante.Imagen" alt="Mcdonalds Logo" id="img" />
+                    <img src="@restaurante.Imagen" alt="Imagen del restaurante en @restaurante.Nombre" />
                     <!-- Información del restaurante -->
                     <div>
                         <h4>@restaurante.Nombre</h4>
-                        
                         <p>Dirección: @restaurante.Dirección</p>
                         <p>Teléfono: @restaurante.Teléfono</p>
                     </div>
                 </div>
             </form>
-                contador++;
-            }
-        </div>
+            
+        }
+    </div>
     }
-    
+
 </body>
 

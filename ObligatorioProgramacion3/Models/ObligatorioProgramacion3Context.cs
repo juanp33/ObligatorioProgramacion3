@@ -271,6 +271,12 @@ public partial class ObligatorioProgramacion3Context : DbContext
             entity.Property(e => e.Dirección)
                 .HasMaxLength(200)
                 .IsUnicode(false);
+            entity.Property(e => e.Imagen)
+                .HasMaxLength(300)
+                .IsUnicode(false);
+            entity.Property(e => e.Moneda)
+                .HasMaxLength(30)
+                .IsUnicode(false);
             entity.Property(e => e.Nombre)
                 .HasMaxLength(100)
                 .IsUnicode(false);

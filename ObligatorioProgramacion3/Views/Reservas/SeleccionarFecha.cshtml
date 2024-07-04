@@ -3,13 +3,28 @@
     var restauranteId = ViewData["RestauranteId"] as int?;
 }
 
-<h1>Seleccionar Fecha</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/StylesCrudeINDEX.css" asp-append-version="true" />
+    
 
-<form asp-action="EnviarFecha" method="post">
-    <div class="form-group">
-        <input type="hidden" name="restauranteId" value="@restauranteId" />
-        <label for="fecha">Fecha</label>
-        <input type="date" class="form-control" id="fecha" name="fecha" required />
+   
+</head>
+<body>
+    <div class="container">
+        <h1>Seleccionar Fecha</h1>
+        <form asp-action="EnviarFecha" method="post">
+            <div class="form-group">
+                <input type="hidden" name="restauranteId" value="@restauranteId" />
+                <label for="fecha">Fecha</label>
+                <input type="date" id="fecha" name="fecha" required />
+            </div>
+            <button type="submit" class="btn-primary">Seleccionar</button>
+        </form>
     </div>
-    <button type="submit" class="btn btn-primary">Seleccionar</button>
-</form>
+</body>
+</html>

@@ -15,6 +15,10 @@
 <table class="table">
     <thead>
         <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Monto)
             </th>
@@ -25,10 +29,10 @@
                 @Html.DisplayNameFor(model => model.MetodoPago)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdClimaNavigation)
+                @Html.DisplayNameFor(model => model.IdClima)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdCotizacionNavigation)
+                @Html.DisplayNameFor(model => model.IdCotizacion)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Reserva)
@@ -40,6 +44,9 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Monto)
                 </td>

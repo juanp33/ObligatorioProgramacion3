@@ -1,12 +1,42 @@
-﻿
-@model ObligatorioProgramacion3.Models.CarritoViewModel
+﻿@model ObligatorioProgramacion3.Models.CarritoViewModel
 
 @{
+    int? restauranteId = ViewData["restauranteId"] as int?;
     decimal? descuento = ViewData["descuento"] as decimal?;
     int? reservaId = ViewData["reservaId"] as int?;
     decimal? TipoDeCambio = ViewData["TipoDeCambio"] as decimal?;
-    decimal tipoDeCambioJS = TipoDeCambio ?? 1; 
+    string tipoDeCambioJS = TipoDeCambio.ToString();
+    tipoDeCambioJS = tipoDeCambioJS.Replace(",", ".");
+    decimal? temperatura = ViewData["temperatura"] as decimal?;
+    bool? estaLloviendo = ViewData["estaLloviendo"] as bool?;
+    string tipoCliente = ViewData["TipoCliente"] as string;
+    decimal? subtotalDec = ViewData["Subtotal"] as decimal?;
+    decimal? descuentoRaw = (1 - @descuento) *100;
+    int descuentoRawInt;
+
+
+    if (descuentoRaw.HasValue)
+    {
+        descuentoRawInt = (int)descuentoRaw.Value;
     }
+    else
+    {
+
+        descuentoRawInt = 0; 
+    }
+    double? subtotal = null;
+    if (subtotalDec.HasValue)
+    {
+        subtotal = (double)subtotalDec.Value;
+    }
+    else
+    {
+
+        subtotal = 0;
+    }
+    double? tipoDeCambioDouble = (double)TipoDeCambio.Value;
+
+}
 <h2>Pagar Reserva</h2>
 <style>
     #carritoContainer {
@@ -55,15 +85,85 @@
         }
     </div>
     <div id="carritoTotal">
-        <h3>Total: <span id="totalDisplay">@Model.Total.ToString("C")</span></h3>
+        <h5> Subtotal: $@subtotal (USD)</h5>
+       
     </div>
     <div class="form-group">
         <label for="currencySelector">Moneda</label>
         <select id="currencySelector" class="form-control" onchange="updateCurrency()">
-  
+
             <option value="USD">Dólares (USD)</option>
-            <option value="UYU">Pesos Uruguayos (UYU)</option>
+
+            @if (restauranteId == 1)
+            {
+                <option value="UYU">Pesos Uruguayos (UYU)</option>
+            }
+            else if (restauranteId == 2)
+            {
+                <option value="MXN">Pesos Mexicanos (MXN)</option>
+            }
+            else
+            {
+                <option value="EUR">Euros (EUR)</option>
+            }
+         
+        
         </select>
+        @if (tipoCliente == "NORMAL")
+        {
+            <p> Tu tipo de cliente es @tipoCliente</p>
+        }
+        else if (tipoCliente == "FRECUENTE")
+        {
+            <p> Tu tipo de cliente es @tipoCliente, obtienes un descuento de 10%</p>
+        }
+        else
+        {
+            <p> Tu tipo de cliente es @tipoCliente, obtienes un descuento de 20%</p>
+        }
+
+        @if (temperatura < 10 && temperatura > 0)
+        {
+            <p>La temperatura es °C @temperatura, obtienes un descuento de 5% </p>
+
+        }
+        else if (temperatura <= 0)
+        {
+            <p>La temperatura es °C @temperatura, obtienes un descuento de 10% </p>
+        }
+        else
+        {
+            <p>La temperatura es °C @temperatura </p>
+        }
+        @if (estaLloviendo == true)
+        {
+            <p>En este momento esta lloviendo en la ciudad, obtienes un descuento de 5% </p>
+        }
+        else
+        {
+            <p>En este momento no esta lloviendo en la ciudad </p>
+        }
+        @if (descuento > 0)
+        {
+            <p>Su descuento total es @descuentoRawInt%</p>
+        }
+        else
+        {
+            <p>No posees un descuento</p>
+        }
+        <h3>Total: <span id="totalDisplay">@Model.Total.ToString("C")</span></h3>
+        @if(restauranteId == 1)
+        {
+            <p> El tipo de cambio al dia de la fecha es: 1 (USD) = @TipoDeCambio (UYU)</p>
+        } else if (restauranteId == 2)
+        {
+            <p> El tipo de cambio al dia de la fecha es: 1 (USD) = @TipoDeCambio (MXN)</p>
+        }
+        else
+        {
+            <p> El tipo de cambio al dia de la fecha es: 1 (USD) = @TipoDeCambio (€)</p>
+        }
+
     </div>
 </div>
 
@@ -74,7 +174,7 @@
             <option value="">Seleccione un método</option>
             <option value="Tarjeta">Tarjeta</option>
             <option value="Efectivo">Efectivo</option>
-            
+
         </select>
         <input type="hidden" name="reservaId" value="@reservaId" />
         <input type="hidden" name="descuento" value="@descuento" />
@@ -83,17 +183,27 @@
 </form>
 
 <script>
-        let tipoDeCambio = @tipoDeCambioJS
-    let totalEnUSD = @Html.Raw(Model.Total);
+    
+    
+    let tipoDeCambio = parseFloat('@tipoDeCambioJS');
+    let totalEnUSD = parseFloat('@Model.Total');
+
     let totalEnUYU = totalEnUSD * tipoDeCambio;
+    let totalEnMXN = totalEnUSD * tipoDeCambio;
+    let totalEnEUR = totalEnUSD * tipoDeCambio;
 
     function updateCurrency() {
         var currency = document.getElementById("currencySelector").value;
         var display = document.getElementById("totalDisplay");
+
         if (currency === "USD") {
             display.innerHTML = totalEnUSD.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-        } else {
+        } else if (currency === "UYU") {
             display.innerHTML = totalEnUYU.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
+        } else if (currency === "MXN") {
+            display.innerHTML = totalEnMXN.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+        } else if (currency === "EUR") {
+            display.innerHTML = totalEnEUR.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
         }
     }
 </script>

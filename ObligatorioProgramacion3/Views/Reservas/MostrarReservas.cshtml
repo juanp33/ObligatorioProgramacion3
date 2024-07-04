@@ -1,7 +1,11 @@
 ﻿@model IEnumerable<Reserva>
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+@using System.Security.Claims
+
+
+@{
+    var isAuthenticated = ViewBag.IsAuthenticated as bool? ?? false;
+    var userClaims = ViewBag.UserClaims as IEnumerable<Claim> ?? Enumerable.Empty<Claim>();
+}
 
 <h1>@ViewData["Title"]</h1>
 <head>
@@ -9,8 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seleccione su restaurante de preferencia</title>
     <style>
-
-
         .reservaContainer {
             display: flex;
             flex-wrap: wrap;
@@ -28,6 +30,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 2s;
             text-align: left;
+            flex-direction: column;
         }
 
             .ReservaMostrar img {
@@ -35,19 +38,18 @@
                 margin-right: 40px;
             }
 
-            .button-link:hover {
-                transform: scale(1.20);
+        .button-link:hover {
+            transform: scale(1.10);
             background-color: #C8BE6F;
-            }
+        }
 
-            .ReservaMostrar h2 {
-                margin-top: 1px;
-            }
+        .ReservaMostrar h2, .ReservaMostrar h4 {
+            margin-top: 1px;
+        }
 
         .button-link {
             background-color: #F7EFAA;
-            border: none;
-          
+            border: 1px solid black;
             padding: 15px 32px;
             text-align: center;
             text-decoration: none;
@@ -57,8 +59,21 @@
             cursor: pointer;
             border-radius: 6px;
         }
-       
+
+        .button-delete {
+            background-color: #ed4c4c;
+            color: white;
+           
+        }
+
+        .BtnsCrearEliminar {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 10px;
+        }
     </style>
+
 </head>
 <body class="Fondo">
     <div class="reservaContainer">
@@ -68,9 +83,10 @@
             @if (Reserva.Estado == "Confirmada" || Reserva.Estado == "Cancelada")
             {
                 <div class="ReservaMostrar">
-                   
+
                     <div>
-                        <h4>Mesa numero: @Reserva.MesaId</h4>
+                        <h4>Reserva numero: @Reserva.Id</h4>
+                        <p>Mesa numero = @Reserva.MesaId</p>
                         <p>Fecha: @Reserva.FechaReserva</p>
                         <p>Dirección: @Reserva.IdRestauranteNavigation.Nombre</p>
                         <p>Teléfono: @Reserva.IdRestauranteNavigation.Teléfono</p>
@@ -81,29 +97,35 @@
             }
             else
             {
-
-
-
                 <div class="ReservaMostrar">
-                    
+
                     <div>
-                        <h4>Mesa numero: @Reserva.MesaId</h4>
+                        <h4>Reserva numero: @Reserva.Id</h4>
+                        <p>Mesa numero : @Reserva.MesaId</p>
                         <p>Fecha: @Reserva.FechaReserva</p>
                         <p>Dirección: @Reserva.IdRestauranteNavigation.Nombre</p>
                         <p>Teléfono: @Reserva.IdRestauranteNavigation.Teléfono</p>
                         <p> Estado: @Reserva.Estado</p>
+                        <div class="BtnsCrearEliminar">
+                           @*  @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "PoderPagarReserva"))
+                            { *@
+                                <form method="post" action="@Url.Action("SeleccionarPlato", "Platoes")">
+                                    <input type="hidden" name="ReservaId" value="@Reserva.Id" />
+                                    <button type="submit" class="button-link">Pagar</button>
+                                </form>
+                           @*  } *@
+                            <form method="post" action="@Url.Action("Cancelar", "Reservas")">
+                                <input type="hidden" name="ReservaId" value="@Reserva.Id" />
+                                <button type="submit" class="button-link button-delete">Cancelar</button>
+                            </form>
 
-                        <form method="post" action="@Url.Action("SeleccionarPlato", "Platoes")">
-                            <input type="hidden" name="ReservaId" value="@Reserva.Id" />
-                            <button type="submit" class="button-link">Pagar</button>
-                        </form>
-
+                        </div>
                     </div>
 
-                    
+
 
                 </div>
             }
         }
-        </div>
-    </body>
+    </div>
+</body>

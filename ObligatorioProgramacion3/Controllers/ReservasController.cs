@@ -24,12 +24,29 @@ namespace ObligatorioProgramacion3.Controllers
         {
             _context = context;
         }
+        [HttpPost]
+        public  async Task<IActionResult> Cancelar(int reservaId)
+        {
+            var reserva = await _context.Reservas.FindAsync(reservaId);
+            if (reserva == null)
+            {
+                return NotFound();
+            }
+            reserva.Estado = "Cancelada";
 
+            
+            _context.Reservas.Update(reserva);
+
+          
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(MostrarReservas));
+        } 
         [Authorize(Policy = "ReservasMostrarReservas")]
         public async Task<IActionResult> MostrarReservas()
         {
             var IdUsuario = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
+            ViewBag.IsAuthenticated = User.Identity.IsAuthenticated;
+            ViewBag.UserClaims = User.Claims;
             var reservas = await _context.Reservas
                 .Include(r => r.IdRestauranteNavigation)
                 .Where(r => r.UsuarioId == IdUsuario)

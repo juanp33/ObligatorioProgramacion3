@@ -183,6 +183,7 @@ namespace ObligatorioProgramacion3.Controllers
         [Authorize(Policy = "UsuariosCrear")]
         public IActionResult Create()
         {
+            ViewData["RolId"] = new SelectList(_context.Roles, "RolId", "Nombre");
             return View();
         }
         [HttpPost]
@@ -212,6 +213,7 @@ namespace ObligatorioProgramacion3.Controllers
             {
                 return NotFound();
             }
+            ViewData["RolId"] = new SelectList(_context.Roles, "RolId", "Nombre", usuario.RolId);
             return View(usuario);
         }
 
@@ -221,7 +223,7 @@ namespace ObligatorioProgramacion3.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Email,Contraseña,Rol")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Email,Contraseña,RolId")] Usuario usuario)
         {
             if (id != usuario.Id)
             {
@@ -248,6 +250,7 @@ namespace ObligatorioProgramacion3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["RolId"] = new SelectList(_context.Roles, "RolId", "Nombre", usuario.RolId);
             return View(usuario);
         }
 
