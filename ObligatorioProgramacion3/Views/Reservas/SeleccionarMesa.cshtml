@@ -16,6 +16,7 @@
             <tr>
                 <th>Seleccionar</th>
                 <th>Mesa</th>
+                <th>Capacidad de personas</th>
             </tr>
         </thead>
         <tbody>
@@ -32,8 +33,12 @@
                             <input type="radio" name="mesaId" value="@mesa.MesaId" disabled />
                         }
                     </td>
+
                     <td>
-                        @mesa.NumeroMesa;
+                        @mesa.NumeroMesa
+                    </td>
+                    <td>
+                        @mesa.Capacidad
                     </td>
                 </tr>
             }

@@ -7,5 +7,7 @@
         public bool EstaOcupada { get; set; }
 
         public int NumeroMesa { get; set; }
+
+        public int Capacidad { get; set; }
     }
 }
