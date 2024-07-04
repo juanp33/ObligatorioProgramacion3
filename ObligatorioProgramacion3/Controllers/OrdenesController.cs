@@ -14,10 +14,51 @@ namespace ObligatorioProgramacion3.Controllers
     public class OrdenesController : Controller
     {
         private readonly ObligatorioProgramacion3Context _context;
+        private readonly CarritoService _carritoService;
 
-        public OrdenesController(ObligatorioProgramacion3Context context)
+        public OrdenesController(ObligatorioProgramacion3Context context, CarritoService carritoService)
         {
             _context = context;
+            _carritoService = carritoService;
+        }
+
+
+        public async Task<IActionResult> GenerarOrden(int reservaId)
+        {
+
+            var items = _carritoService.ObtenerCarritoItems();
+            var total = _carritoService.ObtenerTotal();
+
+            Ordene orden = new Ordene
+            {
+                ReservaId = reservaId,
+                Total = _carritoService.ObtenerTotal()
+            };
+
+            _context.Ordenes.Add(orden);
+            await _context.SaveChangesAsync();
+
+            foreach (var item in items)
+            {
+                OrdenDetalle ordenDetalle = new OrdenDetalle
+                {
+                    OrdenId = orden.Id,
+                    PlatoId = item.PlatoId,
+                    Cantidad = item.Cantidad,
+
+                };
+                _context.OrdenDetalles.Add(ordenDetalle);
+                await _context.SaveChangesAsync();
+            }
+
+            return View();
+        }
+
+
+        public async Task<IActionResult> MostrarOrdenes()
+        {
+            var ordenesSinPago = await _context.Ordenes.Where(o => !_context.Pagos.Any(p => p.ReservaId == o.ReservaId)).ToListAsync();
+            return View(ordenesSinPago);
         }
 
         // GET: Ordenes
