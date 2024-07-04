@@ -1,11 +1,14 @@
 html {
-  font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+        height: 100%;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -18,7 +21,8 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 60px;
 }
 
 
@@ -34,30 +38,48 @@ body {
 }
 .line {
     width: 100%;
-    height: 4px;
+    height: 2px;
     background-color: black; /* Color original */
     transition: background-color 0.3s;
 }
-
-
-
-.offcanvas {
+.offcanvas-title {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
+.btn-close {
+    background-color: white;
+    border: none;
+    color: white; /* Color del icono del botón */
+    font-size: 1rem; /* Tamaño del icono */
+    cursor: pointer;
+}
+    .offcanvas {
     width: 400px;
-    background-color: #deccb4;
+    background-color: rgb(93,64,55);
 }
 
 .nav-link {
-    color: black; 
-    font-size: 14px; 
-    text-decoration: none; 
-    padding: 8px 15px; 
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+    padding: 8px 15px;
+    letter-spacing: 0.03em;
 }
 
     .nav-link:hover {
-        color: black; /* Color del texto al pasar el mouse */
+        /* Color del texto al pasar el mouse */
         background-color: #f0f0f0; /* Color de fondo al pasar el mouse */
         border-radius: 4px; /* Bordes redondeados */
         cursor:pointer;
+    }
+    .nav-link:hover {
+        color: #5D4037;
+    }
+
+    .nav-link:focus,
+    .nav-link:active {
+        color: white; /* O el color que desees */
     }
 .main {
     margin-left: 250px;
@@ -65,13 +87,8 @@ body {
     flex: 1;
 }
 
-.footer {
-    padding: 1rem 0;
-    background-color: #f8f9fa;
-    border-top: 1px solid #998577;
-    width: 100%;
-   
-}
+
+
 
 
 .fotologo {
@@ -124,16 +141,19 @@ body {
     color: #5D4037;
 }
 .btnPrincipal {
-    font-size: 16px;
+    font-size: 22px;
     font-weight: bold;
 }
 
-.btnPrincipal:focus,
-.btnPrincipal:active {
-    color: inherit; /* O el color que desees */
-    background-color: inherit; /* O el color que desees */
-    border: none; /* Si hay un borde que no deseas */
-    box-shadow: none; /* Remover el contorno de Bootstrap */
+    .btnPrincipal:hover {
+        color: rgb(93, 64, 55);
+    }
+   
+.footer {
+    background-color: rgb(93, 64, 55);
+    color: white;
+    padding: 20px 0;
+    margin-top: 40px;
 }
 
 

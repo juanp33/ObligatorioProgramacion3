@@ -14,7 +14,9 @@
     <title>@ViewData["Title"] - ObligatorioProgramacion3</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body class="Fondo">
     <header class="d-flex">
@@ -82,7 +84,12 @@
 
                     }
                    
-
+                    @if(userClaims.Any(c => c.Type == "Permission" && c.Value == "VerMostrarOrdenes"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link btnPrincipal" aria-current="page" asp-area="" asp-controller="Ordenes" asp-action="MostrarOrdenes">Ordenes</a>
+                        </li>
+                    }
 
 
                     @if ((userClaims.Any(c => c.Type == "Permission" && c.Value == "ClientesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenDetallesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PagosVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PlatosVer") || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ResteurantesVer"))) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReseñasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReservasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "UsuariosVer"))||(userClaims.Any(c => c.Type == "Permission" && c.Value == "PermisosRolesYPermisos")))
@@ -196,15 +203,16 @@
         @RenderBody()
     </main>
 
-    <footer class="footer text-muted border-top mt-auto">
-        <div class="container">
-            &copy; 2024 - TriCampeones - <a asp-area="" asp-controller="Home" asp-action="Privacy">Terminos y condiciones</a>
-        </div>
-    </footer>
+    
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <footer class="footer mt-auto py-3">
+        <div class=" text-center">
+            <span>© 2024 Al mal tiempo, buena cara. Todos los derechos reservados.</span>
+        </div>
+    </footer>
 </body>
 </html>

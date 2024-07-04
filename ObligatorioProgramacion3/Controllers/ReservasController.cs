@@ -45,12 +45,29 @@ namespace ObligatorioProgramacion3.Controllers
         public async Task<IActionResult> MostrarReservas()
         {
             var IdUsuario = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
             ViewBag.IsAuthenticated = User.Identity.IsAuthenticated;
+
+
+
             ViewBag.UserClaims = User.Claims;
-            var reservas = await _context.Reservas
-                .Include(r => r.IdRestauranteNavigation)
-                .Where(r => r.UsuarioId == IdUsuario)
-                .ToListAsync();
+            List<Reserva> reservas;
+            if (User.Claims.Any(c => c.Type == "Permission" && c.Value == "VerTodasLasReservas")){
+                 reservas = await _context.Reservas
+
+                              .Include(r => r.IdRestauranteNavigation)
+                             
+                              .ToListAsync();
+            }
+            else
+            {
+                reservas = await _context.Reservas
+
+                               .Include(r => r.IdRestauranteNavigation)
+                               .Where(r => r.UsuarioId == IdUsuario)
+                               .ToListAsync();
+
+            }
 
             return View(reservas);
 

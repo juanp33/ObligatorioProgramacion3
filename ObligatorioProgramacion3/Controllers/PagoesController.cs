@@ -138,11 +138,32 @@ namespace ObligatorioProgramacion3.Controllers
         [Authorize(Policy = "PagosPagarReserva")]
         public async Task<IActionResult> PagarReserva(int reservaId)
         {
-            
-            var items = _carritoService.ObtenerCarritoItems();
-            var total = _carritoService.ObtenerTotal();
+            var ordenId = await _context.Ordenes.Where(x => x.ReservaId == reservaId).Select(x=>x.Id).FirstOrDefaultAsync();
+          
+            List<CarritoItem> items = new List<CarritoItem>();
+            var orden = await _context.Ordenes.Where(orden => orden.Id == ordenId).Select(orden => orden.Id).FirstOrDefaultAsync();
+            var listaDePlatos = await _context.OrdenDetalles.Where(orden => orden.OrdenId == ordenId).ToListAsync();
+            decimal total = 0;
+            foreach (var plato in listaDePlatos)
+            {
+                var nombrePlato = await _context.Platos.Where(c => c.Id == plato.PlatoId).Select(x => x.NombrePlato).FirstOrDefaultAsync();
+                var descripcion = await _context.Platos.Where(c => c.Id == plato.PlatoId).Select(x => x.Descripción).FirstOrDefaultAsync();
+                var precio = await _context.Platos.Where(c => c.Id == plato.PlatoId).Select(x => x.Precio).FirstOrDefaultAsync();
+                CarritoItem carritoItem = new CarritoItem
+                {
+                    PlatoId = plato.PlatoId.Value,
+                    NombrePlato = nombrePlato,
+                    Cantidad = plato.Cantidad,
+                    Precio = precio,
+                    Descripción = descripcion
+                };
+                total = total + (precio * plato.Cantidad);
+                items.Add(carritoItem);
+            }
+
+          
             ViewData["SubTotal"] = total;
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = await _context.Reservas.Where(x => x.Id == reservaId).Select(x => x.UsuarioId).FirstOrDefaultAsync(); ;
 
             var tipoCliente = _context.Clientes
                           .Where(c => c.IdUsuarios == userId)

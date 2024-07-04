@@ -131,48 +131,56 @@ namespace ObligatorioProgramacion3.Controllers
 
 
 
-
-            if (ModelState.IsValid)
+            try
             {
-                var usuario = new Usuario
+                if (ModelState.IsValid)
                 {
-                    Nombre = model.NombreUsuario,
-                    Email = model.EmailUsuario,
-                    Contraseña = model.Contraseña,
-                    RolId = 1
-                };
-                if (await _context.Usuarios.AnyAsync(u => u.Nombre == usuario.Nombre))
-                {
-                    TempData["ErrorMessage"] = "El nombre del usuario ya existe.";
-                    return RedirectToAction("RegistroUsuario");
+                    var usuario = new Usuario
+                    {
+                        Nombre = model.NombreUsuario,
+                        Email = model.EmailUsuario,
+                        Contraseña = model.Contraseña,
+                        RolId = 2
+                    };
+                    if (await _context.Usuarios.AnyAsync(u => u.Nombre == usuario.Nombre))
+                    {
+                        TempData["ErrorMessage"] = "El nombre del usuario ya existe.";
+                        return RedirectToAction("RegistroUsuario");
+                    }
+
+                    if (await _context.Usuarios.AnyAsync(u => u.Email == usuario.Email))
+                    {
+                        TempData["ErrorMessage"] = "El email del usuario ya existe.";
+                        return RedirectToAction("RegistroUsuario");
+                    }
+
+                    _context.Add(usuario);
+                    await _context.SaveChangesAsync();
+
+                    var cliente = new Cliente
+                    {
+                        Nombre = model.NombreCliente,
+                        Email = model.EmailUsuario,
+                        TipoCliente = "Nuevo",
+                        IdUsuarios = usuario.Id
+                    };
+
+
+                    usuario.Cliente = cliente;
+
+                    _context.Add(cliente);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index));
                 }
-
-                if (await _context.Usuarios.AnyAsync(u => u.Email == usuario.Email))
-                {
-                    TempData["ErrorMessage"] = "El email del usuario ya existe.";
-                    return RedirectToAction("RegistroUsuario");
-                }
-               
-                _context.Add(usuario);
-                await _context.SaveChangesAsync();
-
-                var cliente = new Cliente
-                {
-                    Nombre = model.NombreCliente,
-                    Email = model.EmailUsuario,
-                    TipoCliente = "NORMAL",
-                    IdUsuarios = usuario.Id 
-                };
-
-              
-                usuario.Cliente = cliente;
-
-                _context.Add(cliente);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
-            return View(model);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al ingresar el usuario: " + ex.Message;
+                return RedirectToAction("RegistroUsuario");
+            }
+
 
         }
 

@@ -84,9 +84,12 @@ namespace ObligatorioProgramacion3.Controllers
 
                     };
                     _context.OrdenDetalles.Add(ordenDetalle);
-                    await _context.SaveChangesAsync();
+                   
                 }
-                
+                var reserva = _context.Reservas.FirstOrDefault(r => r.Id == reservaId);
+                reserva.Estado = "Confirmada";
+                await _context.SaveChangesAsync();
+
             }
             _carritoService.LimpiarCarrito();
 
@@ -99,9 +102,11 @@ namespace ObligatorioProgramacion3.Controllers
             var userClaims = User.Claims.Where(c => c.Type == "Permission").Select(c => c.Value).ToList();
 
             var ordenesSinPago = await _context.Ordenes
-                .Include(o => o.Reserva) 
-                .Where(o => !_context.Pagos.Any(p => p.ReservaId == o.ReservaId))
-                .ToListAsync();
+          .Include(o => o.Reserva)
+          .Include(o => o.OrdenDetalles)
+              .ThenInclude(od => od.Plato)
+          .Where(o => !_context.Pagos.Any(p => p.ReservaId == o.ReservaId))
+          .ToListAsync();
 
             ViewBag.UserClaims = userClaims;
 

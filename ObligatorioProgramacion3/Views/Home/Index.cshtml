@@ -1,14 +1,98 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    @if (User.Identity.IsAuthenticated)
-    {
-        <p>Bienvenido, @User.Identity.Name</p>
-    }
-    else
-    {
-        <p>Por favor inicia sesión para continuar.</p>
-    }
-</div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Al mal tiempo buena cara</title>
+    <style>
+      
+        .content {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+          
+            color: #5D4037;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            width: 70%;
+            margin: 0 15%;
+            padding: 20px;
+        }
+
+        .locations, .offers, .reviews {
+            margin: 40px 0;
+        }
+
+        .location-item, .offer-item, .review-item {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .discount {
+            font-size: 1.5em;
+            color: #d2691e;
+            margin: 20px 0;
+        }
+
+        .section-title {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #8b4513;
+        }
+
+        .offers img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .offers {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+    </style>
+</head>
+
+    <main class="content">
+        
+        <h1>Bienvenido a Al mal tiempo buena cara</h1>
+        <h2>¡Aprovecha nuestros descuentos especiales basados en el clima!</h2>
+
+        <div class="locations">
+            <h3 class="section-title">Nuestras Sucursales</h3>
+            <div class="location-item">México</div>
+            <div class="location-item">España</div>
+            <div class="location-item">Uruguay</div>
+        </div>
+
+        <div class="offers">
+            
+            <div class="offer-item">
+            <img src="~/Imagenes/Descuentos Frio.png" alt="Oferta 1">
+                <p>Descuento de hasta un 10% en días fríos   </p>
+            </div>
+            <div class="offer-item">
+            <img src="~/Imagenes/Descuentos dia de lluvia.png" alt="Oferta 2">
+                <p>   Descuento del 5% si llueve        </p>
+            </div>
+            <div class="offer-item">
+            <img src="~/Imagenes/DescuentosPorEstadoCliente.png" alt="Oferta 3">
+                <p>Descuento de hasta un 20% si eres VIP</p>
+            </div>
+        </div>
+
+       
+
+        <div class="discount">
+            ¡Cuanto más frío y si llueve, más descuentos!
+        </div>
+    </main>
+
+</html>

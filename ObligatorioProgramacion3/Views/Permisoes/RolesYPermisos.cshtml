@@ -1,5 +1,9 @@
 ﻿@model RolPermisoViewModel
+<head>
 
+
+    <link rel="stylesheet" href="~/css/StylesCrudeINDEX.css" asp-append-version="true" />
+</head>
 <h2>Gestionar Permisos</h2>
 
 <form asp-action="ActualizarPermisos" method="post">
@@ -8,27 +12,39 @@
             <tr>
                 <th>Rol</th>
                 <th>Permisos</th>
+                <th>Descripción</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var rol in Model.Roles)
             {
-                <tr>
-                    <td>
-                        @rol.Nombre
-                        <input type="hidden" name="RolIds" value="@rol.RolId" />
-                    </td>
-                    <td>
-                        @foreach (var permiso in Model.Permisos)
-                        {
-                            <div>
-                                <input type="checkbox" name="PermisoIds_@rol.RolId" value="@permiso.PermisoId"
-                                @(Model.RolPermisos.Any(rp => rp.RolId == rol.RolId && rp.PermisoId == permiso.PermisoId) ? "checked" : "") />
-                                @permiso.Nombre - @permiso.Descripcion
-                            </div>
-                        }
-                    </td>
-                </tr>
+                if (rol.RolId != 1)
+                {
+                    <tr>
+                        <td>
+                            @rol.Nombre
+                            <input type="hidden" name="RolIds" value="@rol.RolId" />
+                        </td>
+                        <td>
+                            @foreach (var permiso in Model.Permisos)
+                            {
+                                <div>
+                                    <input type="checkbox" name="PermisoIds_@rol.RolId" value="@permiso.PermisoId"
+                                    @(Model.RolPermisos.Any(rp => rp.RolId == rol.RolId && rp.PermisoId == permiso.PermisoId) ? "checked" : "") />
+                                    @permiso.Nombre
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            @foreach (var permiso in Model.Permisos)
+                            {
+                                <div>
+                                    @permiso.Descripcion
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>

@@ -37,13 +37,15 @@
     double? tipoDeCambioDouble = (double)TipoDeCambio.Value;
 
 }
-<h2>Pagar Reserva</h2>
+
 <style>
     #carritoContainer {
         margin: 20px;
         padding: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
+        background-color: #5D4037;
+        color: white;
     }
 
     .carrito-item {
@@ -75,7 +77,8 @@
 
 
 <div id="carritoContainer">
-    <h3>Mi Pedido</h3>
+
+    <h3>Pedido</h3>
     <div>
         @foreach (var item in Model.Items)
         {
@@ -165,22 +168,23 @@
         }
 
     </div>
+    <form asp-action="ConfirmarPago" method="post">
+        <div class="form-group">
+            <label for="MetodoPago">Método de Pago</label>
+            <select id="MetodoPago" name="MetodoPago" class="form-control" required>
+                <option value="">Seleccione un método</option>
+                <option value="Tarjeta">Tarjeta</option>
+                <option value="Efectivo">Efectivo</option>
+
+            </select>
+            <input type="hidden" name="reservaId" value="@reservaId" />
+            <input type="hidden" name="descuento" value="@descuento" />
+        </div>
+        <button type="submit" class="btn btn-primary">Confirmar</button>
+    </form>
+
 </div>
 
-<form asp-action="ConfirmarPago" method="post">
-    <div class="form-group">
-        <label for="MetodoPago">Método de Pago</label>
-        <select id="MetodoPago" name="MetodoPago" class="form-control" required>
-            <option value="">Seleccione un método</option>
-            <option value="Tarjeta">Tarjeta</option>
-            <option value="Efectivo">Efectivo</option>
-
-        </select>
-        <input type="hidden" name="reservaId" value="@reservaId" />
-        <input type="hidden" name="descuento" value="@descuento" />
-    </div>
-    <button type="submit" class="btn btn-primary">Confirmar</button>
-</form>
 
 <script>
     

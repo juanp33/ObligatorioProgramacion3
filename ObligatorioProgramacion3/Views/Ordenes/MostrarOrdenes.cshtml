@@ -21,8 +21,8 @@
 
         .OrdenMostrar {
             display: flex;
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
+            background-color: #5D4037;
+            color: white;
             border-radius: 10px;
             padding: 20px;
             width: 500px;
@@ -38,12 +38,14 @@
 
         .button-link:hover {
             transform: scale(1.10);
-            background-color: #C8BE6F;
+            background-color: #48322A;
+            color: white;
         }
 
         .button-link {
-            background-color: #F7EFAA;
-            border: 1px solid black;
+            background-color: #D7CCC8;
+            color: #5D4037;
+            transition: background-color 0.7s ease, color 0.7s ease;
             padding: 15px 32px;
             text-align: center;
             text-decoration: none;
@@ -67,27 +69,35 @@
         }
     </style>
 </head>
+
 <body class="Fondo">
     <div class="ordenContainer">
         @foreach (var orden in Model)
         {
             if ((userClaims.Contains("EmpleadoRestauranteUruguay") && orden.Reserva.IdRestaurante == 1) ||
                 (userClaims.Contains("EmpleadoRestauranteMexico") && orden.Reserva.IdRestaurante == 2) ||
-            (userClaims.Contains("EmpleadoRestauranteEspaña") && orden.Reserva.IdRestaurante == 3))
+                (userClaims.Contains("EmpleadoRestauranteEspaña") && orden.Reserva.IdRestaurante == 3))
             {
                 <div class="OrdenMostrar">
                     <div>
                         <h4>Orden número: @orden.Id</h4>
                         <p>Reserva ID: @orden.ReservaId</p>
-                        <p>Total: @orden.Total</p>
+                        <p>Detalles de la Orden:</p>
+                        <ul>
+                            @foreach (var detalle in orden.OrdenDetalles)
+                            {
+                                <li>@detalle.Plato.NombrePlato x @detalle.Cantidad - Precio: @detalle.Plato.Precio (USD)</li>
+                            }
+                        </ul>
+                        <p>Total: @orden.Total (USD)</p>
                         <div class="BtnsCrearEliminar">
-                            <form method="post" action="@Url.Action("PagarReserva", "Reservas")">
+                            <form method="post" action="@Url.Action("SeleccionarPlato", "Platoes")">
                                 <input type="hidden" name="ReservaId" value="@orden.ReservaId" />
                                 <button type="submit" class="button-link">Editar</button>
                             </form>
-                            <form method="post" action="@Url.Action("SeleccionarPlato", "Platoes")">
+                            <form method="post" action="@Url.Action("PagarReserva", "Pagoes")">
                                 <input type="hidden" name="ReservaId" value="@orden.ReservaId" />
-                                <button type="submit" class="button-link ">Pagar</button>
+                                <button type="submit" class="button-link">Pagar</button>
                             </form>
                         </div>
                     </div>
