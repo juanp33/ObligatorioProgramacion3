@@ -29,20 +29,12 @@ namespace ObligatorioProgramacion3.Controllers
         private async Task<decimal> ObtenerTipoDeCambio(int reservaID)
         {
             var restauranteId = _context.Reservas.Where(r => r.Id == reservaID).Select(r => r.IdRestaurante).FirstOrDefault();
+            var moneda =_context.Restaurantes.Where(r => r.Id==restauranteId).Select(r => r.Moneda).FirstOrDefault();
             using (var client = new HttpClient())
             {
                 try
                 {
-                    string moneda;
-                    if (restauranteId == 1)
-                    {
-                        moneda = "UYU";
-                    }
-                    else if (restauranteId == 2)
-                    {
-                        moneda = "MXN";
-                    }
-                    else { moneda = "EUR"; }
+                   
                     string url = $"http://api.currencylayer.com/live?access_key=b6fb3ee2a8859b4237975e1d708cb64e&currencies={moneda}";
                     HttpResponseMessage response = await client.GetAsync(url);
 
