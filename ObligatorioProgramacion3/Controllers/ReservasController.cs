@@ -72,21 +72,7 @@ namespace ObligatorioProgramacion3.Controllers
             return View(reservas);
 
         }
-        [Authorize(Policy = "ReservasSeleccionarFecha")]
-        [HttpPost]
-        public IActionResult SeleccionarFecha(int restauranteId)
-        {
-          
-            ViewData["RestauranteId"] = restauranteId;
-            return View(restauranteId);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult EnviarFecha(DateTime fecha, int restauranteId)
-        {
-           
-            return RedirectToAction("SeleccionarMesa", new { fecha, restauranteId });
-        }
+       
 
         [Authorize(Policy = "ReservasSeleccionarMesa")]
         public async Task<IActionResult> SeleccionarMesa(DateTime fecha, int restauranteId)

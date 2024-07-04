@@ -13,13 +13,80 @@
 <head>
     <link rel="stylesheet" href="~/css/StylesCrudeINDEX.css" asp-append-version="true" />
 </head>
+<style>
+    h1, h4 {
+        color: #5d4037;
+        text-align: center;
+    }
 
-<h1>Detalles de la Reserva para Mesa @Model.MesaId</h1>
+    .centered-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        min-height: 100vh;
+        padding: 20px;
+        box-sizing: border-box;
+    }
 
-<h4>Información de la Reserva</h4>
-<hr />
-<div class="row">
-    <div class="col-md-6">
+    .form-container {
+        background-color: #5d4037;
+        color:white;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+        width: 100%;
+        max-width: 600px;
+    }
+
+        .form-container p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .form-container .form-group {
+            margin-top: 20px;
+        }
+
+        .form-container .btn-primary {
+            background-color: #D7CCC8;
+            color: #5D4037;
+           
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+            .form-container .btn-primary:hover {
+                background-color: #48322a;
+                border-color: #48322a;
+                color:white;
+            }
+
+    a {
+        color: #5d4037;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+        a:hover {
+            color: #48322a;
+            text-decoration: underline;
+        }
+
+    .volver-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+</style>
+<div class="centered-container">
+    <h1>Detalles de la Reserva</h1>
+
+    <h4>Información de la Reserva</h4>
+    <hr />
+    <div class="form-container">
         <form asp-action="CrearReserva" method="post">
             <input asp-for="MesaId" type="hidden" />
             <input asp-for="FechaReserva" type="hidden" />
@@ -27,24 +94,20 @@
             <input asp-for="IdRestaurante" type="hidden" />
             <input asp-for="UsuarioId" type="hidden" />
             <input asp-for="ClienteId" type="hidden" />
-            
 
-            <!-- Mostrar los detalles de la reserva -->
+         
             <p>Sucursal: @NombreRestaurante</p>
             <p>Fecha Reserva: @fechaReserva </p>
             <p>Numero de mesa: @numeroMesa </p>
             <p>Capacidad: @Capacidad</p>
-
 
             <div class="form-group">
                 <input type="submit" value="Confirmar Reserva" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
 
-<div>
-    <a asp-action="SeleccionarMesa" asp-route-fecha="@Model.FechaReserva.ToString("yyyy-MM-dd")">Volver a Selección de Mesa</a>
+    
 </div>
 
 @section Scripts {

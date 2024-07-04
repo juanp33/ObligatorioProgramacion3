@@ -5,12 +5,20 @@
 }
 <head>
     <link rel="stylesheet" href="~/css/StylesCrudeINDEX.css" asp-append-version="true" />
+    <style>
+        #btnSelec {
+            background-color: #48322a;
+            border-color: #48322a;
+            color: white;
+        }
+    </style>
 </head>
+
 <h1>Seleccionar Mesa para @Model.Fecha.ToShortDateString()</h1>
 
-<form asp-action="CrearReserva" method="get">
-    <input type="hidden" asp-for="Fecha"/>
-    <input type="hidden" name="restauranteId" value="@Model.restauranteId"/>
+<form asp-action="CrearReserva" method="get" onsubmit="return validateForm()">
+    <input type="hidden" asp-for="Fecha" />
+    <input type="hidden" name="restauranteId" value="@Model.restauranteId" />
     <table class="table">
         <thead>
             <tr>
@@ -45,9 +53,26 @@
         </tbody>
     </table>
     <input type="hidden" name="fecha" value="@Model.Fecha" />
-    <button type="submit" class="btn btn-primary">Crear Reserva</button>
+    <button id="btnSelec" type="submit" class="btn btn-primary">Seleccionar mesa</button>
 </form>
 
-<div>
-    <a asp-action="SeleccionarFecha">Volver a Selección de Fecha</a>
-</div>
+
+<script>
+    function validateForm() {
+        var radios = document.getElementsByName('mesaId');
+        var formValid = false;
+
+        for (var i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                formValid = true;
+                break;
+            }
+        }
+
+        if (!formValid) {
+            alert('Por favor, seleccione una mesa.');
+        }
+
+        return formValid;
+    }
+</script>

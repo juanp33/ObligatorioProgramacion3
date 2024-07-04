@@ -3,6 +3,7 @@
 @{
     int contador = 0;
     string restauranteString;
+    var today = DateTime.Now.ToString("yyyy-MM-dd");
 }
 
 
@@ -11,6 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seleccione su restaurante de preferencia</title>
+    <link rel="stylesheet" href="~/css/StylesCrudeINDEX.css" asp-append-version="true" />
     <style>
         
 
@@ -48,36 +50,113 @@
                 margin-top: 1px;
             }
 
+        .background-container {
+            background-color: #5D4037;
+            padding: 20px;
+            border-radius: 60px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top:20px;
+            margin-right:40%;
+            margin-left:40%;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+            .form-group label {
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .form-group input[type="date"] {
+                padding: 10px;
+                font-size: 14px;
+                
+                border-radius: 4px;
+                width: 100%;
+                max-width: 300px;
+                box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+                transition: border-color 0.3s, box-shadow 0.3s;
+            }
+
+                .form-group input[type="date"]:focus {
+                  
+                    outline: none;
+                    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+                }
+
+                .form-group input[type="date"]::-webkit-calendar-picker-indicator {
+                    cursor: pointer;
+                }
+
+                .form-group input[type="date"]::placeholder {
+                    color: #aaa;
+                }
+
+                .form-group input[type="date"]:invalid {
+                   
+                }
+
+                .form-group input[type="date"]:valid {
+                   
+                }
+                #TxtFecha{
+                    color:white;
+                    font-size: 16px;
+                }
     </style>
 </head>
 <body>
-     
-   
-        <div class="restauranteContainer">
-
-            @foreach (var restaurante in Model)
-            {
-            
-
-
-            <form action="@Url.Action("SeleccionarFecha", "Reservas", new { restauranteId = restaurante.Id })" method="post" style="text-decoration: none; color: black;">
-                <!-- Contenedor del restaurante -->
-                <div class="CartaRestaurante" onclick="this.closest('form').submit();">
-                    <!-- Imagen del restaurante -->
-                    <img src="@restaurante.Imagen" alt="Mcdonalds Logo" id="img" />
-                    <!-- Información del restaurante -->
+    <div class="restauranteContainer">
+        @foreach (var restaurante in Model)
+        {
+            <form action="@Url.Action("SeleccionarMesa", "Reservas", new { restauranteId = restaurante.Id})" method="post" style="text-decoration: none; color: black;">
+               
+                <div class="CartaRestaurante" onclick="submitForm(this);">
+                   
+                    <img src="@restaurante.Imagen" alt="Restaurante Logo" id="img" />
+                    
                     <div>
                         <h4>@restaurante.Nombre</h4>
-                        
                         <p>Dirección: @restaurante.Dirección</p>
                         <p>Teléfono: @restaurante.Teléfono</p>
                     </div>
                 </div>
+                
+                <input type="hidden" name="fecha" class="fecha-input" required />
             </form>
-                contador++;
-            }
+        }
+       
+    </div>
+    <div class="background-container">
+        <div class="form-group">
+            <label id="TxtFecha" for="fecha">Fecha</label>
+            <input type="date" id="fecha" name="fecha" min="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="updateFecha(this)" required />
         </div>
-    }
-    
+    </div>
+    <script>
+        function updateFecha(dateInput) {
+            
+            var dateValue = dateInput.value;
+            var dateInputs = document.querySelectorAll('.fecha-input');
+            dateInputs.forEach(function (input) {
+                input.value = dateValue;
+            });
+        }
+
+        function submitForm(cartaRestaurante) {
+            var form = cartaRestaurante.closest('form');
+            var fechaInput = document.getElementById('fecha');
+            if (fechaInput.value === "") {
+                alert("Por favor, seleccione una fecha.");
+                return false;
+            }
+            form.submit();
+        }
+    </script>
 </body>
 
