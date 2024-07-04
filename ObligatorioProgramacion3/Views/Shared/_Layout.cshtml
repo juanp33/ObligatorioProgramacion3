@@ -31,11 +31,11 @@
                 
                 <div class="auth-buttons">
                     @if(!User.Identity.IsAuthenticated){
-                    <a class="btn btn-outline-primary me-2 btnauth" asp-area="" asp-controller="Usuarios" asp-action="Login">Iniciar Sesión</a>
-                        <a class="btn btn-primary btnauth" asp-area="" asp-controller="Usuarios" asp-action="RegistroUsuario">Registrarse</a>
+                    <a class="btn  btnauth" asp-area="" asp-controller="Usuarios" asp-action="Login">Iniciar Sesión</a>
+                        <a class="btn  btnauth" asp-area="" asp-controller="Usuarios" asp-action="RegistroUsuario">Registrarse</a>
                     }else
                     {
-                        <a class="btn btn-primary btnauth" asp-area="" asp-controller="Usuarios" asp-action="Logout">Cerrar Sesión</a>
+                        <a class="btn btnauth" asp-area="" asp-controller="Usuarios" asp-action="Logout">Cerrar Sesión</a>
                     }
 
 

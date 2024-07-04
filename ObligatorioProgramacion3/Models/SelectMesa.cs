@@ -5,5 +5,7 @@
         public DateTime Fecha {  get; set; }
         public int restauranteId { get; set; }
         public List<ChechboxMesa> ChechboxMesa { get; set; }
+
+        
     }
 }

@@ -89,6 +89,8 @@ namespace ObligatorioProgramacion3.Controllers
                 ChechboxMesa = mesas.Select(m => new ChechboxMesa
                 {
                     MesaId = m.Id,
+                    NumeroMesa = m.NumeroMesa,
+                    
 
                     EstaOcupada = mesasOcupadas.Contains(m.Id)
                 }).ToList()
@@ -141,7 +143,7 @@ namespace ObligatorioProgramacion3.Controllers
 
                 _context.Add(reserva);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(MostrarReservas));
             }
             ViewData["MesaId"] = reserva.Id;
             ViewData["Fecha"] = reserva.FechaReserva;
