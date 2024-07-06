@@ -77,7 +77,7 @@ namespace ObligatorioProgramacion3.Controllers
                 }
                 _context.Add(reseña);               
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Reseñas));
             }
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id", reseña.ClienteId);
             ViewData["RestauranteId"] = new SelectList(_context.Restaurantes, "Id", "Nombre", reseña.RestauranteId);
