@@ -8,11 +8,37 @@
     <link rel="stylesheet" href="~/css/StylesCrudeINDEX.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
+<style>
+ .button-link {
+            background-color: #D7CCC8;
+            color: #5D4037;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.7s ease, color 0.7s ease;
+        }
+
+            .button-link:hover {
+                transform: scale(1.10);
+                background-color: #48322A;
+                color: white;
+                transition: transform 1s;
+            }
+            .container{
+        background-color: #5D4037;
+        color: white;
+            }
+</style>
 
 <body class="Fondo">
     <div class="container">
-        <h1 class="text-center">@ViewData["Title"]</h1>
-        <h4 class="center-text">Reseña</h4>
+   
+        <h4 class="center-text">Escriba su reseña</h4>
         <hr />
         <div class="row">
             <div class="col-md-12">
@@ -52,10 +78,10 @@
                     <!-- Botones -->
                     <div class="form-group">
                         <div class="btn-group">
-                            <input type="submit" value="Agregar Reseña" class="btn btn-agregar-reseña" />
+                            <input type="submit" value="Agregar Reseña" class="btn button-link" />
                         </div>
                         <div class="btn-group">
-                            <a asp-action="Index" class="btn btn-cancelar">Cancelar</a>
+                            <a asp-action="Index" class="btn button-link">Cancelar</a>
                         </div>
                     </div>
                 </form>
