@@ -197,7 +197,7 @@ namespace ObligatorioProgramacion3.Controllers
             {
                 _context.Add(reserva);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(MostrarReservas));
             }
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id", reserva.ClienteId);
             ViewData["MesaId"] = new SelectList(_context.Mesas, "Id", "Id", reserva.MesaId);
