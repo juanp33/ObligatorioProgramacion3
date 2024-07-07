@@ -60,11 +60,11 @@
             
 
             <form action="@Url.Action("MenuSoloVer", "Platoes", new { restauranteId = restaurante.Id })" method="post" style="text-decoration: none; color: black;">
-                <!-- Contenedor del restaurante -->
+                
                 <div class="CartaRestaurante" onclick="this.closest('form').submit();">
-                    <!-- Imagen del restaurante -->
+                   
                     <img src="@restaurante.Imagen" alt="Imagen del restaurante en @restaurante.Nombre" />
-                    <!-- Información del restaurante -->
+                    
                     <div>
                         <h4>@restaurante.Nombre</h4>
                         <p>Dirección: @restaurante.Dirección</p>

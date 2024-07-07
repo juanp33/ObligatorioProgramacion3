@@ -58,7 +58,7 @@ namespace ObligatorioProgramacion3.Controllers
                 {
                     var claims = new List<Claim>
             {
-                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.Name, user.Nombre)
             };
 
@@ -75,7 +75,7 @@ namespace ObligatorioProgramacion3.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-                ModelState.AddModelError(string.Empty, "Nombre de usuario o contraseña incorrectos.");
+                ViewBag.ErrorMessage = "Nombre de usuario o contraseña incorrectos.";
             }
 
             return View(model);
@@ -173,12 +173,13 @@ namespace ObligatorioProgramacion3.Controllers
 
                     return RedirectToAction(nameof(Index));
                 }
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el usuario: " ;
                 return View(model);
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Hubo un problema al ingresar el usuario: " + ex.Message;
-                return RedirectToAction("RegistroUsuario");
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el usuario: " + ex.Message;
+                return View(model);
             }
 
 

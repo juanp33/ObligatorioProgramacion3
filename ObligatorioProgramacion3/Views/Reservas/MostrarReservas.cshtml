@@ -5,6 +5,8 @@
 @{
     var isAuthenticated = ViewBag.IsAuthenticated as bool? ?? false;
     var userClaims = ViewBag.UserClaims as IEnumerable<Claim> ?? Enumerable.Empty<Claim>();
+    var usuarioId = (int)ViewData["UsuarioId"];
+   
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -24,8 +26,8 @@
             display: flex;
             background-color: #5D4037;
             color: white;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
+            
+            border-radius: 20px;
             padding: 20px;
             width: 500px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -95,7 +97,7 @@
 
         @foreach (var Reserva in Model)
         {
-            @if ((userClaims.Any(c => c.Type == "Permission" && c.Value == "EmpleadoRestauranteUruguay") && Reserva.IdRestaurante == 1) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "EmpleadoRestauranteMexico") && Reserva.IdRestaurante == 2) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "EmpleadoRestauranteEspaña") && Reserva.IdRestaurante == 3))
+            @if ((userClaims.Any(c => c.Type == "Permission" && c.Value == "EmpleadoRestauranteUruguay") && Reserva.IdRestaurante == 1) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "EmpleadoRestauranteMexico") && Reserva.IdRestaurante == 2) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "EmpleadoRestauranteEspaña") && Reserva.IdRestaurante == 3) || (Reserva.UsuarioId == usuarioId)) ;
             {
                 @if (Reserva.Estado == "Confirmada" || Reserva.Estado == "Cancelada")
                 {

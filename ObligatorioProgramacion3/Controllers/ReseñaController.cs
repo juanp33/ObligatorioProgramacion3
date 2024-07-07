@@ -21,14 +21,7 @@ namespace ObligatorioProgramacion3.Controllers
         {
             _context = context;
         }
-        
-       [Authorize(Policy = "ReseñasCrearReseñaUsuario")]
-        public IActionResult CrearReseñaUsuario()
-        {
-            ViewData["RestauranteId"] = new SelectList(_context.Restaurantes, "Id", "Nombre");
-            return View();
-            
-        }
+     
         // GET: Reseña
         [Authorize(Policy = "ReseñasVer")]
         public async Task<IActionResult> Index()
@@ -51,8 +44,14 @@ namespace ObligatorioProgramacion3.Controllers
             }
         }
 
+        public IActionResult CrearReseñaUsuario()
+        {
+            ViewData["RestauranteId"] = new SelectList(_context.Restaurantes, "Id", "Nombre");
+            return View();
+
+        }
         [HttpPost]
-        [Authorize(Policy = "ReseñasVer")]
+      
         public async Task<IActionResult> CrearReseñaUsuario ([Bind("Id,ClienteId,RestauranteId,Puntaje,Comentario,FechaReseña")] Reseña reseña)
         {
 

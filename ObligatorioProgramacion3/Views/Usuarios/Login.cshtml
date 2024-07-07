@@ -7,39 +7,106 @@
     var MsjRegistroCorrecto = TempData["RegistroCorrecto"] as string;
 }
 
-<h2>@ViewData["Title"]</h2>
-<hr />
-<div class="row">
 
-    <div class="col-md-4">
-        <form asp-action="Login">
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-            <label asp-for="Contraseña" class="control-label"></label>
-            <input asp-for="Contraseña" class="form-control" />
-                <span asp-validation-for="Contraseña" class="text-danger"></span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
     
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
-            </div>
-        </form>
-    </div>
-    @if (!string.IsNullOrEmpty(MsjRegistroCorrecto))
-    {
-        <div class="alert alert-success">
-            @MsjRegistroCorrecto
-        </div>
-    }
-</div>
+    <style>
+        .centered-container {
+            margin-top: 10px;
+            background-color: #5D4037;
+            color:white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 30vh;
+            margin-left: 35%;
+            margin-right:35%;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+            padding: 15px;
+            margin: auto;
+        }
+        .form-group{
+            padding:10px;
+            color:white;
+        }
+        .IrARegistrarse{
+            color:white;
+        }
 
-<div>
-    <a asp-action="RegistroUsuario">No tienes cuenta?, presiona aqui para registrarte.</a>
-</div>
+        .button-link {
+            background-color: #D7CCC8;
+            color: #5D4037;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.7s ease, color 0.7s ease;
+        }
+
+            .button-link:hover {
+                transform: scale(1.10);
+                background-color: #48322A;
+                color: white;
+                transition: transform 1s;
+            }
+    </style>
+</head>
+<body>
+    <h2 class="text-center ">@ViewData["Title"]</h2>
+    <div class="centered-container">
+       
+       
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+        <div class="login-form">
+            <form asp-action="Login">
+                <div class="form-group">
+                    <label asp-for="Nombre" class="control-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contraseña" class="control-label"></label>
+                    <input asp-for="Contraseña" class="form-control" />
+                    <span asp-validation-for="Contraseña" class="text-danger"></span>
+                </div>
+                <div class=" form-group">
+                    <button type="submit" class="btn button-link">Iniciar Sesion</button>
+                </div>
+            </form>
+        </div>
+        @if (!string.IsNullOrEmpty(MsjRegistroCorrecto))
+        {
+            <div class="alert alert-success">
+                @MsjRegistroCorrecto
+            </div>
+        }
+       
+    </div>
+    <div class="text-center">
+        <a asp-action="RegistroUsuario">No tienes cuenta?, presiona aqui para registrarte.</a>
+    </div>
+</body>
+</html>
+
 
 @section Scripts {
     @{
