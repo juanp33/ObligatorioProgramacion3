@@ -138,9 +138,9 @@
                                         <button type="submit" class="button-link">Ordenar</button>
                                     </form>
                                 }
-                               
-                                
-                                <form method="post" action="@Url.Action("Cancelar", "Reservas")">
+
+
+                                <form method="post" action="@Url.Action("Cancelar", "Reservas")" onsubmit="return confirmCancellation()">
                                     <input type="hidden" name="ReservaId" value="@Reserva.Id" />
                                     <button type="submit" class="button-link button-delete">Cancelar</button>
                                 </form>
@@ -156,4 +156,9 @@
 
         }
     </div>
+    <script type="text/javascript">
+        function confirmCancellation() {
+            return confirm('¿Estás seguro de que deseas cancelar esta reserva?');
+        }
+    </script>
 </body>
