@@ -1,1 +1,32 @@
-﻿
+﻿/* wwwroot/css/StylesCrudeEdit.css */
+.button-link {
+    background-color: #D7CCC8;
+    color: #5D4037;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 6px;
+   
+   
+}
+
+    .button-link:hover {
+        transform: scale(1.05);
+        background-color: #48322A;
+        color: white;
+    }
+
+.container {
+    background-color: #5D4037;
+    color: white;
+    border-radius: 6px;
+    padding: 20px;
+}
+.button-group {
+    display: flex;
+    justify-content:space-between;
+}

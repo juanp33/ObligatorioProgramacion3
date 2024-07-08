@@ -9,43 +9,43 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <style>
- .button-link {
-            background-color: #D7CCC8;
-            color: #5D4037;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: background-color 0.7s ease, color 0.7s ease;
+    .button-link {
+        background-color: #D7CCC8;
+        color: #5D4037;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: background-color 0.7s ease, color 0.7s ease;
+    }
+
+        .button-link:hover {
+            transform: scale(1.10);
+            background-color: #48322A;
+            color: white;
+            transition: transform 1s;
         }
 
-            .button-link:hover {
-                transform: scale(1.10);
-                background-color: #48322A;
-                color: white;
-                transition: transform 1s;
-            }
-            .container{
+    .container {
         background-color: #5D4037;
         color: white;
-        border-radius: 6px; 
-
-            }
+        border-radius: 6px;
+    }
 </style>
 
 <body class="Fondo">
     <div class="container">
-   
+
         <h4 class="center-text">Escriba su reseña</h4>
         <hr />
         <div class="row">
             <div class="col-md-12">
                 <form asp-action="CrearReseñaUsuario">
-                  
+
                     <div class="form-group">
                         <label asp-for="RestauranteId" class="control-label"></label>
                         <select asp-for="RestauranteId" class="form-control">
@@ -57,7 +57,7 @@
                         </select>
                     </div>
 
-                   
+
                     <div class="form-group">
                         <label asp-for="Puntaje" class="control-label"></label>
                         <select asp-for="Puntaje" class="form-control">
@@ -70,7 +70,7 @@
                         <span asp-validation-for="Puntaje" class="text-danger"></span>
                     </div>
 
-                   
+
                     <div class="form-group">
                         <label asp-for="Comentario" class="control-label"></label>
                         <input asp-for="Comentario" class="form-control" />

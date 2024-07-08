@@ -2,57 +2,52 @@
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Asegúrate de tener el layout configurado correctamente
 }
 <head>
-    <link rel="stylesheet" href="~/css/StylesCrudeEdit.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/StylesCrudeEdit.css" />
 </head>
 
-<body>
-    <div class="form-container">
-        <h4>Cliente</h4>
-        <hr />
-        <div class="row">
-            <div class="col-md-12">
-                <form asp-action="Edit">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Id" />
-                    <div class="form-group">
-                        <label asp-for="Nombre" class="control-label"></label>
-                        <input asp-for="Nombre" class="form-control" />
-                        <span asp-validation-for="Nombre" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="TipoCliente" class="control-label"></label>
-                        <select asp-for="TipoCliente" class="form-control">
-                            <option value="Nuevo">Nuevo</option>
-                            <option value="Frecuente">Frecuente</option>
-                            <option value="VIP">VIP</option>
-                        </select>
-                        <span asp-validation-for="TipoCliente" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="IdUsuarios" class="control-label"></label>
-                        <select asp-for="IdUsuarios" class="form-control" asp-items="ViewBag.IdUsuarios"></select>
-                        <span asp-validation-for="IdUsuarios" class="text-danger"></span>
-                    </div>
-                    <div class="form-groupBotones">
-                        <div class="btn-group">
-                            <input type="submit" value="Guardar" class="btn btn-primary" />
-                        </div>
-                        <div class="btn-group">
-                            <a asp-action="Index" class="btn btn-cancelar">Cancelar</a>
-                        </div>
-                    </div>
-                    <div class="form-group">
-               
-                </form>
+<hr />
+<div class="row">
+    <div class="col-md-4 container">
+        <h1>Edit clientes</h1>
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
-        </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TipoCliente" class="control-label"></label>
+                <select asp-for="TipoCliente" class="form-control">
+                    <option value="Nuevo">Nuevo</option>
+                    <option value="Frecuente">Frecuente</option>
+                    <option value="VIP">VIP</option>
+                </select>
+                <span asp-validation-for="TipoCliente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdUsuarios" class="control-label"></label>
+                <select asp-for="IdUsuarios" class="form-control" asp-items="ViewBag.IdUsuarios"></select>
+                <span asp-validation-for="IdUsuarios" class="text-danger"></span>
+            </div>
+            <div class="form-group button-group">
+
+                <a asp-action="Index" class="button-link">Volver</a>
+                <input type="submit" value="Guardar" class="button-link" />
+                
+            </div>
+        </form>
+      
     </div>
-</body>
-</html>
+</div>
+
+
