@@ -93,7 +93,21 @@
                     }
 
 
-                    @if ((userClaims.Any(c => c.Type == "Permission" && c.Value == "ClientesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenDetallesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenesVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PagosVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PlatosVer") || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ResteurantesVer"))) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReseñasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReservasVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "UsuariosVer")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "PermisosRolesYPermisos")) || (userClaims.Any(c => c.Type == "Permission" && c.Value == "CotizacionVer")))
+                    @if ((userClaims.Any(c => c.Type == "Permission" && c.Value == "ClientesVer")) ||
+                    (userClaims.Any(c => c.Type == "Permission" && c.Value == "RolesVer")) ||
+                    (userClaims.Any(c => c.Type == "Permission" && c.Value == "PermisosVer")) ||
+                    (userClaims.Any(c => c.Type == "Permission" && c.Value == "PermisosRolesYPermisos")) ||
+                    (userClaims.Any(c => c.Type == "Permission" && c.Value == "MesasVer")) ||
+                    (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenDetallesVer")) ||
+                    (userClaims.Any(c => c.Type == "Permission" && c.Value == "OrdenesVer")) ||
+                    (userClaims.Any(c => c.Type == "Permission" && c.Value == "PagosVer")) ||
+                    (userClaims.Any(c => c.Type == "Permission" && c.Value == "PlatoesVer")) ||
+                    (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReseñasVer")) ||
+                    (userClaims.Any(c => c.Type == "Permission" && c.Value == "ReservasVer")) ||
+                    (userClaims.Any(c => c.Type == "Permission" && c.Value == "RestaurantesVer")) ||
+                    (userClaims.Any(c => c.Type == "Permission" && c.Value == "UsuariosVer")) ||
+                    (userClaims.Any(c => c.Type == "Permission" && c.Value == "ClimasVer")) ||
+                    (userClaims.Any(c => c.Type == "Permission" && c.Value == "CotizacionVer")))
                     {
                         <li class="nav-item">
                             <a class="nav-link btnPrincipal" data-bs-toggle="collapse" href="#adminSubmenu" role="button" aria-expanded="false" aria-controls="adminSubmenu">
@@ -123,7 +137,7 @@
                                     @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "PermisosRolesYPermisos"))
                                     {
                                         <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Permisoes" asp-action="RolesYPermisos">Permisos en roles</a>
+                                            <a class="nav-link" asp-area="" asp-controller="Permisoes" asp-action="RolesYPermisos">Gestion rol y sus permisos</a>
                                         </li>
                                     }
                                     
@@ -198,7 +212,7 @@
                                     @if (userClaims.Any(c => c.Type == "Permission" && c.Value == "CotizacionVer"))
                                     {
                                         <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Cotizacions" asp-action="Index">Cotrizacion</a>
+                                            <a class="nav-link" asp-area="" asp-controller="Cotizacions" asp-action="Index">Cotizacion</a>
                                         </li>
                                     }
                                 </ul>
