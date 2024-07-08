@@ -133,6 +133,14 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("PermisosDetalle", policy => policy.Requirements.Add(new PermisoPaginaRequisito("PermisosDetalle")));
     options.AddPolicy("PermisosRolesYPermisos", policy => policy.Requirements.Add(new PermisoPaginaRequisito("PermisosRolesYPermisos")));
 
+    // Políticas para Cotizacion
+    options.AddPolicy("CotizacionVer", policy => policy.Requirements.Add(new PermisoPaginaRequisito("CotizacionVer")));
+    options.AddPolicy("CotizacionCrear", policy => policy.Requirements.Add(new PermisoPaginaRequisito("CotizacionCrear")));
+    options.AddPolicy("CotizacionEditar", policy => policy.Requirements.Add(new PermisoPaginaRequisito("CotizacionEditar")));
+    options.AddPolicy("CotizacionEliminar", policy => policy.Requirements.Add(new PermisoPaginaRequisito("CotizacionEliminar")));
+    options.AddPolicy("CotizacionDetalle", policy => policy.Requirements.Add(new PermisoPaginaRequisito("CotizacionDetalle")));
+    
+
 });
 builder.Services.AddControllersWithViews();
 var app = builder.Build();

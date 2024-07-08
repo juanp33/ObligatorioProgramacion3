@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -18,12 +19,13 @@ namespace ObligatorioProgramacion3.Controllers
             _context = context;
         }
 
+        [Authorize(Policy = "CotizacionVer")]
         // GET: Cotizacions
         public async Task<IActionResult> Index()
         {
             return View(await _context.Cotizacions.ToListAsync());
         }
-
+        [Authorize(Policy = "CotizacionDetalle")]
         // GET: Cotizacions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -41,7 +43,7 @@ namespace ObligatorioProgramacion3.Controllers
 
             return View(cotizacion);
         }
-
+        [Authorize(Policy = "CotizacionCrear")]
         // GET: Cotizacions/Create
         public IActionResult Create()
         {
@@ -63,7 +65,7 @@ namespace ObligatorioProgramacion3.Controllers
             }
             return View(cotizacion);
         }
-
+        [Authorize(Policy = "CotizacionEditar")]
         // GET: Cotizacions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -114,7 +116,7 @@ namespace ObligatorioProgramacion3.Controllers
             }
             return View(cotizacion);
         }
-
+        [Authorize(Policy = "CotizacionEliminar")]
         // GET: Cotizacions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
