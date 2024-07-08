@@ -164,8 +164,6 @@
     padding: 10px 20px; /* Ajusta el espaciado interno */
     font-size: 16px; /* Ajusta el tamaño de la fuente */
     text-decoration: none; /* Elimina el subrayado */
-
-
     cursor: pointer; /* Cambiar cursor al pasar el ratón */
     transition: background-color 0.3s ease; /* Añadir transición suave */
 }
@@ -175,4 +173,9 @@
     color: white 
 }
 
-   
+.footer {
+    background-color: rgb(93, 64, 55);
+    color: white;
+    padding: 20px 0;
+    margin-top: 40px;
+}
