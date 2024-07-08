@@ -36,7 +36,7 @@
                 @Html.DisplayNameFor(model => model.IdCotizacion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Reserva)
+                @Html.DisplayNameFor(model => model.ReservaId)
             </th>
             <th></th>
         </tr>
@@ -64,7 +64,7 @@
                     @Html.DisplayFor(modelItem => item.IdCotizacionNavigation.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Reserva.Estado)
+                    @Html.DisplayFor(modelItem => item.Reserva.Id)
                 </td>
                 <td>
                     <a class="botonesEditDetailsDelete boton-edit" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |

@@ -4,11 +4,12 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<head>
+    <link rel="stylesheet" href="~/css/StyleCrudeCreate.css" asp-append-version="true" />
+</head>
 
-<h4>Cotizacion</h4>
-<hr />
 <div class="row">
+    <h1 class="text-center"> Crear rol</h1>
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -22,8 +23,9 @@
                 <input asp-for="FechaCotizacion" class="form-control" />
                 <span asp-validation-for="FechaCotizacion" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="button-group">
+                <input type="submit" value="Create" class="button-link" />
+                <a class="button-link" asp-action="Index">Volver a index</a>
             </div>
         </form>
     </div>

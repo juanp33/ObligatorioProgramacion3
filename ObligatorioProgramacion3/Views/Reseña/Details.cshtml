@@ -4,12 +4,15 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Reseña</h4>
-    <hr />
-    <dl class="row">
+<head>
+    <link rel="stylesheet" href="~/css/StyleCrudeDetails.css" />
+</head>
+
+<div class="details-container">
+
+    <h1 class="text-center" color="white">Detalles</h1>
+    <dl >
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Puntaje)
         </dt>
@@ -41,8 +44,9 @@
             @Html.DisplayFor(model => model.Restaurante.Id)
         </dd>
     </dl>
+    <div class="button-group">
+        <a class="button-link" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        <a class="button-link" asp-action="Index">Back to List</a>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+

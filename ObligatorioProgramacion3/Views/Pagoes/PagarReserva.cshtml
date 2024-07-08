@@ -13,6 +13,7 @@
     decimal? subtotalDec = ViewData["Subtotal"] as decimal?;
     decimal? descuentoRaw = (1 - @descuento) *100;
     int descuentoRawInt;
+ 
 
 
     if (descuentoRaw.HasValue)
@@ -179,6 +180,7 @@
             </select>
             <input type="hidden" name="reservaId" value="@reservaId" />
             <input type="hidden" name="descuento" value="@descuento" />
+            <input type="hidden" name="Total" value="@subtotalDec" />
         </div>
         <button type="submit" class="btn btn-primary">Confirmar</button>
     </form>

@@ -4,12 +4,14 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Pago</h4>
-    <hr />
-    <dl class="row">
+<head>
+    <link rel="stylesheet" href="~/css/StyleCrudeDetails.css" />
+</head>
+<div class="details-container">
+
+    <h1 class="text-center" color="white">Detalles</h1>
+    <dl>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Monto)
         </dt>
@@ -28,27 +30,30 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.MetodoPago)
         </dd>
+        
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdClimaNavigation)
+            IdClima
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IdClimaNavigation.Id)
         </dd>
+        
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdCotizacionNavigation)
+            IdCotizacion
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IdCotizacionNavigation.Id)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Reserva)
+            @Html.DisplayNameFor(model => model.ReservaId)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Reserva.Estado)
+            @Html.DisplayFor(model => model.Reserva.Id)
         </dd>
     </dl>
+    <div class="button-group">
+        <a class="button-link" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> 
+        <a class="button-link" asp-action="Index">Back to List</a>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+

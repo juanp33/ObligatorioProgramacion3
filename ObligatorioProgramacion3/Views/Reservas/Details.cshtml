@@ -3,13 +3,15 @@
 @{
     ViewData["Title"] = "Details";
 }
+<head>
+    <link rel="stylesheet" href="~/css/StyleCrudeDetails.css" />
+</head>
 
-<h1>Details</h1>
 
-<div>
-    <h4>Reserva</h4>
-    <hr />
-    <dl class="row">
+<div class="details-container">
+
+    <h1 class="text-center" color="white">Detalles</h1>
+    <dl >
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FechaReserva)
         </dt>
@@ -47,8 +49,8 @@
             @Html.DisplayFor(model => model.Usuario.Id)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="button-group">
+        <a class="button-link" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        <a class="button-link" asp-action="Index">Back to List</a>
+    </div>
 </div>

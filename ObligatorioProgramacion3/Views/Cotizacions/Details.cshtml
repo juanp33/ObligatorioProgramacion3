@@ -4,12 +4,14 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<head>
+    <link rel="stylesheet" href="~/css/StyleCrudeDetails.css" />
+</head>
 
-<div>
-    <h4>Cotizacion</h4>
-    <hr />
-    <dl class="row">
+<div class="details-container">
+    <h1 class="text-center" color="white">Detalles</h1>
+ 
+    <dl>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Cotizacion1)
         </dt>
@@ -23,8 +25,8 @@
             @Html.DisplayFor(model => model.FechaCotizacion)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="button-group">
+        <a class="button-link" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        <a class="button-link" asp-action="Index">Back to List</a>
+    </div>
 </div>
