@@ -71,7 +71,7 @@ namespace ObligatorioProgramacion3.Controllers
         public async Task<IActionResult> SeleccionarMesa(DateTime fecha, int restauranteId)
         {
             
-            var mesasOcupadas = await _context.Reservas.Where(reserva => reserva.FechaReserva == fecha && reserva.IdRestaurante == restauranteId).Select(reserva => reserva.MesaId).ToListAsync();
+            var mesasOcupadas = await _context.Reservas.Where(reserva => reserva.FechaReserva == fecha && reserva.IdRestaurante == restauranteId && reserva.Estado!= "Cancelada").Select(reserva => reserva.MesaId).ToListAsync();
 
             var mesas = await _context.Mesas
          .Where(m => m.IdRestaurante == restauranteId)
@@ -197,7 +197,7 @@ namespace ObligatorioProgramacion3.Controllers
             {
                 _context.Add(reserva);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(MostrarReservas));
             }
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id", reserva.ClienteId);
             ViewData["MesaId"] = new SelectList(_context.Mesas, "Id", "Id", reserva.MesaId);
