@@ -72,7 +72,8 @@ namespace ObligatorioProgramacion3.Controllers
                 }
                 else
                 {
-                    reseña.ClienteId = -1;
+                   
+                    reseña.ClienteId = 1015;
                 }
                 _context.Add(reseña);               
                 await _context.SaveChangesAsync();

@@ -71,7 +71,7 @@ namespace ObligatorioProgramacion3.Controllers
         public async Task<IActionResult> SeleccionarMesa(DateTime fecha, int restauranteId)
         {
             
-            var mesasOcupadas = await _context.Reservas.Where(reserva => reserva.FechaReserva == fecha && reserva.IdRestaurante == restauranteId).Select(reserva => reserva.MesaId).ToListAsync();
+            var mesasOcupadas = await _context.Reservas.Where(reserva => reserva.FechaReserva == fecha && reserva.IdRestaurante == restauranteId && reserva.Estado!= "Cancelada").Select(reserva => reserva.MesaId).ToListAsync();
 
             var mesas = await _context.Mesas
          .Where(m => m.IdRestaurante == restauranteId)

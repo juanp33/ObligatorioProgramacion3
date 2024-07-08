@@ -106,7 +106,7 @@ namespace ObligatorioProgramacion3.Controllers
             }
 
             
-            return RedirectToAction(nameof(RolesYPermisos));
+            return RedirectToAction(nameof(Index));
         }
         // GET: Permisoes
 

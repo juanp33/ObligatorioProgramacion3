@@ -58,6 +58,7 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Email,TipoCliente,IdUsuarios")] Cliente cliente)
         {
+            ModelState.Remove("IdUsuariosNavigation");
             if (ModelState.IsValid)
             {
                 _context.Add(cliente);
@@ -96,7 +97,7 @@ namespace ObligatorioProgramacion3.Controllers
             {
                 return NotFound();
             }
-
+            ModelState.Remove("IdUsuariosNavigation");
             if (ModelState.IsValid)
             {
                 try
