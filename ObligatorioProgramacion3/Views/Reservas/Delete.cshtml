@@ -3,7 +3,12 @@
 @{
     ViewData["Title"] = "Delete";
 }
-
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 <head>
     <link rel="stylesheet" href="~/css/StyleCrudeCreate.css" asp-append-version="true" />
 </head>
