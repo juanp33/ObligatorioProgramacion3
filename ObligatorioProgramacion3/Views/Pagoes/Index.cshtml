@@ -7,7 +7,12 @@
     <link rel="stylesheet" href="~/css/StylesCrudeINDEX.css" asp-append-version="true" />
 
 </head>
-
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 <h1>Index</h1>
 
 <p>

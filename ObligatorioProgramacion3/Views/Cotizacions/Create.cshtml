@@ -7,7 +7,12 @@
 <head>
     <link rel="stylesheet" href="~/css/StyleCrudeCreate.css" asp-append-version="true" />
 </head>
-
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 <div class="row">
     <h1 class="text-center"> Crear rol</h1>
     <div class="col-md-4">
