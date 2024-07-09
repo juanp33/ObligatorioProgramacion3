@@ -7,6 +7,12 @@
         new SelectListItem { Value = "Tarjeta", Text = "Tarjeta" },
         new SelectListItem { Value = "Efectivo", Text = "Efectivo" }
     };
+} 
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
 }
 
 <h1>Create</h1>

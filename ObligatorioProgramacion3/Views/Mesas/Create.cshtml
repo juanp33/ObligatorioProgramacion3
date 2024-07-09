@@ -9,6 +9,12 @@
         new SelectListItem { Value = "Ocupada", Text = "Ocupada" }
     };
 }
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 
 <h1>Create</h1>
 

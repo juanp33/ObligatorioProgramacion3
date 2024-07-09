@@ -13,6 +13,12 @@
 <head>
     <link rel="stylesheet" href="~/css/StylesCrudeEdit.css" asp-append-version="true" />
 </head>
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 
 <h1 class="text-center">Edit Reserva</h1>
 

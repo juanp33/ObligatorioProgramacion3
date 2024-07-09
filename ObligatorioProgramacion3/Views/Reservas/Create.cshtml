@@ -9,7 +9,12 @@
         new SelectListItem { Value = "Cancelada", Text = "Cancelada" }
     };
 }
-
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 <h1>Create</h1>
 
 <h4>Reserva</h4>
