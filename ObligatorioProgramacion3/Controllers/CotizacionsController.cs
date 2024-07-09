@@ -158,14 +158,22 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cotizacion = await _context.Cotizacions.FindAsync(id);
-            if (cotizacion != null)
+            try
             {
-                _context.Cotizacions.Remove(cotizacion);
-            }
+                var cotizacion = await _context.Cotizacions.FindAsync(id);
+                if (cotizacion != null)
+                {
+                    _context.Cotizacions.Remove(cotizacion);
+                }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         private bool CotizacionExists(int id)

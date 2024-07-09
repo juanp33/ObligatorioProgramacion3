@@ -162,7 +162,7 @@ namespace ObligatorioProgramacion3.Controllers
         // POST: Clientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             try
             {
@@ -178,7 +178,7 @@ namespace ObligatorioProgramacion3.Controllers
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = "Hubo un problema al registrar el usuario: " + ex.Message;
-                return View(id);
+                return RedirectToAction(nameof(Index));
             }
 
         }

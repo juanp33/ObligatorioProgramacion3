@@ -337,7 +337,7 @@ namespace ObligatorioProgramacion3.Controllers
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = "Hubo un problema al registrar el usuario: " + ex.Message;
-                return View(id);
+                return RedirectToAction(nameof(Index));
             }
         }
 
