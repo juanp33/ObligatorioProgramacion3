@@ -71,13 +71,21 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Dirección,Teléfono,Descripcion,Imagen,Moneda")] Restaurante restaurante)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(restaurante);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(restaurante);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(restaurante);
             }
-            return View(restaurante);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(restaurante);
+            }
         }
 
         // GET: Restaurantes/Edit/5
@@ -104,32 +112,40 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Dirección,Teléfono,Descripcion,Imagen,Moneda")] Restaurante restaurante)
         {
-            if (id != restaurante.Id)
+            try
             {
-                return NotFound();
-            }
+                if (id != restaurante.Id)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
-                    _context.Update(restaurante);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RestauranteExists(restaurante.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(restaurante);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!RestauranteExists(restaurante.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
+                return View(restaurante);
             }
-            return View(restaurante);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(restaurante);
+            }
         }
 
         // GET: Restaurantes/Delete/5
@@ -156,14 +172,22 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var restaurante = await _context.Restaurantes.FindAsync(id);
-            if (restaurante != null)
+            try
             {
-                _context.Restaurantes.Remove(restaurante);
-            }
+                var restaurante = await _context.Restaurantes.FindAsync(id);
+                if (restaurante != null)
+                {
+                    _context.Restaurantes.Remove(restaurante);
+                }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(model);
+            }
         }
 
         private bool RestauranteExists(int id)

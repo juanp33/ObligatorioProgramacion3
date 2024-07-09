@@ -58,15 +58,24 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Email,TipoCliente,IdUsuarios")] Cliente cliente)
         {
-            ModelState.Remove("IdUsuariosNavigation");
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(cliente);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ModelState.Remove("IdUsuariosNavigation");
+                if (ModelState.IsValid)
+                {
+                    _context.Add(cliente);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["IdUsuarios"] = new SelectList(_context.Usuarios, "Id", "Id", cliente.IdUsuarios);
+                return View(cliente);
             }
-            ViewData["IdUsuarios"] = new SelectList(_context.Usuarios, "Id", "Id", cliente.IdUsuarios);
-            return View(cliente);
+           
+             catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el usuario: " + ex.Message;
+                return View(cliente);
+            }
         }
 
         // GET: Clientes/Edit/5
@@ -93,33 +102,42 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Email,TipoCliente,IdUsuarios")] Cliente cliente)
         {
-            if (id != cliente.Id)
+            try
             {
-                return NotFound();
+                if (id != cliente.Id)
+                {
+                    return NotFound();
+                }
+                ModelState.Remove("IdUsuariosNavigation");
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(cliente);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!ClienteExists(cliente.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+
+                ViewData["IdUsuarios"] = new SelectList(_context.Usuarios, "Id", "Id", cliente.IdUsuarios);
+                return View(cliente);
             }
-            ModelState.Remove("IdUsuariosNavigation");
-            if (ModelState.IsValid)
+            catch (Exception ex)
             {
-                try
-                {
-                    _context.Update(cliente);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ClienteExists(cliente.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el usuario: " + ex.Message;
+                return View(cliente);
             }
-            ViewData["IdUsuarios"] = new SelectList(_context.Usuarios, "Id", "Id", cliente.IdUsuarios);
-            return View(cliente);
         }
 
         // GET: Clientes/Delete/5
@@ -146,14 +164,23 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
-            if (cliente != null)
+            try
             {
-                _context.Clientes.Remove(cliente);
+                var cliente = await _context.Clientes.FindAsync(id);
+                if (cliente != null)
+                {
+                    _context.Clientes.Remove(cliente);
+                }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el usuario: " + ex.Message;
+                return View(id);
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool ClienteExists(int id)

@@ -44,41 +44,48 @@ namespace ObligatorioProgramacion3.Controllers
             ModelState.Remove("Rol");
             ModelState.Remove("Email");
             ModelState.Remove("RolId");
-           
-
-            if (ModelState.IsValid)
+            try
             {
-                var user = await _context.Usuarios
-                    .Include(u => u.Rol)
-                    .ThenInclude(r => r.RolPermisos)
-                    .ThenInclude(rp => rp.Permiso)
-                    .FirstOrDefaultAsync(u => u.Nombre == model.Nombre && u.Contraseña == model.Contraseña);
-
-                if (user != null)
+                if (ModelState.IsValid)
                 {
-                    var claims = new List<Claim>
+                    var user = await _context.Usuarios
+                        .Include(u => u.Rol)
+                        .ThenInclude(r => r.RolPermisos)
+                        .ThenInclude(rp => rp.Permiso)
+                        .FirstOrDefaultAsync(u => u.Nombre == model.Nombre && u.Contraseña == model.Contraseña);
+
+                    if (user != null)
+                    {
+                        var claims = new List<Claim>
             {
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.Name, user.Nombre)
             };
 
-                    foreach (var permiso in user.Rol.RolPermisos.Select(rp => rp.Permiso.Nombre))
-                    {
-                        claims.Add(new Claim("Permission", permiso));
+                        foreach (var permiso in user.Rol.RolPermisos.Select(rp => rp.Permiso.Nombre))
+                        {
+                            claims.Add(new Claim("Permission", permiso));
+                        }
+
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+
+                        return RedirectToAction("Index", "Home");
                     }
 
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
-
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.ErrorMessage = "Nombre de usuario o contraseña incorrectos.";
                 }
 
-                ViewBag.ErrorMessage = "Nombre de usuario o contraseña incorrectos.";
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el usuario: " + ex.Message;
+                return View(model);
             }
 
-            return View(model);
         }
 
 
@@ -190,6 +197,7 @@ namespace ObligatorioProgramacion3.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Policy = "UsuariosCrear")]
+        
         public IActionResult Create()
         {
             ViewData["RolId"] = new SelectList(_context.Roles, "RolId", "Nombre");
@@ -199,14 +207,22 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Email,Contraseña,Rol")] Usuario usuario)
         {
-
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(usuario);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(usuario);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(usuario);
             }
-            return View(usuario);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el usuario: " + ex.Message;
+                return View(usuario);
+            }
+
         }
 
         [Authorize(Policy = "UsuariosEditar")]
@@ -234,33 +250,42 @@ namespace ObligatorioProgramacion3.Controllers
 
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Email,Contraseña,RolId")] Usuario usuario)
         {
-            if (id != usuario.Id)
+            try
             {
-                return NotFound();
+                if (id != usuario.Id)
+                {
+                    return NotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(usuario);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!UsuarioExists(usuario.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["RolId"] = new SelectList(_context.Roles, "RolId", "Nombre", usuario.RolId);
+                return View(usuario);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el usuario: " + ex.Message;
+                return View(usuario);
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(usuario);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UsuarioExists(usuario.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["RolId"] = new SelectList(_context.Roles, "RolId", "Nombre", usuario.RolId);
-            return View(usuario);
         }
 
         // GET: Usuarios/Delete/5
@@ -268,19 +293,28 @@ namespace ObligatorioProgramacion3.Controllers
         [Authorize(Policy = "UsuariosEliminar")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var usuario = await _context.Usuarios
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (usuario == null)
+                {
+                    return NotFound();
+                }
+
+                return View(usuario);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el usuario: " + ex.Message;
+                return View(id);
             }
 
-            var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-
-            return View(usuario);
         }
 
         // POST: Usuarios/Delete/5
@@ -289,14 +323,22 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario != null)
+            try
             {
-                _context.Usuarios.Remove(usuario);
-            }
+                var usuario = await _context.Usuarios.FindAsync(id);
+                if (usuario != null)
+                {
+                    _context.Usuarios.Remove(usuario);
+                }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el usuario: " + ex.Message;
+                return View(id);
+            }
         }
 
         private bool UsuarioExists(int id)

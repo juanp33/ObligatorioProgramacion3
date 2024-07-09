@@ -63,32 +63,50 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NumeroMesa,Capacidad,Estado,IdRestaurante")] Mesa mesa)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(mesa);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(mesa);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", mesa.IdRestaurante);
+                return View(mesa);
             }
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", mesa.IdRestaurante);
-            return View(mesa);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(mesa);
+            }
+
         }
 
         // GET: Mesas/Edit/5
         [Authorize(Policy = "MesasEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var mesa = await _context.Mesas.FindAsync(id);
+                if (mesa == null)
+                {
+                    return NotFound();
+                }
+                ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", mesa.IdRestaurante);
+                return View(mesa);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(model);
             }
 
-            var mesa = await _context.Mesas.FindAsync(id);
-            if (mesa == null)
-            {
-                return NotFound();
-            }
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", mesa.IdRestaurante);
-            return View(mesa);
         }
 
         // POST: Mesas1/Edit/5
@@ -98,53 +116,69 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,NumeroMesa,Capacidad,Estado,IdRestaurante")] Mesa mesa)
         {
-            if (id != mesa.Id)
+            try
             {
-                return NotFound();
-            }
+                if (id != mesa.Id)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
-                    _context.Update(mesa);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MesaExists(mesa.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(mesa);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!MesaExists(mesa.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
+                ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", mesa.IdRestaurante);
+                return View(mesa);
             }
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Dirección", mesa.IdRestaurante);
-            return View(mesa);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(mesa);
+            }
         }
 
         // GET: Mesas/Delete/5
         [Authorize(Policy = "MesasEliminar")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var mesa = await _context.Mesas
-                .Include(m => m.IdRestauranteNavigation)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (mesa == null)
+                var mesa = await _context.Mesas
+                    .Include(m => m.IdRestauranteNavigation)
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (mesa == null)
+                {
+                    return NotFound();
+                }
+
+                return View(mesa);
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(id);
             }
-
-            return View(mesa);
         }
 
         // POST: Mesas1/Delete/5
@@ -152,14 +186,23 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var mesa = await _context.Mesas.FindAsync(id);
-            if (mesa != null)
+            try
             {
-                _context.Mesas.Remove(mesa);
+                var mesa = await _context.Mesas.FindAsync(id);
+                if (mesa != null)
+                {
+                    _context.Mesas.Remove(mesa);
+                }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(id);
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool MesaExists(int id)

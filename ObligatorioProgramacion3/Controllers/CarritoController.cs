@@ -19,14 +19,14 @@ namespace ObligatorioProgramacion3.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var platos = await _context.Platos.ToListAsync(); // Implementa este método para obtener todos los platos
+            var platos = await _context.Platos.ToListAsync();
             return View(platos);
         }
 
         [HttpPost]
         public async Task<IActionResult> AñadirAlCarrito(int id)
         {
-            var plato = await _context.Platos.FirstOrDefaultAsync(p => p.Id == id); // Implementa este método para obtener los detalles del Plato por id
+            var plato = await _context.Platos.FirstOrDefaultAsync(p => p.Id == id); 
             var carritoItem = new CarritoItem
             {
                 PlatoId = plato.Id,

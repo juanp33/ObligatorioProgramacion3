@@ -319,16 +319,25 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,ReservaId,Monto,FechaPago,MetodoPago,IdClima,IdCotizacion")] Pago pago)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(pago);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(pago);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["IdClima"] = new SelectList(_context.Climas, "Id", "Id", pago.IdClima);
+                ViewData["IdCotizacion"] = new SelectList(_context.Cotizacions, "Id", "Id", pago.IdCotizacion);
+                ViewData["ReservaId"] = new SelectList(_context.Reservas, "Id", "Estado", pago.ReservaId);
+                return View(pago);
             }
-            ViewData["IdClima"] = new SelectList(_context.Climas, "Id", "Id", pago.IdClima);
-            ViewData["IdCotizacion"] = new SelectList(_context.Cotizacions, "Id", "Id", pago.IdCotizacion);
-            ViewData["ReservaId"] = new SelectList(_context.Reservas, "Id", "Estado", pago.ReservaId);
-            return View(pago);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(model);
+            }
+
         }
 
         // GET: Pagoes/Edit/5
@@ -358,35 +367,44 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,ReservaId,Monto,FechaPago,MetodoPago,IdClima,IdCotizacion")] Pago pago)
         {
-            if (id != pago.Id)
+            try
             {
-                return NotFound();
+                if (id != pago.Id)
+                {
+                    return NotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(pago);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!PagoExists(pago.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["IdClima"] = new SelectList(_context.Climas, "Id", "Id", pago.IdClima);
+                ViewData["IdCotizacion"] = new SelectList(_context.Cotizacions, "Id", "Id", pago.IdCotizacion);
+                ViewData["ReservaId"] = new SelectList(_context.Reservas, "Id", "Estado", pago.ReservaId);
+                return View(pago);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(pago);
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(pago);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PagoExists(pago.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["IdClima"] = new SelectList(_context.Climas, "Id", "Id", pago.IdClima);
-            ViewData["IdCotizacion"] = new SelectList(_context.Cotizacions, "Id", "Id", pago.IdCotizacion);
-            ViewData["ReservaId"] = new SelectList(_context.Reservas, "Id", "Estado", pago.ReservaId);
-            return View(pago);
         }
         // GET: Pagoes/Delete/5
         [Authorize(Policy = "PagosEliminar")]
@@ -415,14 +433,22 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pago = await _context.Pagos.FindAsync(id);
-            if (pago != null)
+            try
             {
-                _context.Pagos.Remove(pago);
-            }
+                var pago = await _context.Pagos.FindAsync(id);
+                if (pago != null)
+                {
+                    _context.Pagos.Remove(pago);
+                }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(id);
+            }
         }
 
         private bool PagoExists(int id)
