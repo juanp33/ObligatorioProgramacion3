@@ -123,35 +123,52 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,ClienteId,RestauranteId,Puntaje,Comentario,FechaReseña")] Reseña reseña)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(reseña);
-                @reseña.FechaReseña = DateTime.Now;
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(reseña);
+                    @reseña.FechaReseña = DateTime.Now;
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id", reseña.ClienteId);
+                ViewData["RestauranteId"] = new SelectList(_context.Restaurantes, "Id", "Nombre", reseña.RestauranteId);
+                return View(reseña);
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id", reseña.ClienteId);
-            ViewData["RestauranteId"] = new SelectList(_context.Restaurantes, "Id", "Nombre", reseña.RestauranteId);
-            return View(reseña);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(reseña);
+            }
+
         }
 
         // GET: Reseña/Edit/5
         [Authorize(Policy = "ReseñasEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var reseña = await _context.Reseñas.FindAsync(id);
-            if (reseña == null)
-            {
-                return NotFound();
+                var reseña = await _context.Reseñas.FindAsync(id);
+                if (reseña == null)
+                {
+                    return NotFound();
+                }
+                ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id", reseña.ClienteId);
+                ViewData["RestauranteId"] = new SelectList(_context.Restaurantes, "Id", "Id", reseña.RestauranteId);
+                return View(reseña);
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id", reseña.ClienteId);
-            ViewData["RestauranteId"] = new SelectList(_context.Restaurantes, "Id", "Id", reseña.RestauranteId);
-            return View(reseña);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(id);
+            }
         }
 
         // POST: Reseña/Edit/5

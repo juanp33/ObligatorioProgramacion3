@@ -57,13 +57,22 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Cotizacion1,FechaCotizacion")] Cotizacion cotizacion)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(cotizacion);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(cotizacion);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(cotizacion);
             }
-            return View(cotizacion);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(cotizacion);
+            }
+
         }
         [Authorize(Policy = "CotizacionEditar")]
         // GET: Cotizacions/Edit/5
@@ -89,32 +98,41 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Cotizacion1,FechaCotizacion")] Cotizacion cotizacion)
         {
-            if (id != cotizacion.Id)
+            try
             {
-                return NotFound();
+                if (id != cotizacion.Id)
+                {
+                    return NotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(cotizacion);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!CotizacionExists(cotizacion.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(cotizacion);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(cotizacion);
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(cotizacion);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CotizacionExists(cotizacion.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(cotizacion);
         }
         [Authorize(Policy = "CotizacionEliminar")]
         // GET: Cotizacions/Delete/5

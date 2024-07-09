@@ -75,14 +75,23 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NombrePlato,Descripción,Precio,Imagen,IdRestaurante")] Plato plato)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(plato);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(plato);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Nombre", plato.IdRestaurante);
+                return View(plato);
             }
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Nombre", plato.IdRestaurante);
-            return View(plato);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(plato);
+            }
+
         }
 
         // GET: Platoes/Edit/5
@@ -110,33 +119,42 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,NombrePlato,Descripción,Precio,Imagen,IdRestaurante")] Plato plato)
         {
-            if (id != plato.Id)
+            try
             {
-                return NotFound();
+                if (id != plato.Id)
+                {
+                    return NotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(plato);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!PlatoExists(plato.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Nombre", plato.IdRestaurante);
+                return View(plato);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(model);
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(plato);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PlatoExists(plato.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["IdRestaurante"] = new SelectList(_context.Restaurantes, "Id", "Nombre", plato.IdRestaurante);
-            return View(plato);
         }
 
         // GET: Platoes/Delete/5
@@ -165,14 +183,23 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var plato = await _context.Platos.FindAsync(id);
-            if (plato != null)
+            try
             {
-                _context.Platos.Remove(plato);
+                var plato = await _context.Platos.FindAsync(id);
+                if (plato != null)
+                {
+                    _context.Platos.Remove(plato);
+                }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(id);
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool PlatoExists(int id)

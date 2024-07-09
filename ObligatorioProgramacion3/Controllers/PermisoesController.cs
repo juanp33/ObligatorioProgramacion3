@@ -44,6 +44,7 @@ namespace ObligatorioProgramacion3.Controllers
         [HttpPost]
         public async Task<IActionResult> ActualizarPermisos(List<int> RolIds)
         {
+
             foreach (var rolId in RolIds)
             {
                 if (rolId != 1)
@@ -158,30 +159,48 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PermisoId,Nombre,Descripcion")] Permiso permiso)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(permiso);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(permiso);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(permiso);
             }
-            return View(permiso);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(permiso);
+            }
+
         }
 
         // GET: Permisoes/Edit/5
         [Authorize(Policy = "PermisosEditar")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var permiso = await _context.Permisos.FindAsync(id);
+                if (permiso == null)
+                {
+                    return NotFound();
+                }
+                return View(permiso);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(id);
             }
 
-            var permiso = await _context.Permisos.FindAsync(id);
-            if (permiso == null)
-            {
-                return NotFound();
-            }
-            return View(permiso);
         }
 
         // POST: Permisoes/Edit/5
@@ -191,32 +210,41 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("PermisoId,Nombre,Descripcion")] Permiso permiso)
         {
-            if (id != permiso.PermisoId)
+            try
             {
-                return NotFound();
+                if (id != permiso.PermisoId)
+                {
+                    return NotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(permiso);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!PermisoExists(permiso.PermisoId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(permiso);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(permiso);
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(permiso);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PermisoExists(permiso.PermisoId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(permiso);
         }
 
         // GET: Permisoes/Delete/5
@@ -243,14 +271,23 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var permiso = await _context.Permisos.FindAsync(id);
-            if (permiso != null)
+            try
             {
-                _context.Permisos.Remove(permiso);
+                var permiso = await _context.Permisos.FindAsync(id);
+                if (permiso != null)
+                {
+                    _context.Permisos.Remove(permiso);
+                }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(id);
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool PermisoExists(int id)

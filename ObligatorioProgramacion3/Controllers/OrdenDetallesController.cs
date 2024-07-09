@@ -53,9 +53,17 @@ namespace ObligatorioProgramacion3.Controllers
         [Authorize(Policy = "OrdenDetallesCrear")]
         public IActionResult Create()
         {
-            ViewData["OrdenId"] = new SelectList(_context.Ordenes, "Id", "Id");
-            ViewData["PlatoId"] = new SelectList(_context.Platos, "Id", "Id");
-            return View();
+            try
+            {
+                ViewData["OrdenId"] = new SelectList(_context.Ordenes, "Id", "Id");
+                ViewData["PlatoId"] = new SelectList(_context.Platos, "Id", "Id");
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View();
+            }
         }
 
         // POST: OrdenDetalles/Create
@@ -65,15 +73,23 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,OrdenId,PlatoId,Cantidad")] OrdenDetalle ordenDetalle)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(ordenDetalle);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(ordenDetalle);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["OrdenId"] = new SelectList(_context.Ordenes, "Id", "Id", ordenDetalle.OrdenId);
+                ViewData["PlatoId"] = new SelectList(_context.Platos, "Id", "Id", ordenDetalle.PlatoId);
+                return View(ordenDetalle);
             }
-            ViewData["OrdenId"] = new SelectList(_context.Ordenes, "Id", "Id", ordenDetalle.OrdenId);
-            ViewData["PlatoId"] = new SelectList(_context.Platos, "Id", "Id", ordenDetalle.PlatoId);
-            return View(ordenDetalle);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(model);
+            }
         }
 
         // GET: OrdenDetalles/Edit/5
@@ -102,34 +118,42 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,OrdenId,PlatoId,Cantidad")] OrdenDetalle ordenDetalle)
         {
-            if (id != ordenDetalle.Id)
+            try
             {
-                return NotFound();
-            }
+                if (id != ordenDetalle.Id)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
-                    _context.Update(ordenDetalle);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!OrdenDetalleExists(ordenDetalle.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(ordenDetalle);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!OrdenDetalleExists(ordenDetalle.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
+                ViewData["OrdenId"] = new SelectList(_context.Ordenes, "Id", "Id", ordenDetalle.OrdenId);
+                ViewData["PlatoId"] = new SelectList(_context.Platos, "Id", "Id", ordenDetalle.PlatoId);
+                return View(ordenDetalle);
             }
-            ViewData["OrdenId"] = new SelectList(_context.Ordenes, "Id", "Id", ordenDetalle.OrdenId);
-            ViewData["PlatoId"] = new SelectList(_context.Platos, "Id", "Id", ordenDetalle.PlatoId);
-            return View(ordenDetalle);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(ordenDetalle);
+            }
         }
 
         // GET: OrdenDetalles/Delete/5
@@ -158,14 +182,23 @@ namespace ObligatorioProgramacion3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ordenDetalle = await _context.OrdenDetalles.FindAsync(id);
-            if (ordenDetalle != null)
+            try
             {
-                _context.OrdenDetalles.Remove(ordenDetalle);
+                var ordenDetalle = await _context.OrdenDetalles.FindAsync(id);
+                if (ordenDetalle != null)
+                {
+                    _context.OrdenDetalles.Remove(ordenDetalle);
+                }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
+                return View(id);
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool OrdenDetalleExists(int id)
