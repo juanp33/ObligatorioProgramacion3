@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
 </head>
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 <h2>Reseñas</h2>
 <p>
     <a class="BotonCreate" asp-action="Create">Crear</a>
