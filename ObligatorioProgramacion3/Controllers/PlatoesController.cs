@@ -152,7 +152,7 @@ namespace ObligatorioProgramacion3.Controllers
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = "Hubo un problema al registrar el cambio: " + ex.Message;
-                return View(model);
+                return View(plato);
             }
 
         }
