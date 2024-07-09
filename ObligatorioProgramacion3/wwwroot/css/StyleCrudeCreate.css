@@ -1,0 +1,54 @@
+﻿.button-link {
+    background-color: #D7CCC8;
+    color: #5D4037;
+    padding: 5px 22px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+    .button-link:hover {
+        transform: scale(1.05);
+        background-color: #48322A;
+        color: white;
+    }
+
+.row {
+    display: flex;
+    background-color: #5D4037;
+    color: white;
+    border-radius: 6px;
+    padding: 20px;
+    height: auto;
+    width: auto;
+    margin-left: 25%;
+    margin-right: 25%;
+    justify-content: center;
+}
+
+.form-group {
+    width: 100%;
+    margin: 10px 0;
+    background-color: #5A4033;
+    color: #fff;
+    border-radius: 10px;
+}
+
+.form-control {
+    width: 100%; /* Asegura que los inputs ocupen el 100% del contenedor */
+    padding: 10px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    font-size:20px;
+}

@@ -160,12 +160,11 @@
 .btn-primary {
     background-color: #5d4037;
     color: white;
-    border-radius: 15px; /* Ajusta este valor para cambiar el grado de redondez */
-    padding: 10px 20px; /* Ajusta el espaciado interno */
-    font-size: 16px; /* Ajusta el tamaño de la fuente */
-    text-decoration: none; /* Elimina el subrayado */
-    cursor: pointer; /* Cambiar cursor al pasar el ratón */
-    transition: background-color 0.3s ease; /* Añadir transición suave */
+    border-radius: 15px; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    text-decoration: none; 
+    transition: background-color 0.3s ease; 
 }
 
 .btn-primary:hover {

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ObligatorioProgramacion3.Models;
 using System.Security.Claims;
+using System.Globalization;
 
 
 namespace ObligatorioProgramacion3.Controllers
@@ -23,6 +24,7 @@ namespace ObligatorioProgramacion3.Controllers
         {
             _context = context;
             _carritoService = carritoService;
+            
         }
 
 

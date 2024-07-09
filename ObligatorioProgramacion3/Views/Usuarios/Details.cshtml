@@ -3,12 +3,12 @@
 @{
     ViewData["Title"] = "Details";
 }
+<head>
+    <link rel="stylesheet" href="~/css/StyleCrudeDetails.css" />
+</head>
 
-<h1>Details</h1>
-
-<div>
-    <h4>Usuario</h4>
-    <hr />
+<div class="details-container">
+    <h1 class="text-center" color="white">Detalles</h1>
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Nombre)
@@ -29,14 +29,14 @@
             @Html.DisplayFor(model => model.Contraseña)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Rol)
+            @Html.DisplayNameFor(model => model.Rol.RolId)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Rol)
+            @Html.DisplayFor(model => model.Rol.RolId)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="button-group">
+        <a class="button-link" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        <a class="button-link" asp-action="Index">Back to List</a>
+    </div>
 </div>

@@ -43,24 +43,38 @@ namespace ObligatorioProgramacion3.Controllers
                     {
                         string content = await response.Content.ReadAsStringAsync();
                         dynamic data = JsonConvert.DeserializeObject(content);
-                        var tipoDeCambio = new Cotizacion
-                        {
-                            Cotizacion1 = data.quotes.USDUYU,
-                            FechaCotizacion = DateTime.Now
-                        };
-                        _context.Cotizacions.Add(tipoDeCambio);
-                        await _context.SaveChangesAsync();
+                      
                         if (restauranteId == 1)
                         {
+                            var tipoDeCambio = new Cotizacion
+                            {
+                                Cotizacion1 = data.quotes.USDUYU,
+                                FechaCotizacion = DateTime.Now
+                            };
+                            _context.Cotizacions.Add(tipoDeCambio);
+                            await _context.SaveChangesAsync();
                             return data.quotes.USDUYU;
                         }
                         else if (restauranteId == 2)
                         {
-
+                            var tipoDeCambio = new Cotizacion
+                            {
+                                Cotizacion1 = data.quotes.USDMXN,
+                                FechaCotizacion = DateTime.Now
+                            };
+                            _context.Cotizacions.Add(tipoDeCambio);
+                            await _context.SaveChangesAsync();
                             return data.quotes.USDMXN;
                         }
                         else
                         {
+                            var tipoDeCambio = new Cotizacion
+                            {
+                                Cotizacion1 = data.quotes.USDEUR,
+                                FechaCotizacion = DateTime.Now
+                            };
+                            _context.Cotizacions.Add(tipoDeCambio);
+                            await _context.SaveChangesAsync();
                             return data.quotes.USDEUR;
                         }
                     }
@@ -215,7 +229,7 @@ namespace ObligatorioProgramacion3.Controllers
         }
         [HttpPost]
         [Authorize(Policy = "PagosPagarReserva")]
-        public async Task<IActionResult> ConfirmarPago(string MetodoPago, int reservaId, decimal descuento)
+        public async Task<IActionResult> ConfirmarPago(string MetodoPago, int reservaId, decimal descuento,decimal Total)
         {
             if (string.IsNullOrEmpty(MetodoPago) || MetodoPago.Length > 50)
             {
@@ -228,29 +242,7 @@ namespace ObligatorioProgramacion3.Controllers
             }
            
             var items = _carritoService.ObtenerCarritoItems();
-            var total = _carritoService.ObtenerTotal() * descuento;
-
-            Ordene orden = new Ordene
-            {
-                ReservaId = reservaId,
-                Total = _carritoService.ObtenerTotal()
-            };
-
-            _context.Ordenes.Add(orden);
-            await _context.SaveChangesAsync();
-          
-            foreach(var item in items)
-            {
-                OrdenDetalle ordenDetalle = new OrdenDetalle
-                {
-                    OrdenId = orden.Id,
-                    PlatoId = item.PlatoId,
-                    Cantidad = item.Cantidad,
-
-                };
-                _context.OrdenDetalles.Add(ordenDetalle);
-                await _context.SaveChangesAsync();
-            }
+            
             
             var ultimoClima = await _context.Climas
                                         .OrderByDescending(c => c.Fecha)
@@ -261,7 +253,7 @@ namespace ObligatorioProgramacion3.Controllers
             var pago = new Pago
             {
                 ReservaId = reservaId,
-                Monto = total,
+                Monto = Total,
                 FechaPago = DateTime.Now,
                 MetodoPago = MetodoPago,
                 IdCotizacion=ultimaCotizacion.Id,
@@ -277,7 +269,7 @@ namespace ObligatorioProgramacion3.Controllers
             
             _carritoService.LimpiarCarrito();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("MostrarOrdenes","Ordenes");
         }
       
         [Authorize(Policy = "PagosVer")]

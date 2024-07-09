@@ -46,67 +46,76 @@ namespace ObligatorioProgramacion3.Controllers
         {
             foreach (var rolId in RolIds)
             {
-
-                var permisoIds = Request.Form[$"PermisoIds_{rolId}"].Select(int.Parse).ToList();
-
-
-                var rol = await _context.Roles.FindAsync(rolId);
-
-
-
-                var permisosValidos = await _context.Permisos
-                    .Where(p => permisoIds.Contains(p.PermisoId))
-                    .ToListAsync();
-
-
-                var permisosExistentes = _context.RolPermisos.Where(rp => rp.RolId == rolId);
-                _context.RolPermisos.RemoveRange(permisosExistentes);
-
-
-                foreach (var permiso in permisosValidos)
+                if (rolId != 1)
                 {
-                    _context.RolPermisos.Add(new RolPermiso
-                    {
-                        RolId = rolId,
-                        PermisoId = permiso.PermisoId
-                    });
-                }
+                    var permisoIds = Request.Form[$"PermisoIds_{rolId}"].Select(int.Parse).ToList();
 
 
-                await _context.SaveChangesAsync();
+                    var rol = await _context.Roles.FindAsync(rolId);
 
 
-                var usuariosConRol = await _context.Usuarios
-                    .Include(u => u.Rol)
-                    .Where(u => u.RolId == rolId)
-                    .ToListAsync();
 
-                foreach (var usuario in usuariosConRol)
-                {
-                    var claimsActuales = (await HttpContext.AuthenticateAsync()).Principal.Claims.ToList();
+                    var permisosValidos = await _context.Permisos
+                        .Where(p => permisoIds.Contains(p.PermisoId))
+                        .ToListAsync();
 
-                    var permisosARemover = claimsActuales.Where(c => c.Type == "Permission");
 
-                    foreach (var claim in permisosARemover.ToList())
-                    {
-                        claimsActuales.Remove(claim);
-                    }
+                    var permisosExistentes = _context.RolPermisos.Where(rp => rp.RolId == rolId);
+                    _context.RolPermisos.RemoveRange(permisosExistentes);
 
 
                     foreach (var permiso in permisosValidos)
                     {
-                        claimsActuales.Add(new Claim("Permission", permiso.Nombre));
+                        _context.RolPermisos.Add(new RolPermiso
+                        {
+                            RolId = rolId,
+                            PermisoId = permiso.PermisoId
+                        });
                     }
 
-                    var claimsIdentity = new ClaimsIdentity(claimsActuales, CookieAuthenticationDefaults.AuthenticationScheme);
-                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+                    await _context.SaveChangesAsync();
+
+
+                    var usuariosConRol = await _context.Usuarios
+                        .Include(u => u.Rol)
+                        .Where(u => u.RolId == rolId && u.RolId != 1)
+                        .ToListAsync();
+                    var IdUsuario = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+                    foreach (var usuario in usuariosConRol)
+                    {
+                        if (usuario.Id == IdUsuario)
+                        {
+                            var claimsActuales = (await HttpContext.AuthenticateAsync()).Principal.Claims.ToList();
+
+                        var permisosARemover = claimsActuales.Where(c => c.Type == "Permission");
+
+                        foreach (var claim in permisosARemover.ToList())
+                        {
+                            claimsActuales.Remove(claim);
+                        }
+
+                      
+                        foreach (var permiso in permisosValidos)
+                        {
+                            claimsActuales.Add(new Claim("Permission", permiso.Nombre));
+                        }
+                       
+                            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                   
+                            var claimsIdentity = new ClaimsIdentity(claimsActuales, CookieAuthenticationDefaults.AuthenticationScheme);
+                            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+                        }
+                     
+
+                    }
+
                 }
             }
-
-            
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(RolesYPermisos));
         }
         // GET: Permisoes
 
